@@ -3,7 +3,7 @@ import { useSearchParams } from "react-router-dom";
 
 const OAuthSuccess = () => {
 
-    const [searchParams, _setSearchParams] = useSearchParams();
+    const [ searchParams ] = useSearchParams();
 
     console.log("Search params: ", searchParams.get('token'))
 
