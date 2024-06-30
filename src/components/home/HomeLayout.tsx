@@ -5,7 +5,7 @@ import HomeNavbar from './HomeNavbar'
 
 const HomeLayout = () => {
   return (
-    <Box >
+    <Box px={8} py={4} bg={"white-bg.100"} minH="100vh">
         <HomeNavbar />
     </Box>
   )

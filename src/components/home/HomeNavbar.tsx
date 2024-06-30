@@ -11,19 +11,24 @@ import {
     useColorModeValue,
     useBreakpointValue,
     useDisclosure,
+    Image,
+    Icon,
 } from '@chakra-ui/react'
 import {
     HamburgerIcon,
     CloseIcon,
 } from '@chakra-ui/icons'
+import LoginIcon from '@mui/icons-material/Login';
+
+import logo from '../../assets/images/logo.png'
 
 export default function HomeNavbar() {
     const { isOpen, onToggle } = useDisclosure()
 
     return (
-        <Box>
+        <Box w='full'>
             <Flex
-                bg={useColorModeValue('white', 'gray.800')}
+                bg={'transparent'}
                 color={useColorModeValue('gray.600', 'white')}
                 minH={'60px'}
                 py={{ base: 2 }}
@@ -45,15 +50,38 @@ export default function HomeNavbar() {
                     />
                 </Flex>
 
-                <Flex flex={{ base: 1 }} justify={{ base: 'center', md: 'start' }}>
-                    <Text
-                        textAlign={useBreakpointValue({ base: 'center', md: 'left' })}
-                        fontFamily={'heading'}
-                        color={useColorModeValue('gray.800', 'white')}
-                        fontSize={{ base: "15px", md: "20px" }}
+                <Flex flex={{ base: 1 }} align={'center'} justify={{ base: 'center', md: 'start' }}>
+
+
+                    {/* LOGO */}
+                    <Flex
+                        gap={4}
+                        justify={'center'}
+                        align={'center'}
+                        as='a'
+                        href='/'
                     >
-                        CookleAI
-                    </Text>
+
+                        <Image
+                            src={logo}
+                            alt='Logo'
+                            display={{ base: 'none', md: 'block' }}
+                        />
+
+                        {/* TITLE */}
+                        <Text
+                            textAlign={useBreakpointValue({ base: 'center', md: 'left' })}
+                            fontFamily={'heading'}
+                            color={'dark-green.100'}
+                            fontSize={{ base: "sm", md: "md", lg: "2xl" }}
+                            fontWeight={'bold'}
+
+                        >
+                            CookleAI
+                        </Text>
+
+                    </Flex>
+
 
                     <Flex flex={1} justifyContent={'flex-end'} px={10} display={{ base: 'none', md: 'flex' }} ml={10}>
                         <DesktopNav />
@@ -63,6 +91,9 @@ export default function HomeNavbar() {
 
                 <Flex
                     gap={4}
+                    justifyItems={'center'}
+                    alignItems={'center'}
+                    display={{ base: 'none', md: 'flex' }}
                 >
 
                     {/* Login */}
@@ -83,18 +114,22 @@ export default function HomeNavbar() {
                     {/* Get started btn */}
                     <Button
                         as={'a'}
-                        fontSize={'medium'}
+                        fontSize={{ base: '8px', md: '15px' }}
                         fontWeight={600}
                         color={'white'}
                         colorScheme={'lightgreen'}
                         href={'#'}
                         _hover={{
                             bg: 'lightgreen-hover.100',
-                        }}>
+                        }}
+                        size={{ base: 'xs', md: "md" }}
+                    >
+
                         Get Started for free
+                        <Icon as={LoginIcon} ml="6px" />
                     </Button>
                 </Flex>
-                
+
 
             </Flex>
 
@@ -135,11 +170,56 @@ const DesktopNav = () => {
 
 const MobileNav = () => {
     return (
-        <Stack bg={useColorModeValue('white', 'gray.800')} p={4} display={{ md: 'none' }}>
+        <Flex
+            bg={useColorModeValue('white', 'gray.800')}
+            p={4}
+            gap={2}
+            display={{ md: 'none' }}
+        >
+
             {NAV_ITEMS.map((navItem) => (
                 <MobileNavItem key={navItem.label} {...navItem} />
             ))}
-        </Stack>
+
+            {/* Login */}
+            <Stack spacing={4} py={2}>
+                <Text
+                    as={'a'}
+                    href='/login'
+                    bg={'transparent'}
+                    color="header-green.100"
+                    textAlign={'left'}
+                    _hover={{
+                        bg: 'transparent',
+                        cursor: 'pointer',
+                        color: 'lightgreen-hover.100'
+                    }}
+                >
+                    Login
+                </Text>
+            </Stack>
+
+            <Stack spacing={4} py={2}>
+                {/* Get started btn */}
+                <Button
+                    as={'a'}
+                    fontSize={{base: '10px', sm: '13px'}}
+                    fontWeight={600}
+                    color={'white'}
+                    colorScheme={'lightgreen'}
+                    href={'#'}
+                    _hover={{
+                        bg: 'lightgreen-hover.100',
+                    }}
+                    size={"md"}
+                >
+                    Get Started for free
+
+                    <Icon as={LoginIcon}  ml="6px" />
+                </Button>
+            </Stack>
+
+        </Flex>
     )
 }
 

@@ -4,10 +4,13 @@ import Home from './components/home/Home';
 import OAuthSuccess from './components/home/auth/OAuthSuccess';
 import HomeLayout from './components/home/HomeLayout';
 import LoginPage from './components/home/auth/LoginPage';
+import { Box } from '@chakra-ui/react';
 
 const App = () => {
 
   return (
+    <Box>
+
     <BrowserRouter>
       <Routes>
 
@@ -24,6 +27,7 @@ const App = () => {
         <Route path="/oauth" element={<OAuthSuccess />} />
       </Routes>
     </BrowserRouter>
+    </Box>
   )
 }
 
