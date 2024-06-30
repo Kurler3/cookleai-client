@@ -14,7 +14,7 @@ const navItems: NavItem[] = [
         label: 'Explore',
         url: '/dashboard/explore',
         color: 'neutral-content',
-        bgColor: 'neutral',
+        bgColor: 'ghost',
     },
     {
         label: 'About',

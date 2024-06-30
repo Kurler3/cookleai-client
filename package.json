@@ -16,9 +16,11 @@
     "@emotion/styled": "^11.11.5",
     "@fontsource/jetbrains-mono": "^5.0.20",
     "@mui/icons-material": "^5.15.21",
+    "axios": "^1.7.2",
     "framer-motion": "^11.2.12",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-query": "^3.39.3",
     "react-router-dom": "^6.24.0"
   },
   "devDependencies": {

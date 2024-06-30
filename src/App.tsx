@@ -8,7 +8,8 @@ import LoginPage from './components/home/auth/LoginPage';
 const App = () => {
 
   return (
-    <div className='max-w-screen'>
+    <div className='w-screen min-h-screen flex'>
+      <div className='flex-1'>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<HomeLayout />}>
@@ -20,10 +21,10 @@ const App = () => {
           <Route path="/login" element={<LoginPage />} />
           {/* SUCCESSFULLY LOGGED IN */}
           <Route path="/oauth-redirect" element={<OAuthSuccess />} />
-        </Routes>
-
-      
+        </Routes>      
     </BrowserRouter>
+      </div>
+     
     </div >
   )
 }
