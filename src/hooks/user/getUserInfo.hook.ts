@@ -24,7 +24,7 @@ export const useGetUser = (
             }
 
             // Check if token is ok and user exists
-            const user = await axios.get(BASE_BACKEND_URL + '/user/me', {
+            const user = await axios.get(BASE_BACKEND_URL + '/users/me', {
                 headers: {
                     Authorization: 'Bearer ' + jwtToken,
                 },

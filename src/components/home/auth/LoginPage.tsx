@@ -6,6 +6,20 @@ import Image from '../../utils/Image';
 
 
 const LoginPage = () => {
+
+
+  /////////////////////////
+  // FUNCTIONS ////////////
+  /////////////////////////
+
+  const redirectToLogin = () => {
+      window.location.href = 'http://localhost:3000/auth/google';
+  }
+
+  /////////////////////////
+  // RETURN ///////////////
+  /////////////////////////
+
   return (
     <div className="w-full h-full flex justify-center items-center flex-col bg-white relative">
 
@@ -35,6 +49,7 @@ const LoginPage = () => {
 
         {/* GOOGLE LOGIN BTN */}
         <motion.button
+          onClick={redirectToLogin}
           whileTap={{ scale: 0.9 }}      // Scale button down on tap
           transition={{ duration: 0.2 }} // Duration of the animations
           className='inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm ring-offset-background transition-colors disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border border-input hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2 bg-card font-bold'

@@ -15,7 +15,6 @@ const OAuthSuccess = () => {
         error,
     } = useGetUser(searchParams.get('token'))
 
-
     if(isLoadingUser) {
         return <div>Loading user...</div>
     }
