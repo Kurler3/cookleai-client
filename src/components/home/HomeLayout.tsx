@@ -1,13 +1,18 @@
-
-
-import { Box } from '@chakra-ui/react'
-import HomeNavbar from './HomeNavbar'
+import { Outlet } from 'react-router-dom'
+import Navbar from '../NavBar'
 
 const HomeLayout = () => {
   return (
-    <Box px={8} py={4} bg={"white-bg.100"} minH="100vh">
-        <HomeNavbar />
-    </Box>
+    <div className='flex flex-col px-8 py-4 min-h-full max-w-[100vw]'>
+
+      {/* NAVBAR */}
+        <Navbar />
+
+        {/* CHILDREN */}
+        <div className='flex-1'>
+          <Outlet />
+        </div>
+    </div>
   )
 }
 

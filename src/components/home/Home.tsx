@@ -6,12 +6,7 @@ const Home = () => {
 
     return (
         <div>
-            
-            <button onClick={handleLogin}>
-                Login w google
-            </button>
-
-
+          
         </div>
     )
 }

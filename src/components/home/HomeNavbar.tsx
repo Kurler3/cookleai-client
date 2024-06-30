@@ -75,6 +75,7 @@ export default function HomeNavbar() {
                             color={'dark-green.100'}
                             fontSize={{ base: "sm", md: "md", lg: "2xl" }}
                             fontWeight={'bold'}
+                            ml={{base: "-30px", md: 0}}
 
                         >
                             CookleAI

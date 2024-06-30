@@ -23,6 +23,7 @@ export const theme = extendTheme({
         'lightgreen-hover': createCustomColorObject('#5FCD11'),
         'header-green': createCustomColorObject('#88F33C'),
         'white-bg': createCustomColorObject('#FBFFF8'),
+        'white-txt': createCustomColorObject('#FBFFF8'),
         'dark-green': createCustomColorObject('#4A8E80'),
     },
     fonts: {

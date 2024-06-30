@@ -4,30 +4,27 @@ import Home from './components/home/Home';
 import OAuthSuccess from './components/home/auth/OAuthSuccess';
 import HomeLayout from './components/home/HomeLayout';
 import LoginPage from './components/home/auth/LoginPage';
-import { Box } from '@chakra-ui/react';
 
 const App = () => {
 
   return (
-    <Box>
-
-    <BrowserRouter>
-      <Routes>
-
-        <Route path="/" element={<HomeLayout />}>
-          
-          {/* HOME */}
-          <Route path="/" element={<Home />} />
+    <div className='max-w-screen'>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<HomeLayout />}>
+            {/* HOME */}
+            <Route index element={<Home />} />
+          </Route>
 
           {/* LOGIN */}
-          <Route path='/login' element={<LoginPage />} />
-        </Route>
+          <Route path="/login" element={<LoginPage />} />
+          {/* SUCCESSFULLY LOGGED IN */}
+          <Route path="/oauth-redirect" element={<OAuthSuccess />} />
+        </Routes>
 
-        {/* SUCCESSFULLY LOGGED IN */}
-        <Route path="/oauth" element={<OAuthSuccess />} />
-      </Routes>
+      
     </BrowserRouter>
-    </Box>
+    </div >
   )
 }
 
