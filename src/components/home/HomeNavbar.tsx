@@ -49,7 +49,9 @@ export default function HomeNavbar() {
                     <Text
                         textAlign={useBreakpointValue({ base: 'center', md: 'left' })}
                         fontFamily={'heading'}
-                        color={useColorModeValue('gray.800', 'white')}>
+                        color={useColorModeValue('gray.800', 'white')}
+                        fontSize={{ base: "15px", md: "20px" }}
+                    >
                         CookleAI
                     </Text>
 
@@ -66,11 +68,13 @@ export default function HomeNavbar() {
                     {/* Login */}
                     <Button
                         as={'a'}
-                        fontSize={'small'}
+                        href='/login'
                         bg={'transparent'}
+                        color="header-green.100"
                         _hover={{
                             bg: 'transparent',
-                            cursor: 'pointer'
+                            cursor: 'pointer',
+                            color: 'lightgreen-hover.100'
                         }}
                     >
                         Login
@@ -82,10 +86,10 @@ export default function HomeNavbar() {
                         fontSize={'medium'}
                         fontWeight={600}
                         color={'white'}
-                        bg={'pink.400'}
+                        colorScheme={'lightgreen'}
                         href={'#'}
                         _hover={{
-                            bg: 'pink.300',
+                            bg: 'lightgreen-hover.100',
                         }}>
                         Get Started for free
                     </Button>
@@ -115,10 +119,10 @@ const DesktopNav = () => {
                         href={navItem.href ?? '#'}
                         fontSize={'sm'}
                         fontWeight={500}
-                        color={linkColor}
+                        color={navItem.color ?? linkColor}
                         _hover={{
                             textDecoration: 'none',
-                            color: linkHoverColor,
+                            color: navItem.hoverColor ?? linkHoverColor,
                         }}>
                         {navItem.label}
                     </Box>
@@ -161,14 +165,17 @@ const MobileNavItem = ({ label, href }: NavItem) => {
 }
 
 interface NavItem {
-    label: string
-    subLabel?: string
-    href?: string
+    label: string;
+    color?: string;
+    hoverColor?: string;
+    href?: string;
 }
 
 const NAV_ITEMS: Array<NavItem> = [
     {
         label: 'Explore',
+        color: "header-green.100",
+        hoverColor: 'lightgreen-hover.100',
     },
     {
         label: 'About',
