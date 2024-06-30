@@ -3,10 +3,10 @@
 import { motion } from 'framer-motion';
 import Logo from '../../utils/Image';
 import Image from '../../utils/Image';
+import withoutAuth from '../../../hoc/withoutAuth';
 
 
 const LoginPage = () => {
-
 
   /////////////////////////
   // FUNCTIONS ////////////
@@ -65,4 +65,6 @@ const LoginPage = () => {
   )
 }
 
-export default LoginPage
+const LoginPageWithoutAuth = withoutAuth(LoginPage);
+
+export default LoginPageWithoutAuth

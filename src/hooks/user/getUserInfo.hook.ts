@@ -16,6 +16,7 @@ export const useGetUser = (
         isSuccess,
         error,
     } = useQuery({
+        staleTime: getMinutesInMs(5),
         queryKey: 'current_user',
         queryFn: async () => {
 
@@ -35,8 +36,13 @@ export const useGetUser = (
 
             return user.data as IUser;
         },
+        onError: () => {
+            localStorage.removeItem(COOKLEAI_ACCESS_TOKEN)
+        },
         refetchInterval:  getMinutesInMs(5 * 60), // 5 Minutes
         refetchIntervalInBackground: true,
+        retry: false,
+        
     })
 
     return {

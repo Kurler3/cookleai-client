@@ -4,28 +4,34 @@ import Home from './components/home/Home';
 import OAuthSuccess from './components/home/auth/OAuthSuccess';
 import HomeLayout from './components/home/HomeLayout';
 import LoginPage from './components/home/auth/LoginPage';
+import Dashboard from './components/dashboard/Dashboard';
 
 const App = () => {
 
   return (
+
     <div className='w-screen min-h-screen flex'>
       <div className='flex-1'>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<HomeLayout />}>
-            {/* HOME */}
-            <Route index element={<Home />} />
-          </Route>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<HomeLayout />}>
+              {/* HOME */}
+              <Route index element={<Home />} />
+            </Route>
 
-          {/* LOGIN */}
-          <Route path="/login" element={<LoginPage />} />
-          {/* SUCCESSFULLY LOGGED IN */}
-          <Route path="/oauth-redirect" element={<OAuthSuccess />} />
-        </Routes>      
-    </BrowserRouter>
+            {/* LOGIN */}
+            <Route path="/login" element={<LoginPage />} />
+            {/* SUCCESSFULLY LOGGED IN */}
+            <Route path="/oauth-redirect" element={<OAuthSuccess />} />
+
+            {/* DASHBOARD */}
+            <Route path='/dashboard' element={<Dashboard />}>
+
+            </Route>
+          </Routes>
+        </BrowserRouter>
       </div>
-     
-    </div >
+    </div>
   )
 }
 

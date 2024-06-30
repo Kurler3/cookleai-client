@@ -1,5 +1,6 @@
 import { useSearchParams } from "react-router-dom";
 import { useGetUser } from "../../../hooks/user";
+import { useEffect } from "react";
 
 
 const OAuthSuccess = () => {
@@ -11,25 +12,28 @@ const OAuthSuccess = () => {
         isLoadingUser,
         isErrorWhileGettingUser,
         user,
-        isFetchedUserSuccessfully,
         error,
-    } = useGetUser(searchParams.get('token'))
+    } = useGetUser(searchParams.get('token'));
+    
+    useEffect(() => {
+        
+        // After getting user data, redirect to /dashboard
+        if(user) {
+            window.location.href = '/dashboard';
+        }
 
-    if(isLoadingUser) {
-        return <div>Loading user...</div>
-    }
- 
+    }, [user])
+
+
     if(isErrorWhileGettingUser)  {
         return <div>
             Something went wrong...{error!.message as string}
         </div>
     }
 
-    return (
-        <div>
-            Welcome {user?.fullName}
-        </div>
-    )
+    if(isLoadingUser) {
+        return <div>Loading user...</div>
+    }
 };
 
 export default OAuthSuccess;
