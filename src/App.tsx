@@ -9,8 +9,7 @@ import Dashboard from './components/dashboard/Dashboard';
 const App = () => {
 
   return (
-
-    <div className='w-screen min-h-screen flex'>
+    <div className='w-screen min-h-screen flex overflow-x-hidden'>
       <div className='flex-1'>
         <BrowserRouter>
           <Routes>
