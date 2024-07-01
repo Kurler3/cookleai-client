@@ -12,10 +12,6 @@ const withoutAuth = <P extends object>(Component: ComponentType<P>) => {
         // Check if user is logged in
         const { token, user, isLoadingUser, error } = useAuth();
 
-        console.log({
-            token, user, isLoadingUser, error
-        })
-
         // If no token, return component directly
         if (!token) {
             return <Component {...props} />

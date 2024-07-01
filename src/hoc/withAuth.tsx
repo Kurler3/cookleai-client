@@ -10,10 +10,6 @@ const withAuth = <P extends object>(Component: ComponentType<P>) => {
       const navigate = useNavigate();
         
       const { user, isLoadingUser, error } = useAuth();
-      
-      console.log({
-        user, isLoadingUser, error
-      })
 
       useEffect(() => {
         if(error || !user) {
