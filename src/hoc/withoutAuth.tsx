@@ -1,8 +1,7 @@
 import { ComponentType } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { COOKLEAI_ACCESS_TOKEN } from '../utils/constants';
-import { useGetUser } from '../hooks/user';
- 
+import { useAuth } from '../hooks/auth/useAuth.hook';
+
 
 const withoutAuth = <P extends object>(Component: ComponentType<P>) => {
 
@@ -10,20 +9,24 @@ const withoutAuth = <P extends object>(Component: ComponentType<P>) => {
 
         const navigate = useNavigate();
 
+        // Check if user is logged in
+        const { token, user, isLoadingUser, error } = useAuth();
+
+        console.log({
+            token, user, isLoadingUser, error
+        })
+
         // If no token, return component directly
-        if(!localStorage.getItem(COOKLEAI_ACCESS_TOKEN)) {
-            return <Component {...props}/>
+        if (!token) {
+            return <Component {...props} />
         }
 
-        // Check if user is logged in
-        const { user, isLoadingUser, error } = useGetUser();
-
-        if(isLoadingUser) {
+        if (isLoadingUser) {
             return <div>Loading...</div>;
         }
 
         // If user exists => navigate to homepage
-        if(user || error) {
+        if (user || error) {
             navigate('/');
             return null;
         }

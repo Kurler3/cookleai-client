@@ -1,15 +1,20 @@
 import { useNavigate } from "react-router-dom";
-import { useGetUser } from "../hooks/user";
+// import { useGetUser } from "../hooks/user";
 import { ComponentType, useEffect } from "react";
+import { useAuth } from "../hooks/auth/useAuth.hook";
 
 
 const withAuth = <P extends object>(Component: ComponentType<P>) => {
-    const WrappedComponent = (props: P) => {
+   
+    return (props: P) => {
       const navigate = useNavigate();
         
+      const { user, isLoadingUser, error } = useAuth();
+      
+      console.log({
+        user, isLoadingUser, error
+      })
 
-      const { user, isLoadingUser, error } = useGetUser();
-  
       useEffect(() => {
         if(error || !user) {
           navigate('/login')
@@ -25,9 +30,7 @@ const withAuth = <P extends object>(Component: ComponentType<P>) => {
       }
   
       return <Component {...props} />;
-    };
-  
-    return WrappedComponent;
+    };;
   };
 
 export default withAuth;

@@ -1,1 +1,1 @@
-export * from './getUserInfo.hook'
+export * from './getUser.hook'

@@ -24,7 +24,7 @@ const navItems: NavItem[] = [
 ]
 
 
-const Navbar = () => {
+const Navbar = ({ isLoggedIn }: { isLoggedIn: boolean; }) => {
     return (
         <div className="navbar bg-base-100">
 
@@ -38,8 +38,8 @@ const Navbar = () => {
                 </div>
 
                 {/* IMG LOGO */}
-                <a 
-                    href='/' 
+                <a
+                    href='/'
                     className="btn btn-ghost text-main-text-green text-sm md:text-base lg:text-xl"
                 >
                     CookleAI
@@ -71,7 +71,17 @@ const Navbar = () => {
             <div className="navbar-end">
 
                 <div className='hidden md:flex justify-center items-center gap-4'>
-                    {/* LOGIN */}
+
+                    {
+                        isLoggedIn ? (
+                            <div>
+
+                                GET BACK HERE BOI
+
+                            </div>
+                        ): (
+                                <>
+                             {/* LOGIN */ }
                     <a
                         href='/login'
                         className='btn btn-ghost text-accent'
@@ -88,35 +98,40 @@ const Navbar = () => {
                         <LoginIcon />
 
                     </a>
-                </div>
+                </>
+                )
+                    }
 
 
-                <div className="dropdown">
-                    <div tabIndex={0} role="button" className="btn btn-ghost md:hidden">
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            className="h-5 w-5"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor">
-                            <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth="2"
-                                d="M4 6h16M4 12h8m-8 6h16" />
-                        </svg>
-                    </div>
-                    <ul
-                        tabIndex={0}
-                        className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
-                        <li><a>Explore</a></li>
-                        <li><a>About</a></li>
-                        <li><a>Login</a></li>
-                        {/* SIGN UP BTN */}
-                    </ul>
+            </div>
+
+
+            <div className="dropdown">
+                <div tabIndex={0} role="button" className="btn btn-ghost md:hidden">
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-5 w-5"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="2"
+                            d="M4 6h16M4 12h8m-8 6h16" />
+                    </svg>
                 </div>
+                <ul
+                    tabIndex={0}
+                    className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
+                    <li><a>Explore</a></li>
+                    <li><a>About</a></li>
+                    <li><a>Login</a></li>
+                    {/* SIGN UP BTN */}
+                </ul>
             </div>
         </div>
+        </div >
     )
 };
 

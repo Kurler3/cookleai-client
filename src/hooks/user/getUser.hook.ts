@@ -5,7 +5,7 @@ import { BASE_BACKEND_URL, COOKLEAI_ACCESS_TOKEN } from "../../utils/constants"
 import { IUser } from "../../types"
 
 export const useGetUser = (
-    jwtToken=localStorage.getItem(COOKLEAI_ACCESS_TOKEN)
+    jwtToken: string | null
 ) => {
 
     const {
@@ -16,8 +16,9 @@ export const useGetUser = (
         isSuccess,
         error,
     } = useQuery({
+        enabled: !!jwtToken,
         staleTime: getMinutesInMs(5),
-        queryKey: 'current_user',
+        queryKey: ['current_user', jwtToken],
         queryFn: async () => {
 
             if(!jwtToken) {
@@ -37,7 +38,7 @@ export const useGetUser = (
             return user.data as IUser;
         },
         onError: () => {
-            localStorage.removeItem(COOKLEAI_ACCESS_TOKEN)
+            // localStorage.removeItem(COOKLEAI_ACCESS_TOKEN)
         },
         refetchInterval:  getMinutesInMs(5 * 60), // 5 Minutes
         refetchIntervalInBackground: true,
