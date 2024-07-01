@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useGetUser } from "../hooks/user";
-import { ComponentType } from "react";
+import { ComponentType, useEffect } from "react";
 
 
 const withAuth = <P extends object>(Component: ComponentType<P>) => {
@@ -10,12 +10,17 @@ const withAuth = <P extends object>(Component: ComponentType<P>) => {
 
       const { user, isLoadingUser, error } = useGetUser();
   
+      useEffect(() => {
+        if(error || !user) {
+          navigate('/login')
+        }
+      }, [])
+
       if (isLoadingUser) {
         return <div>Loading...</div>;
       }
   
       if (error || !user) {
-        navigate('/login');
         return null;
       }
   
