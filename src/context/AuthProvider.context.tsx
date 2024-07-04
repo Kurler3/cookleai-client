@@ -1,8 +1,19 @@
 import { createContext, ReactNode, useState } from "react";
 import { useGetUser } from "../hooks/user";
+import { IUser } from "../types";
 
 
-const AuthContext = createContext(undefined);
+type IAuthContext = {
+    token: string | null;
+    setToken: React.Dispatch<React.SetStateAction<string | null>>;
+    isLoadingUser: boolean;
+    isErrorWhileGettingUser: boolean;
+    user: IUser | undefined;
+    isFetchedUserSuccessfully: boolean;
+    isLoggedIn: boolean;
+}   
+
+const AuthContext = createContext<IAuthContext | undefined>(undefined);
 
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {

@@ -21,10 +21,6 @@ export const useGetUser = (
         queryKey: ['current_user', jwtToken],
         queryFn: async () => {
 
-            if(!jwtToken) {
-                throw new Error('No token found');
-            }
-
             // Check if token is ok and user exists
             const user = await axios.get(BASE_BACKEND_URL + '/users/me', {
                 headers: {
@@ -43,7 +39,6 @@ export const useGetUser = (
         refetchInterval:  getMinutesInMs(5 * 60), // 5 Minutes
         refetchIntervalInBackground: true,
         retry: false,
-        
     })
 
     return {
