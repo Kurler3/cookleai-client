@@ -1,6 +1,7 @@
 import { ComponentType } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/auth/useAuth.hook';
+import { useGetUser } from '../hooks/user';
 
 
 const withoutAuth = <P extends object>(Component: ComponentType<P>) => {
@@ -10,7 +11,11 @@ const withoutAuth = <P extends object>(Component: ComponentType<P>) => {
         const navigate = useNavigate();
 
         // Check if user is logged in
-        const { token, user, isLoadingUser, error } = useAuth();
+        const { user, isLoadingUser, error } = useGetUser();
+
+        const {
+            token
+        } = useAuth()
 
         // If no token, return component directly
         if (!token) {

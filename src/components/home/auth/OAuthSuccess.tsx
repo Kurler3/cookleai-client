@@ -1,6 +1,7 @@
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useEffect } from "react";
 import { useAuth } from "../../../hooks/auth/useAuth.hook";
+import { useGetUser } from "../../../hooks/user";
 
 
 const OAuthSuccess = () => {
@@ -12,19 +13,15 @@ const OAuthSuccess = () => {
     const urlToken = searchParams.get('token');
 
     const {
-        setToken,
-        isLoadingUser,
-        isErrorWhileGettingUser,
-        user,
-        isFetchedUserSuccessfully,
-    } = useAuth();
+        setToken
+    } = useAuth()
 
-    console.log({
+    const {
         isLoadingUser,
         isErrorWhileGettingUser,
         user,
-        isFetchedUserSuccessfully,
-    })
+        error,
+    } = useGetUser();
 
     useEffect(() => {
         // If there is a token!

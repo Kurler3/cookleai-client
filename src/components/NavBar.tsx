@@ -45,7 +45,7 @@ const Navbar = ({ isLoggedIn }: { isLoggedIn: boolean; }) => {
                     CookleAI
                 </a>
 
-                <ul className="menu menu-horizontal ml-4 hidden md:flex gap-4">
+                <ul className="menu menu-horizontal ml-4 hidden md:flex gap-4 sm:flex-row flex-nowrap">
                     {
                         navItems.map((navItem) => {
                             return (
