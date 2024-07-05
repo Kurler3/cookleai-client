@@ -4,13 +4,13 @@ import { useUser } from '../../hooks/user/useUser.hook';
 
 const HomeLayout = () => {
 
-  const {isLoggedIn} = useUser();
+  const { isLoggedIn, isLoadingUser } = useUser();
 
   return (
     <div className='flex flex-col px-8 py-4 min-h-full max-w-[100vw]'>
 
       {/* NAVBAR */}
-        <Navbar isLoggedIn={isLoggedIn}/>
+        <Navbar isLoggedIn={isLoggedIn} isLoadingUser={isLoadingUser}/>
 
         {/* CHILDREN */}
         <div className='flex-1'>

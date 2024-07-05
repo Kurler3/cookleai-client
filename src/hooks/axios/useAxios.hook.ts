@@ -33,17 +33,13 @@ const useAxios = () => {
             async (error) => {
                 const originalRequest = error.config;
 
-                console.log('Retry: ', error.response.status, originalRequest._retry)
-
                 if (error.response.status === 401 && !originalRequest._retry) {
                     // Attach private attribute to request to keep track
                     originalRequest._retry = true;
                     try {
                         const accessToken = await refresh();
-
                         originalRequest.headers['Authorization'] = `Bearer ${accessToken}`;
-
-                        return axios(originalRequest, { withCredentials: true });
+                        return axios(originalRequest);
                     } catch (refreshError) {
                         // Handle refresh token error, e.g., redirect to login
                         return Promise.reject(refreshError);

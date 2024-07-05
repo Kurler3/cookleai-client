@@ -1,6 +1,7 @@
 
 import LoginIcon from '@mui/icons-material/Login';
 import logo from '../assets/images/logo.png'
+import React from 'react';
 
 type NavItem = {
     label: string;
@@ -24,7 +25,12 @@ const navItems: NavItem[] = [
 ]
 
 
-const Navbar = ({ isLoggedIn }: { isLoggedIn: boolean; }) => {
+type IProps = {
+    isLoggedIn: boolean;
+    isLoadingUser: boolean;
+}
+
+const Navbar: React.FC<IProps> = ({ isLoggedIn, isLoadingUser }) => {
     return (
         <div className="navbar bg-base-100">
 

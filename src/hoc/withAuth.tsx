@@ -6,6 +6,7 @@ import { useUser } from "../hooks/user/useUser.hook";
 const withAuth = <P extends object>(Component: ComponentType<P>) => {
    
     return (props: P) => {
+      
       const navigate = useNavigate();
         
       const { user, isLoadingUser, error } = useUser();
