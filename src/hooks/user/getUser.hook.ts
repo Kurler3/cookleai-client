@@ -1,14 +1,14 @@
 import { useQuery } from "react-query"
 import { getMinutesInMs } from "../../utils/functions"
-import { BASE_BACKEND_URL, COOKLEAI_ACCESS_TOKEN } from "../../utils/constants"
+import { COOKLEAI_ACCESS_TOKEN } from "../../utils/constants"
 import { IUser } from "../../types"
-import usePrivateAxios from "../axios/usePrivateAxios.hook"
+import useAxios from "../axios/useAxios.hook"
 import { useAuth } from "../auth/useAuth.hook"
 
 export const useGetUser = (
 ) => {
 
-    const privateAxios = usePrivateAxios();
+    const axios = useAxios();
     const {
         token
     } = useAuth();
@@ -22,13 +22,13 @@ export const useGetUser = (
         isSuccess,
         error,
     } = useQuery({
-        enabled: !!token,
+        // enabled: !!token,
         staleTime: getMinutesInMs(5),
         queryKey: ['current_user', token],
         queryFn: async () => {
 
             // Check if token is ok and user exists
-            const user = await privateAxios.get('/users/me', {
+            const user = await axios.get('/users/me', {
                 headers: {
                     Authorization: 'Bearer ' + token,
                 },
@@ -52,7 +52,7 @@ export const useGetUser = (
         isErrorWhileGettingUser: isError,
         user: data,
         isFetchedUserSuccessfully: isSuccess,
-        error,
+        error: error as Error,
         isLoggedIn: !!data && isSuccess,
     }
 

@@ -1,10 +1,11 @@
 import { useEffect } from 'react';
 import useRefreshToken from '../auth/useRefreshToken.hook';
-import { privateAxios } from '../../axios';
 import { useAuth } from '../auth/useAuth.hook';
 import { AxiosResponse } from 'axios';
+import axios from '../../axios';
 
-const usePrivateAxios = () => {
+const useAxios = () => {
+
     const refresh = useRefreshToken();
 
     const { token } = useAuth();
@@ -12,7 +13,7 @@ const usePrivateAxios = () => {
     // Add interceptors
     useEffect(() => {
         // Request interceptors
-        const requestInterceptors = privateAxios.interceptors.request.use(
+        const requestInterceptors = axios.interceptors.request.use(
             async (config) => {
                 if (token) {
                     config.headers['Authorization'] = `Bearer ${token}`;
@@ -25,12 +26,14 @@ const usePrivateAxios = () => {
         );
 
         // Response interceptors
-        const responseInterceptors = privateAxios.interceptors.response.use(
+        const responseInterceptors = axios.interceptors.response.use(
             (response: AxiosResponse) => {
                 return response;
             },
             async (error) => {
                 const originalRequest = error.config;
+
+                console.log('Retry: ', error.response.status, originalRequest._retry)
 
                 if (error.response.status === 401 && !originalRequest._retry) {
                     // Attach private attribute to request to keep track
@@ -40,7 +43,7 @@ const usePrivateAxios = () => {
 
                         originalRequest.headers['Authorization'] = `Bearer ${accessToken}`;
 
-                        return privateAxios(originalRequest);
+                        return axios(originalRequest, { withCredentials: true });
                     } catch (refreshError) {
                         // Handle refresh token error, e.g., redirect to login
                         return Promise.reject(refreshError);
@@ -52,12 +55,12 @@ const usePrivateAxios = () => {
 
         // Cleanup
         return () => {
-            privateAxios.interceptors.request.eject(requestInterceptors);
-            privateAxios.interceptors.response.eject(responseInterceptors);
+            axios.interceptors.request.eject(requestInterceptors);
+            axios.interceptors.response.eject(responseInterceptors);
         };
     }, []);
 
-    return privateAxios;
+    return axios;
 };
 
-export default usePrivateAxios;
+export default useAxios;

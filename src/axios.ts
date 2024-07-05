@@ -6,8 +6,8 @@ export default axios.create({
     baseURL: BASE_BACKEND_URL, 
 });
 
-export const privateAxios = axios.create({
-    baseURL: BASE_BACKEND_URL,
-    withCredentials: true,
-});
+// export const privateAxios = axios.create({
+//     baseURL: BASE_BACKEND_URL,
+//     // withCredentials: true,
+// });
 
