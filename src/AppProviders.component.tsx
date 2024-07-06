@@ -1,19 +1,19 @@
 import { QueryClient, QueryClientProvider } from "react-query"
 import { AuthProvider } from "./context/AuthProvider.context"
 import { ReactNode } from "react"
-import { UserProvider } from "./context/UserProvider.context"
+import ErrorCatcher from "./components/utils/ErrorCatcher"
 
 const queryClient = new QueryClient()
 
 const AppProviders = ({ children }: { children: ReactNode }) => {
     return (
-        <QueryClientProvider client={queryClient}>
-            <AuthProvider>
-                <UserProvider>
+        <ErrorCatcher>
+            <QueryClientProvider client={queryClient}>
+                <AuthProvider>
                     {children}
-                </UserProvider>
-            </AuthProvider>
-        </QueryClientProvider>
+                </AuthProvider>
+            </QueryClientProvider>
+        </ErrorCatcher>
     )
 }
 

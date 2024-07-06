@@ -1,6 +1,8 @@
 import { Outlet, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { useGetUser } from "../../hooks/user";
+import LoadingScreen from "../utils/LoadingScreen";
+import ErrorScreen from "../utils/ErrorScreen";
 
 
 const ProtectedRoutes = () => {
@@ -10,14 +12,7 @@ const ProtectedRoutes = () => {
     const {
         isLoadingUser,
         isErrorWhileGettingUser,
-        user,
     } = useGetUser();
-
-    console.log({
-        isLoadingUser,
-        isErrorWhileGettingUser,
-        user
-    })
 
     useEffect(() => {
 
@@ -31,13 +26,13 @@ const ProtectedRoutes = () => {
 
     // If loading
     if (isLoadingUser) {
-        return <div>
-            Loading...
-        </div>
+        return ( <LoadingScreen /> )
     }
 
     if (isErrorWhileGettingUser) {
-        return (<div>Error</div>)
+        return (
+            <ErrorScreen />
+        )
     }
 
     return (
