@@ -8,7 +8,6 @@ const Dashboard = () => {
 
             <DashboardSideBar />
            
-
             {/* RIGHT SIDE   */}
             <div className="flex-1 drawer-content flex justify-start items-start">
           

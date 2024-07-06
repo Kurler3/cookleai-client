@@ -1,12 +1,17 @@
 
 import { Link, useLocation, useNavigate } from 'react-router-dom'
-import { DASHBOARD_DRAWER_ID, DASHBOARD_SIDEBAR_GROUPS } from '../../utils/constants'
+import { DASHBOARD_DRAWER_ID, DASHBOARD_SIDEBAR_GROUPS, DASHBOARD_SIDEBAR_PROFILE_ITEMS } from '../../utils/constants'
 import Logo from '../utils/Logo';
+import { useGetUser } from '../../hooks/user';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 const DashboardSideBar = () => {
 
 	const location = useLocation();
 	const navigate = useNavigate();
+	const {
+		user
+	} = useGetUser();
 
 	return (
 		<>
@@ -17,85 +22,146 @@ const DashboardSideBar = () => {
 				{/* CLOSE */}
 				<label htmlFor={DASHBOARD_DRAWER_ID} aria-label="close sidebar" className="drawer-overlay"></label>
 
-				<ul className="menu bg-base-200 text-base-content min-h-full w-48 p-4 gap-4">
+				<div className='flex flex-col justify-between items-start h-screen bg-base-300'>
+					<ul className="menu text-base-content h-full w-48 p-4 gap-4">
 
-					{/* LOGO */}
-					<div className='flex justify-start items-center'>
+						{/* LOGO */}
+						<div className='flex justify-start items-center'>
 
-						<div className="avatar">
-							<div className="w-10">
-								<Logo />
+							<div className="avatar">
+								<div className="w-12">
+									<Logo />
+								</div>
 							</div>
+
+							{/* IMG LOGO */}
+							<button
+								className="btn btn-ghost text-main-text-green text-sm md:text-base"
+								onClick={() => navigate('/dashboard')}
+							>
+								CookleAI
+							</button>
 						</div>
 
-						{/* IMG LOGO */}
-						<button
-							className="btn btn-ghost text-main-text-green text-sm md:text-base"
-							onClick={() => navigate('/dashboard')}
-						>
-							CookleAI
-						</button>
-					</div>
+						{/* SIDE BAR NAVIGATION */}
+						{
+							DASHBOARD_SIDEBAR_GROUPS.map((sideBarGroup, idx) => {
+								return (
+									<div
+										key={`sidebar_group_${sideBarGroup.id}_${idx}`}
+										className='flex flex-col justify-start items-start w-full'
+									>
+										{/* TITLE */}
+										<div className='text-gray-400 font-medium text-sm lg:text-base'>
+											{sideBarGroup.label}
+										</div>
 
-					{/* SIDE BAR NAVIGATION */}
-					{
-						DASHBOARD_SIDEBAR_GROUPS.map((sideBarGroup, idx) => {
-							return (
-								<div
-									key={`sidebar_group_${sideBarGroup.id}_${idx}`}
-									className='flex flex-col justify-start items-start w-full'
-								>
-									{/* TITLE */}
-									<div className='text-gray-400 font-medium text-sm lg:text-base'>
-										{sideBarGroup.label}
-									</div>
+										{/* ITEMS */}
+										{
+											sideBarGroup.items.map((groupItem) => {
 
-									{/* ITEMS */}
-									{
-										sideBarGroup.items.map((groupItem) => {
-
-											return (
-												<Link
-													key={`group_item_${sideBarGroup.id}_${groupItem.id}`}
-													to={groupItem.uri}
-													className='w-full mt-4'
-												>
-													<button 
-														className={
-															`
-															btn w-full btn-sm justify-start text-gray-300 hover:bg-green-600 hover:text-white
-															${location.pathname === groupItem.uri ? 'text-white bg-green-600' : ''}
-															`
-														}
-														style={{
-															color: location.pathname === groupItem.uri ? 'white' : null,
-														}}
+												return (
+													<Link
+														key={`group_item_${sideBarGroup.id}_${groupItem.id}`}
+														to={groupItem.uri}
+														className='w-full mt-4'
 													>
-														{/* ICON */}
-														{
-															<groupItem.icon />
-														}
-
-														{/* LABEL */}
-														<div>
-															{
-																groupItem.label
+														<button
+															className={
+																`
+										btn w-full btn-sm justify-start text-gray-300 hover:bg-green-600 hover:text-white
+										${location.pathname === groupItem.uri ? 'text-white bg-green-600' : ''}
+										`
 															}
-														</div>
-													</button>
+															style={{
+																color: location.pathname === groupItem.uri ? 'white' : null,
+															}}
+														>
+															{/* ICON */}
+															{
+																<groupItem.icon />
+															}
 
-												</Link>
-											)
-										})
-									}
+															{/* LABEL */}
+															<div>
+																{
+																	groupItem.label
+																}
+															</div>
+														</button>
+
+													</Link>
+												)
+											})
+										}
 
 
+									</div>
+								)
+							})
+						}
+
+					</ul>
+
+
+					<div className='p-4 w-full dropdown dropdown-top'>
+
+						<div tabIndex={0} role='button' className='btn btn-md flex flex-row justify-between items-center w-full hover:bg-gray-700 px-2'>
+
+							<div className='flex justify-start items-center gap-2'>
+								{/* AVATAR */}
+								<img
+									src={user?.avatar}
+									alt='User avatar'
+									className='w-6 rounded-full'
+								/>
+
+								{/* NAME */}
+								<div>
+									{user?.firstName}
 								</div>
-							)
-						})
-					}
+							</div>
 
-				</ul>
+							{/* 3 DOTS */}
+							<MoreVertIcon
+								className='align-end'
+							/>
+
+						</div>
+
+						<ul tabIndex={0} className='dropdown-content menu gap-2 w-[85%] bg-base-100 rounded-md shadow-md'>
+							{
+								DASHBOARD_SIDEBAR_PROFILE_ITEMS.map((profileItem) => {
+									return (
+										<Link
+											to={profileItem.uri}
+											key={`profile_item_${profileItem.id}`}
+											className='w-full'
+										>
+											<button className='btn bg-base-100 border-none shadow-none btn-sm w-full flex justify-start items-center text-white'>
+
+												{
+													<profileItem.icon />
+												}
+
+												<div>
+													{
+														profileItem.label
+													}
+												</div>
+
+
+
+											</button>
+										</Link>
+									)
+								})
+							}
+						</ul>
+
+					</div>
+				</div>
+
 			</div>
 		</>
 	)

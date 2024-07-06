@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom'; // Assuming you're using react-router
 
 const ErrorScreen: React.FC = () => {
+
   return (
     <div className="flex items-center justify-center h-screen bg-base-300 text-center gap-6 flex-col">
 
