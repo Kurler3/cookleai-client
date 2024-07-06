@@ -130,7 +130,7 @@ const Navbar: React.FC<IProps> = ({ isLoggedIn, isLoadingUser }) => {
                         <span className="md:hidden loading loading-spinner text-success"></span>
                     )
                         : (
-                            <div className="dropdown">
+                            <div className="dropdown dropdown-end">
                                 <div tabIndex={0} role="button" className="btn btn-ghost md:hidden">
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
@@ -147,17 +147,60 @@ const Navbar: React.FC<IProps> = ({ isLoggedIn, isLoadingUser }) => {
                                 </div>
                                 <ul
                                     tabIndex={0}
-                                    className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
-                                    <li><a>Explore</a></li>
-                                    <li><a>About</a></li>
-                                    <li><a>Login</a></li>
-                                    {/* SIGN UP BTN */}
+                                    className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow gap-4">
+
+                                    {
+                                        navItems.map((navItem) => {
+                                            return (
+                                                <li key={`nav_item_small_${navItem.label}`}>
+                                                    <button onClick={() => handleNavigate(navItem.url)} className='font-medium'>
+                                                        {navItem.label}
+                                                    </button>
+                                                </li>
+                                            )
+                                        })
+                                    }
+
+                                    {
+                                        isLoggedIn ? (
+                                            <li>
+                                                <button className='btn btn-sm btn-success text-white' onClick={() => handleNavigate('/dashboard')}>
+                                                    Go to dashboard
+                                                </button>
+                                            </li>
+                                        ) : (
+                                            <>
+                                                {/* Login */}
+                                                <li>
+                                                    <button className='btn btn-sm text-left' onClick={() => handleNavigate('/login')}>
+                                                        Login
+                                                    </button>
+                                                </li>
+
+                                                {/* GET STARTED */}
+                                                <li>
+                                                    <button
+                                                        onClick={() => handleNavigate('/login')}
+                                                        className="btn btn-sm md:inline-flex btn-accent text-accent-content">
+                                                        Get Started For Free
+
+                                                        {/* LOGIN ICON */}
+                                                        <LoginIcon />
+
+                                                    </button>
+                                                </li>
+
+                                            </>
+
+                                        )
+                                    }
+
                                 </ul>
                             </div>
                         )
                 }
 
-            </div>
+            </div >
         </div >
     )
 };

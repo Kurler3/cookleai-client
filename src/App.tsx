@@ -38,6 +38,7 @@ const App = () => {
 
 							{/* LOGIN */}
 							<Route path="/login" element={<LoginPage />} />
+							
 						</Route>
 
 					</Routes>

@@ -37,8 +37,6 @@ const OAuthSuccess = () => {
 
         // After getting user data, redirect to /dashboard
         if (user) {
-
-            console.log('Navigating to dashboard')
             navigate('/dashboard');
         }
 
