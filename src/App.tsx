@@ -32,7 +32,7 @@ const App = () => {
 							{/* DASHBOARD */}
 							<Route path='/dashboard' element={<Dashboard />}>
 
-
+								<Route path='/dashboard/explore' element={<div>Hello</div>}/>
 
 							</Route>
 
