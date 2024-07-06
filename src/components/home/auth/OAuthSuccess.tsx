@@ -2,6 +2,8 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { useEffect } from "react";
 import { useAuth } from "../../../hooks/auth/useAuth.hook";
 import { useGetUser } from "../../../hooks/user";
+import ErrorScreen from "../../utils/ErrorScreen";
+import LoadingScreen from "../../utils/LoadingScreen";
 
 
 const OAuthSuccess = () => {
@@ -20,7 +22,6 @@ const OAuthSuccess = () => {
         isLoadingUser,
         isErrorWhileGettingUser,
         user,
-        error,
     } = useGetUser();
 
     useEffect(() => {
@@ -43,13 +44,11 @@ const OAuthSuccess = () => {
     }, [user])
 
     if (isErrorWhileGettingUser) {
-        return <div>
-            Something went wrong...{error!.message as string}
-        </div>
+        return <ErrorScreen />
     }
 
     if (isLoadingUser) {
-        return <div>Loading user...</div>
+        return <LoadingScreen />
     }
 
 

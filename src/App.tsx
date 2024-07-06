@@ -7,6 +7,7 @@ import LoginPage from './components/home/auth/LoginPage';
 import Dashboard from './components/dashboard/Dashboard';
 import ProtectedRoutes from './components/routeWrappers/ProtectedRoutes';
 import UnProtectedRoutes from './components/routeWrappers/UnProtectedRoutes';
+import NotFound from './components/utils/NotFound';
 
 const App = () => {
 
@@ -29,7 +30,11 @@ const App = () => {
 						<Route path='/' element={<ProtectedRoutes />}>
 
 							{/* DASHBOARD */}
-							<Route path='/dashboard' element={<Dashboard />} />
+							<Route path='/dashboard' element={<Dashboard />}>
+
+
+
+							</Route>
 
 						</Route>
 
@@ -38,10 +43,14 @@ const App = () => {
 
 							{/* LOGIN */}
 							<Route path="/login" element={<LoginPage />} />
-							
+
 						</Route>
 
+						{/* NOT FOUND */}
+						<Route path="*" element={<NotFound />} />
 					</Routes>
+
+
 				</BrowserRouter>
 			</div>
 		</div>
