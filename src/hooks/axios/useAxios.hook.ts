@@ -38,7 +38,7 @@ const useAxios = () => {
                     originalRequest._retry = true;
                     try {
                         const accessToken = await refresh();
-                        originalRequest.headers['Authorization'] = `Bearer ${accessToken}`;
+                        originalRequest.headers.Authorization = `Bearer ${accessToken}`;
                         return axios(originalRequest);
                     } catch (refreshError) {
                         // Handle refresh token error, e.g., redirect to login

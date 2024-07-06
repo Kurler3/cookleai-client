@@ -5,33 +5,46 @@ import OAuthSuccess from './components/home/auth/OAuthSuccess';
 import HomeLayout from './components/home/HomeLayout';
 import LoginPage from './components/home/auth/LoginPage';
 import Dashboard from './components/dashboard/Dashboard';
+import ProtectedRoutes from './components/routeWrappers/ProtectedRoutes';
+import UnProtectedRoutes from './components/routeWrappers/UnProtectedRoutes';
 
 const App = () => {
 
-  return (
-    <div className='w-screen min-h-screen flex overflow-x-hidden'>
-      <div className='flex-1'>
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<HomeLayout />}>
-              {/* HOME */}
-              <Route index element={<Home />} />
-            </Route>
+	return (
+		<div className='w-screen min-h-screen flex overflow-x-hidden'>
+			<div className='flex-1'>
+				<BrowserRouter>
+					<Routes>
 
-            {/* LOGIN */}
-            <Route path="/login" element={<LoginPage />} />
-            {/* SUCCESSFULLY LOGGED IN */}
-            <Route path="/oauth-redirect" element={<OAuthSuccess />} />
+						{/* HOME LAYOUT */}
+						<Route path="/" element={<HomeLayout />}>
+							{/* HOME */}
+							<Route index element={<Home />} />
+						</Route>
 
-            {/* DASHBOARD */}
-            <Route path='/dashboard' element={<Dashboard />}>
+						{/* SUCCESSFULLY LOGGED IN */}
+						<Route path="/oauth-redirect" element={<OAuthSuccess />} />
 
-            </Route>
-          </Routes>
-        </BrowserRouter>
-      </div>
-    </div>
-  )
+						{/* PROTECTED ROUTES */}
+						<Route path='/' element={<ProtectedRoutes />}>
+
+							{/* DASHBOARD */}
+							<Route path='/dashboard' element={<Dashboard />} />
+
+						</Route>
+
+						{/* UNPROTECTED ROUTES */}
+						<Route path='/' element={<UnProtectedRoutes />}>
+
+							{/* LOGIN */}
+							<Route path="/login" element={<LoginPage />} />
+						</Route>
+
+					</Routes>
+				</BrowserRouter>
+			</div>
+		</div>
+	)
 }
 
 export default App

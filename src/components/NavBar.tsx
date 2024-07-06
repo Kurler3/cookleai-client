@@ -2,6 +2,7 @@
 import LoginIcon from '@mui/icons-material/Login';
 import logo from '../assets/images/logo.png'
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 type NavItem = {
     label: string;
@@ -31,6 +32,12 @@ type IProps = {
 }
 
 const Navbar: React.FC<IProps> = ({ isLoggedIn, isLoadingUser }) => {
+
+    const navigate = useNavigate();
+
+    const handleNavigate = (uri: string) => navigate(uri);
+
+
     return (
         <div className="navbar bg-base-100">
 
@@ -44,20 +51,21 @@ const Navbar: React.FC<IProps> = ({ isLoggedIn, isLoadingUser }) => {
                 </div>
 
                 {/* IMG LOGO */}
-                <a
-                    href='/'
+                <button
+
                     className="btn btn-ghost text-main-text-green text-sm md:text-base lg:text-xl"
+                    onClick={() => handleNavigate('/')}
                 >
                     CookleAI
-                </a>
+                </button>
 
                 <ul className="menu menu-horizontal ml-4 hidden md:flex gap-4 sm:flex-row flex-nowrap">
                     {
                         navItems.map((navItem) => {
                             return (
                                 <li key={`nav_item_${navItem.label}`}>
-                                    <a
-                                        href={navItem.url}
+                                    <button
+                                        onClick={() => handleNavigate(navItem.url)}
                                         className={`
                                             btn
                                             ${navItem.color ? `text-${navItem.color}` : ''} 
@@ -65,7 +73,7 @@ const Navbar: React.FC<IProps> = ({ isLoggedIn, isLoadingUser }) => {
                                         `}
                                     >
                                         {navItem.label}
-                                    </a>
+                                    </button>
                                 </li>
                             )
                         })
@@ -79,64 +87,77 @@ const Navbar: React.FC<IProps> = ({ isLoggedIn, isLoadingUser }) => {
                 <div className='hidden md:flex justify-center items-center gap-4'>
 
                     {
-                        isLoggedIn ? (
-                            <div>
-
-                                GET BACK HERE BOI
-
-                            </div>
-                        ): (
+                        isLoadingUser ? (
+                            <span className="loading loading-spinner text-success"></span>
+                        ) :
+                            isLoggedIn ? (
+                                <button
+                                    onClick={() => handleNavigate('/dashboard')}
+                                    className='btn btn-success text-white'
+                                >
+                                    Go to dashboard
+                                </button>
+                            ) : (
                                 <>
-                             {/* LOGIN */ }
-                    <a
-                        href='/login'
-                        className='btn btn-ghost text-accent'
-                    >
-                        Login
-                    </a>
-                    {/* GET STARTED FOR FREE */}
-                    <a
-                        href='/login'
-                        className="btn hidden md:inline-flex btn-accent text-accent-content">
-                        Get Started For Free
+                                    {/* LOGIN */}
+                                    <button
+                                        onClick={() => handleNavigate('/login')}
+                                        className='btn btn-ghost text-accent'
+                                    >
+                                        Login
+                                    </button>
+                                    {/* GET STARTED FOR FREE */}
+                                    <button
 
-                        {/* LOGIN ICON */}
-                        <LoginIcon />
+                                        onClick={() => handleNavigate('/login')}
+                                        className="btn hidden md:inline-flex btn-accent text-accent-content">
+                                        Get Started For Free
 
-                    </a>
-                </>
-                )
+                                        {/* LOGIN ICON */}
+                                        <LoginIcon />
+
+                                    </button>
+                                </>
+                            )
                     }
 
 
-            </div>
-
-
-            <div className="dropdown">
-                <div tabIndex={0} role="button" className="btn btn-ghost md:hidden">
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-5 w-5"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor">
-                        <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            d="M4 6h16M4 12h8m-8 6h16" />
-                    </svg>
                 </div>
-                <ul
-                    tabIndex={0}
-                    className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
-                    <li><a>Explore</a></li>
-                    <li><a>About</a></li>
-                    <li><a>Login</a></li>
-                    {/* SIGN UP BTN */}
-                </ul>
+
+
+                {
+                    isLoadingUser ? (
+                        <span className="md:hidden loading loading-spinner text-success"></span>
+                    )
+                        : (
+                            <div className="dropdown">
+                                <div tabIndex={0} role="button" className="btn btn-ghost md:hidden">
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        className="h-5 w-5"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        stroke="currentColor">
+                                        <path
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            strokeWidth="2"
+                                            d="M4 6h16M4 12h8m-8 6h16" />
+                                    </svg>
+                                </div>
+                                <ul
+                                    tabIndex={0}
+                                    className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
+                                    <li><a>Explore</a></li>
+                                    <li><a>About</a></li>
+                                    <li><a>Login</a></li>
+                                    {/* SIGN UP BTN */}
+                                </ul>
+                            </div>
+                        )
+                }
+
             </div>
-        </div>
         </div >
     )
 };

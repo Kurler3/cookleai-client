@@ -1,10 +1,10 @@
 import { Outlet } from 'react-router-dom'
 import Navbar from '../NavBar'
-import { useUser } from '../../hooks/user/useUser.hook';
+import { useGetUser } from '../../hooks/user';
 
 const HomeLayout = () => {
 
-  const { isLoggedIn, isLoadingUser } = useUser();
+  const { isLoggedIn, isLoadingUser } = useGetUser();
 
   return (
     <div className='flex flex-col px-8 py-4 min-h-full max-w-[100vw]'>

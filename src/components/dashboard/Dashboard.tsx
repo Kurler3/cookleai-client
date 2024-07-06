@@ -1,5 +1,4 @@
 import { useNavigate } from 'react-router-dom';
-import withAuth from '../../hoc/withAuth';
 
 
 const Dashboard = () => {
@@ -15,6 +14,4 @@ const Dashboard = () => {
     )
 };
 
-const DashBoardWithAuth = withAuth(Dashboard)
-
-export default DashBoardWithAuth;
+export default Dashboard;
