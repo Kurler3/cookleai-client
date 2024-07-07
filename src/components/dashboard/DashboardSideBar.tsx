@@ -39,7 +39,7 @@ const DashboardSideBar = () => {
 							{/* IMG LOGO */}
 							<button
 								className="btn btn-ghost text-main-text-green text-sm md:text-base"
-								onClick={() => navigate('/dashboard')}
+								onClick={() => navigate('/dashboard/recipes')}
 							>
 								CookleAI
 							</button>
