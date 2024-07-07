@@ -10,7 +10,7 @@ const Searchbar = () => {
             <input
                 type="text"
                 placeholder="Search my recipes..."
-                className="w-80 input input-md input-bordered text-sm pl-10 focus:outline-app-green" 
+                className="w-20 md:w-56 lg:w-80 input input-md input-bordered text-sm pl-10 focus:outline-app-green" 
             />
             
         </div>

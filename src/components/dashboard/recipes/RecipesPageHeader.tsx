@@ -54,7 +54,7 @@ const RecipesPageHeader: React.FC<IProps> = ({
 
                     <FilterAltIcon />
 
-                    <div>Filter</div>
+                    <div className='hidden lg:block'>Filter</div>
 
                     <KeyboardArrowDownIcon />
 

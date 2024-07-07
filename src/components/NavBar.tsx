@@ -92,7 +92,7 @@ const Navbar: React.FC<IProps> = ({ isLoggedIn, isLoadingUser }) => {
                         ) :
                             isLoggedIn ? (
                                 <button
-                                    onClick={() => handleNavigate('/dashboard')}
+                                    onClick={() => handleNavigate('/dashboard/recipes')}
                                     className='btn btn-success text-white'
                                 >
                                     Go to dashboard
