@@ -8,6 +8,7 @@ import Dashboard from './components/dashboard/Dashboard';
 import ProtectedRoutes from './components/routeWrappers/ProtectedRoutes';
 import UnProtectedRoutes from './components/routeWrappers/UnProtectedRoutes';
 import NotFound from './components/utils/NotFound';
+import RecipesPage from './components/dashboard/recipes/RecipesPage';
 
 const App = () => {
 
@@ -32,6 +33,10 @@ const App = () => {
 							{/* DASHBOARD */}
 							<Route path='/dashboard' element={<Dashboard />}>
 
+								{/* RECIPES */}
+								<Route path='/dashboard/recipes' element={<RecipesPage />}/>
+
+								{/* EXPLORE */}
 								<Route path='/dashboard/explore' element={<div>Hello</div>}/>
 
 							</Route>

@@ -2,8 +2,6 @@ import { Outlet, useNavigate } from "react-router-dom"
 import { useGetUser } from "../../hooks/user";
 import { useEffect } from "react";
 import LoadingScreen from "../utils/LoadingScreen";
-import ErrorScreen from "../utils/ErrorScreen";
-
 
 const UnProtectedRoutes = () => {
 
@@ -14,7 +12,7 @@ const UnProtectedRoutes = () => {
 
     useEffect(() => {
 
-        if(user || error) {
+        if(user) {
             navigate('/')
         }
 
@@ -25,8 +23,8 @@ const UnProtectedRoutes = () => {
     }
 
     // If user exists => navigate to homepage
-    if (user || error) {
-        return <ErrorScreen />;
+    if (user) {
+        return null;
     }
     return (
         <Outlet />

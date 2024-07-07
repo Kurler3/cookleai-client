@@ -9,7 +9,7 @@ const Dashboard = () => {
             <DashboardSideBar />
            
             {/* RIGHT SIDE   */}
-            <div className="flex-1 drawer-content flex justify-start items-start">
+            <div className="bg-base-200 flex-1 drawer-content flex justify-start items-start flex-col lg:flex-row">
           
                 {/* BUTTON TO OPEN DRAWER */}
                 <label 
@@ -21,7 +21,7 @@ const Dashboard = () => {
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
                         viewBox="0 0 24 24"
-                        className="inline-block h-6 w-6 stroke-current">
+                        className="inline-block h-6 w-6 stroke-current mt-2">
                         <path
                         strokeLinecap="round"
                         strokeLinejoin="round"
@@ -31,8 +31,9 @@ const Dashboard = () => {
                 </label>
 
                 {/* DASHBOARD CONTENT */}
-
-                <Outlet />
+                <div className="w-full p-6">
+                    <Outlet />
+                </div>
             </div>
         </div>
     )

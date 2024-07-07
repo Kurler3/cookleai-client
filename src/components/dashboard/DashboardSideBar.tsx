@@ -22,7 +22,9 @@ const DashboardSideBar = () => {
 				{/* CLOSE */}
 				<label htmlFor={DASHBOARD_DRAWER_ID} aria-label="close sidebar" className="drawer-overlay"></label>
 
-				<div className='flex flex-col justify-between items-start h-screen bg-base-300'>
+				<div 
+					className='flex flex-col justify-between items-start h-screen bg-base-300 border-r border-r-slate-600'
+				>
 					<ul className="menu text-base-content h-full w-48 p-4 gap-4">
 
 						{/* LOGO */}

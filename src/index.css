@@ -7,3 +7,9 @@
     max-width: 100vw;
     overflow-x: hidden;
 }
+
+@layer components {
+    .common_btn {
+        @apply btn bg-app-green hover:bg-app-green-hover text-white;
+    }
+}
