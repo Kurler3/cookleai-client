@@ -13,8 +13,8 @@ export type IRecipe = {
     likedBy?: IUser[];
     cookbooks?: ICookbook[];
     users?: IUsersOnRecipes[];
-    createdAt: Date;
-    updatedAt: Date;
+    createdAt: string;
+    updatedAt: string;
     updatedBy: number;
     updatedByUser?: IUser;
     createdBy: number;
@@ -36,6 +36,6 @@ type IUsersOnRecipes = {
     userId: number;
     user?: IUser;
     role: string;
-    addedAt: Date;
+    addedAt: string;
     addedBy: number;
 }

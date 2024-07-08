@@ -40,10 +40,20 @@ export const mockRecipes: IRecipe[] = [
         likedBy: [], // User IDs who liked the recipe
         cookbooks: [], // Assuming you have cookbook relationships to add here
         users: [], // Assuming you have user-recipe relationships to add here
-        createdAt: new Date(),
-        updatedAt: new Date(),
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
         updatedBy: 2,
         createdBy: 1,
+        createdByUser: {
+            "id": 1,
+            "email": "miguelbento2000@gmail.com",
+            "firstName": "Miguel",
+            "lastName": "Bento",
+            "fullName": "Miguel Bento",
+            "avatar": "https://lh3.googleusercontent.com/a/ACg8ocKPmBf-qtDhF9LubLmxpO-yi3cSkz5iSvbZ6ASj7mtGIIfkYA=s96-c",
+            "createdAt": "2024-07-08T07:57:56.710Z",
+            "updatedAt": "2024-07-08T07:57:56.710Z"
+        }
     },
     {
         id: 2,
@@ -78,9 +88,19 @@ export const mockRecipes: IRecipe[] = [
         likedBy: [], // User IDs who liked the recipe
         cookbooks: [], // Assuming you have cookbook relationships to add here
         users: [], // Assuming you have user-recipe relationships to add here
-        createdAt: new Date(),
-        updatedAt: new Date(),
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
         updatedBy: 1,
         createdBy: 3,
+        createdByUser: {
+            "id": 1,
+            "email": "miguelbento2000@gmail.com",
+            "firstName": "Miguel",
+            "lastName": "Bento",
+            "fullName": "Miguel Bento",
+            "avatar": "https://lh3.googleusercontent.com/a/ACg8ocKPmBf-qtDhF9LubLmxpO-yi3cSkz5iSvbZ6ASj7mtGIIfkYA=s96-c",
+            "createdAt": "2024-07-08T07:57:56.710Z",
+            "updatedAt": "2024-07-08T07:57:56.710Z"
+        }
     },
 ];

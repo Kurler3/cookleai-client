@@ -7,8 +7,8 @@ export type IUser = {
     lastName: string;
     fullName: string;
     avatar: string;
-    createdAt: Date,
-    updatedAt: Date,
+    createdAt: string,
+    updatedAt: string,
 
     //TODO Missing relationships
 }

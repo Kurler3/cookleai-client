@@ -12,7 +12,8 @@ export default {
       colors: {
         'main-text-green': '#62E004',
         'app-green': '#16a34a',
-        'app-green-hover': '#127F3A'
+        'app-green-hover': '#127F3A',
+        'app-white': '#F2F2F2',
       }
     },
   },

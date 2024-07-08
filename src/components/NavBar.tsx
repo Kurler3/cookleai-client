@@ -95,7 +95,7 @@ const Navbar: React.FC<IProps> = ({ isLoggedIn, isLoadingUser }) => {
                                     onClick={() => handleNavigate('/dashboard/recipes')}
                                     className='btn btn-success text-white'
                                 >
-                                    Go to dashboard
+                                    Go to your recipes
                                 </button>
                             ) : (
                                 <>
@@ -164,8 +164,8 @@ const Navbar: React.FC<IProps> = ({ isLoggedIn, isLoadingUser }) => {
                                     {
                                         isLoggedIn ? (
                                             <li>
-                                                <button className='btn btn-sm btn-success text-white' onClick={() => handleNavigate('/dashboard')}>
-                                                    Go to dashboard
+                                                <button className='btn btn-sm btn-success text-white' onClick={() => handleNavigate('/dashboard/recipes')}>
+                                                    Go to your recipes
                                                 </button>
                                             </li>
                                         ) : (
