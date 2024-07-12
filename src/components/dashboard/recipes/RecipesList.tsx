@@ -1,8 +1,7 @@
 import useGetUserRecipes from "../../../hooks/recipes/useGetUserRecipes.hook";
 import { useGetUser } from "../../../hooks/user";
 import RecipeCard from "./grid/RecipeCard";
-import RecipeRow from "./RecipeRow";
-import RecipesListRowHeaders from "./RecipesListRowHeaders";
+import RecipesTable from "./row/RecipesTable";
 
 
 type IProps = {
@@ -12,8 +11,10 @@ type IProps = {
 const RecipesList: React.FC<IProps> = ({ isGrid }) => {
 
     const {
-        recipes
+        recipes,
+        isLoadingRecipes,
     } = useGetUserRecipes();
+
 
     const {
         user
@@ -25,30 +26,26 @@ const RecipesList: React.FC<IProps> = ({ isGrid }) => {
         <div className="flex justify-start items-start w-full flex-wrap gap-4">
 
             {
-                !isGrid && (
-                    <RecipesListRowHeaders />
-                )
-            }
+                !isGrid ? 
+                   <RecipesTable 
+                        recipes={recipes} 
+                        isLoadingRecipes={isLoadingRecipes}
+                    />
+                 : (
+                    recipes.map((recipe, idx) => {
 
-            {
-                recipes.map((recipe, idx) => {
-
-                    const key = `recipe_card_${idx}_${recipe.id}`
-
-                    return (
-                        isGrid ?
-                            (<RecipeCard
-                                key={key}
-                                recipe={recipe}
-                            />)
-                            : (
-                                <RecipeRow
+                        const key = `recipe_card_${idx}_${recipe.id}`
+    
+                        return (
+                            
+                                (<RecipeCard
                                     key={key}
                                     recipe={recipe}
-                                />
-                            )
-                    )
-                })
+                                />)
+                                
+                        )
+                    })
+                )
             }
         </div>
     )

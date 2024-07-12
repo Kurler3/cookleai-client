@@ -7,6 +7,7 @@ const useGetUserRecipes = () => {
     
     return {
         recipes: mockRecipes,
+        isLoadingRecipes: true,
     }
 };
 

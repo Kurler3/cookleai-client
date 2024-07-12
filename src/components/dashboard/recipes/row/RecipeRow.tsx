@@ -1,4 +1,4 @@
-import { IRecipe } from "../../../types/recipe.types";
+import { IRecipe } from "../../../../types";
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 
@@ -10,8 +10,9 @@ const RecipeRow: React.FC<IProps> = ({
     recipe,
 }) => {
     return (
-        <div 
-            className="max-w-screen flex justify-between items-center h-28 gap-4 p-4 min-w-96 w-full overflow-x-auto overflow-y-hidden border border-gray-600 rounded-md shadow-md"
+        <tr 
+            // className="max-w-screen flex justify-between items-center h-28 gap-4 p-4 min-w-96 w-full overflow-x-auto overflow-y-hidden border border-gray-600 rounded-md shadow-md mt-4"
+            className="flex justify-between items-center h-28 gap-4 p-4 w-full border border-gray-600 rounded-md shadow-md mt-4"
         >
 
             {/* IMAGE */}
@@ -45,7 +46,7 @@ const RecipeRow: React.FC<IProps> = ({
                 <MoreVertIcon />
             </div>
 
-        </div>
+        </tr>
     )
 };
 
