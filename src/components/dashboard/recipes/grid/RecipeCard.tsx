@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { IRecipe } from "../../../types/recipe.types";
+import { IRecipe } from "../../../../types";
 
 
 

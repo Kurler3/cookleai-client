@@ -1,6 +1,7 @@
 import useGetUserRecipes from "../../../hooks/recipes/useGetUserRecipes.hook";
 import { useGetUser } from "../../../hooks/user";
 import RecipeCard from "./grid/RecipeCard";
+import RecipeCardSkeleton from "./grid/RecipeCardSkeleton";
 import RecipesTable from "./row/RecipesTable";
 
 
@@ -37,7 +38,9 @@ const RecipesList: React.FC<IProps> = ({ isGrid }) => {
                         const key = `recipe_card_${idx}_${recipe.id}`
     
                         return (
-                            
+                                isLoadingRecipes ? (
+                                    <RecipeCardSkeleton  key={key}/>
+                                ) :
                                 (<RecipeCard
                                     key={key}
                                     recipe={recipe}
