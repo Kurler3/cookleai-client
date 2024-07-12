@@ -9,12 +9,13 @@ import ProtectedRoutes from './components/routeWrappers/ProtectedRoutes';
 import UnProtectedRoutes from './components/routeWrappers/UnProtectedRoutes';
 import NotFound from './components/utils/NotFound';
 import RecipesPage from './components/dashboard/recipes/RecipesPage';
+import { ROUTE_PATHS } from './utils/constants';
 
 const App = () => {
 
 	return (
 		<div className='w-screen min-h-screen flex overflow-x-hidden'>
-			<div className='flex-1'>
+			<div className='flex-1 max-w-full'>
 				<BrowserRouter>
 					<Routes>
 
@@ -34,7 +35,7 @@ const App = () => {
 							<Route path='/dashboard' element={<Dashboard />}>
 
 								{/* RECIPES */}
-								<Route path='/dashboard/recipes' element={<RecipesPage />}/>
+								<Route path={ROUTE_PATHS.DASHBOARD} element={<RecipesPage />}/>
 
 								{/* EXPLORE */}
 								<Route path='/dashboard/explore' element={<div>Hello</div>}/>

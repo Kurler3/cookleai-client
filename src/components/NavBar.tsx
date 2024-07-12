@@ -3,6 +3,7 @@ import LoginIcon from '@mui/icons-material/Login';
 import logo from '../assets/images/logo.png'
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { ROUTE_PATHS } from '../utils/constants';
 
 type NavItem = {
     label: string;
@@ -92,7 +93,7 @@ const Navbar: React.FC<IProps> = ({ isLoggedIn, isLoadingUser }) => {
                         ) :
                             isLoggedIn ? (
                                 <button
-                                    onClick={() => handleNavigate('/dashboard/recipes')}
+                                    onClick={() => handleNavigate(ROUTE_PATHS.DASHBOARD)}
                                     className='btn btn-success text-white'
                                 >
                                     Go to your recipes
@@ -164,7 +165,7 @@ const Navbar: React.FC<IProps> = ({ isLoggedIn, isLoadingUser }) => {
                                     {
                                         isLoggedIn ? (
                                             <li>
-                                                <button className='btn btn-sm btn-success text-white' onClick={() => handleNavigate('/dashboard/recipes')}>
+                                                <button className='btn btn-sm btn-success text-white' onClick={() => handleNavigate(ROUTE_PATHS.DASHBOARD)}>
                                                     Go to your recipes
                                                 </button>
                                             </li>

@@ -4,6 +4,7 @@ import { useAuth } from "../../../hooks/auth/useAuth.hook";
 import { useGetUser } from "../../../hooks/user";
 import ErrorScreen from "../../utils/ErrorScreen";
 import LoadingScreen from "../../utils/LoadingScreen";
+import { ROUTE_PATHS } from "../../../utils/constants";
 
 
 const OAuthSuccess = () => {
@@ -38,7 +39,7 @@ const OAuthSuccess = () => {
 
         // After getting user data, redirect to /dashboard
         if (user) {
-            navigate('/dashboard');
+            navigate(ROUTE_PATHS.DASHBOARD);
         }
 
     }, [user])

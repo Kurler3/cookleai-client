@@ -1,6 +1,6 @@
 
 import { Link, useLocation, useNavigate } from 'react-router-dom'
-import { DASHBOARD_DRAWER_ID, DASHBOARD_SIDEBAR_GROUPS, DASHBOARD_SIDEBAR_PROFILE_ITEMS } from '../../utils/constants'
+import { DASHBOARD_DRAWER_ID, DASHBOARD_SIDEBAR_GROUPS, DASHBOARD_SIDEBAR_PROFILE_ITEMS, ROUTE_PATHS } from '../../utils/constants'
 import Logo from '../utils/Logo';
 import { useGetUser } from '../../hooks/user';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
@@ -39,7 +39,7 @@ const DashboardSideBar = () => {
 							{/* IMG LOGO */}
 							<button
 								className="btn btn-ghost text-main-text-green text-sm md:text-base"
-								onClick={() => navigate('/dashboard/recipes')}
+								onClick={() => navigate(ROUTE_PATHS.DASHBOARD)}
 							>
 								CookleAI
 							</button>

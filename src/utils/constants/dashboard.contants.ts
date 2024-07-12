@@ -5,6 +5,7 @@ import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import HomeIcon from '@mui/icons-material/Home';
 import SettingsIcon from '@mui/icons-material/Settings';
 import LogoutIcon from '@mui/icons-material/Logout';
+import { ROUTE_PATHS } from './routing.constants';
 
 
 export const DASHBOARD_DRAWER_ID = 'dashboard-drawer';
@@ -18,7 +19,7 @@ export const DASHBOARD_SIDEBAR_GROUPS = [
             {
                 id: 'recipes',
                 label: 'Recipes',
-                uri: '/dashboard/recipes',
+                uri: ROUTE_PATHS.DASHBOARD,
                 icon: BlenderIcon,
             },
             {

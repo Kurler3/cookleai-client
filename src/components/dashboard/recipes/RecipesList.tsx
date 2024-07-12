@@ -1,6 +1,6 @@
 import useGetUserRecipes from "../../../hooks/recipes/useGetUserRecipes.hook";
 import { useGetUser } from "../../../hooks/user";
-import RecipeCard from "./RecipeCard";
+import RecipeCard from "./grid/RecipeCard";
 import RecipeRow from "./RecipeRow";
 import RecipesListRowHeaders from "./RecipesListRowHeaders";
 
