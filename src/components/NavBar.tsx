@@ -1,6 +1,6 @@
 
 import LoginIcon from '@mui/icons-material/Login';
-import logo from '../assets/images/logo.png'
+import logo  from '../assets/images/logo.png'
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ROUTE_PATHS } from '../utils/constants';

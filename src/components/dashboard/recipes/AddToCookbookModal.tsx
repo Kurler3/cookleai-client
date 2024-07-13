@@ -28,9 +28,8 @@ const AddToCookbookModal: React.FC<IProps> = ({
             <div className="modal-box">
                 <h3 className="text-lg font-bold text-center">Add this recipe to a cookbook</h3>
 
-
                 <div
-                    className="flex justify-center items-center flex-col"
+                    className="join join-vertical border-red-600 border p-4 gap-2 max-h-40 overflow-y-auto overflow-x-hidden w-full scroll"
                 >
 
                     {
@@ -38,6 +37,7 @@ const AddToCookbookModal: React.FC<IProps> = ({
                             return (
                                 <div
                                     key={`add_modal_cookbook_${cookbook.id}`}
+                                    className="p-2 text-white font-medium text-base rounded cursor-pointer hover:bg-app-green-hover transition w-full text-center"
                                 >
                                     {
                                         cookbook.title
@@ -48,7 +48,9 @@ const AddToCookbookModal: React.FC<IProps> = ({
                     }
 
                 </div> 
-
+                
+                {/* CREATE COOKBOOK BTN */}
+                    
 
             </div>
             <label className="modal-backdrop" htmlFor="add_to_cookbook">Close</label>
