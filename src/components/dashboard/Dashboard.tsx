@@ -31,10 +31,11 @@ const Dashboard = () => {
                 </label>
 
                 {/* DASHBOARD CONTENT */}
-                <div className="w-full p-6">
+                <div className="w-full p-6 h-full">
                     <Outlet />
                 </div>
             </div>
+
         </div>
     )
 };

@@ -10,7 +10,7 @@ const RecipesPage = () => {
     ] = useState(false);
 
     return (
-        <div className="w-full flex flex-col justify-start items-start gap-4">
+        <div className="w-full flex flex-col justify-start items-start gap-4 h-full">
 
             <RecipesPageHeader
                 isGrid={isGrid}

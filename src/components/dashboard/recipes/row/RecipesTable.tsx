@@ -18,7 +18,7 @@ const RecipesTable: React.FC<IProps> = ({
 
     return (
         // min-w-96 
-        <div className="w-full overflow-x-auto overflow-y-hidden">
+        <div className="w-full overflow-x-auto h-full">
 
             {/* HEADERS */}
             <div className="w-full flex justify-between min-w-[644px] items-center gap-4 px-4 overflow-x-auto overflow-y-hidden border h-12 rounded border-gray-600 text-app-white">

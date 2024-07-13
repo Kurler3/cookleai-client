@@ -24,7 +24,7 @@ const RecipesList: React.FC<IProps> = ({ isGrid }) => {
     console.log(user);
 
     return (
-        <div className="flex justify-start items-start w-full flex-wrap gap-4">
+        <div className="flex justify-start items-start w-full flex-wrap gap-4 h-full">
 
             {
                 !isGrid ? 

@@ -1,5 +1,6 @@
 import { IRecipe } from "../../../../types";
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import RecipeActionsDropdownMenu from "../RecipeActionsDropdownMenu";
 
 
 type IProps = {
@@ -10,7 +11,7 @@ const RecipeRow: React.FC<IProps> = ({
     recipe,
 }) => {
     return (
-        <tr 
+        <tr
             // className="max-w-screen flex justify-between items-center h-28 gap-4 p-4 min-w-96 w-full overflow-x-auto overflow-y-hidden border border-gray-600 rounded-md shadow-md mt-4"
             className="flex justify-between items-center h-28 gap-4 p-4 w-full border border-gray-600 rounded-md shadow-md mt-4"
         >
@@ -42,8 +43,10 @@ const RecipeRow: React.FC<IProps> = ({
             </div>
 
             {/* ACTIONS */}
-            <div>
-                <MoreVertIcon />
+            <div className="dropdown dropdown-bottom dropdown-end">
+                <div role="button" tabIndex={0} className="cursor-pointer hover:bg-gray-600 hover:text-white transition rounded p-2"> <MoreVertIcon /></div>
+
+                <RecipeActionsDropdownMenu recipe={recipe}/>
             </div>
 
         </tr>

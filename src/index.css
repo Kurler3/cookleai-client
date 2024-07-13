@@ -12,4 +12,7 @@
     .common_btn {
         @apply btn bg-app-green hover:bg-app-green-hover text-white;
     }
+    .menuActionClass {
+        @apply cursor-pointer p-1 hover:bg-app-green flex justify-start items-center transition rounded gap-2 text-[13px];
+    }
 }
