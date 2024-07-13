@@ -1,5 +1,8 @@
+import { Link } from "react-router-dom";
 import useGetCookbooks from "../../../hooks/cookbook/useGetCookbooks";
 import { IRecipe } from "../../../types";
+import { ROUTE_PATHS } from "../../../utils/constants";
+import { Add } from "@mui/icons-material";
 
 type IProps = {
     recipe: IRecipe;
@@ -18,38 +21,62 @@ const AddToCookbookModal: React.FC<IProps> = ({
         isLoadingCookbooks,
     } = useGetCookbooks();
 
-
     /////////////////////////////////
     // RENDER ///////////////////////
     /////////////////////////////////
 
     return (
         <div className="modal" role="dialog">
-            <div className="modal-box">
-                <h3 className="text-lg font-bold text-center">Add this recipe to a cookbook</h3>
+
+            <div className="modal-box flex flex-col gap-2">
+                
+                <h3 className="text-lg font-bold text-center text-white">Add this recipe to a cookbook</h3>
+
+                {/* CREATE COOKBOOK BTN */}
+                <Link 
+                    to={ROUTE_PATHS.COOKBOOKS}
+                    className="w-full"
+                >
+                    <button className="w-full btn flex justify-center items-center common_btn">
+
+                        <Add />
+
+                        Create a cookbook
+
+                    </button>
+                </Link>
+
 
                 <div
-                    className="join join-vertical border-red-600 border p-4 gap-2 max-h-40 overflow-y-auto overflow-x-hidden w-full scroll"
+                    className="flex justify-start items-center flex-col  p-4 gap-3 h-60 overflow-y-auto overflow-x-hidden w-full"
                 >
 
                     {
-                        cookbooks.map((cookbook) => {
+                        !isLoadingCookbooks ? cookbooks.map((cookbook) => {
                             return (
                                 <div
                                     key={`add_modal_cookbook_${cookbook.id}`}
-                                    className="p-2 text-white font-medium text-base rounded cursor-pointer hover:bg-app-green-hover transition w-full text-center"
+                                    className="p-2 text-white font-medium text-base rounded cursor-pointer hover:bg-app-green-hover transition w-full text-center bg-base-200"
                                 >
                                     {
                                         cookbook.title
                                     }
                                 </div>
                             )
-                        })
+                        }) : (
+                            <div className="flexCenterCenter m-auto gap-2">
+                                <span className="loading loading-spinner text-success"></span>
+
+                                <div className="text-base font-bold">
+                                    Getting your cookbooks...
+                                </div>
+                                
+                            </div>
+                        )
                     }
 
                 </div> 
-                
-                {/* CREATE COOKBOOK BTN */}
+            
                     
 
             </div>

@@ -1,4 +1,5 @@
 import './App.css'
+import './index.css'
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from './components/home/Home';
 import OAuthSuccess from './components/home/auth/OAuthSuccess';
@@ -10,6 +11,7 @@ import UnProtectedRoutes from './components/routeWrappers/UnProtectedRoutes';
 import NotFound from './components/utils/NotFound';
 import RecipesPage from './components/dashboard/recipes/RecipesPage';
 import { ROUTE_PATHS } from './utils/constants';
+import CookbooksPage from './components/dashboard/cookbooks/CookbooksPage';
 
 const App = () => {
 
@@ -37,8 +39,11 @@ const App = () => {
 								{/* RECIPES */}
 								<Route path={ROUTE_PATHS.DASHBOARD} element={<RecipesPage />}/>
 
+								{/* COOKBOOKS */}
+								<Route path={ROUTE_PATHS.COOKBOOKS} element={<CookbooksPage />} />
+
 								{/* EXPLORE */}
-								<Route path='/dashboard/explore' element={<div>Hello</div>}/>
+								<Route path={ROUTE_PATHS.EXPLORE} element={<div>Hello</div>}/>
 
 							</Route>
 
