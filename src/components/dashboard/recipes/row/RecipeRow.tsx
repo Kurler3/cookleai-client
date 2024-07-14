@@ -1,6 +1,7 @@
 import { IRecipe } from "../../../../types";
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import RecipeActionsDropdownMenu from "../RecipeActionsDropdownMenu";
+import recipePlaceholderImg from '@/assets/images/recipe_placeholder.png';
 
 
 type IProps = {
@@ -18,7 +19,7 @@ const RecipeRow: React.FC<IProps> = ({
 
             {/* IMAGE */}
             <img
-                src={recipe.image}
+                src={recipe.image ?? recipePlaceholderImg}
                 alt={recipe.title}
                 className="w-24 h-24 object-cover rounded"
             />
