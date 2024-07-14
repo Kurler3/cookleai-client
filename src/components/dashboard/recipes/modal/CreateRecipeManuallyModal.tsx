@@ -1,8 +1,20 @@
+import useCreateRecipe from "@/hooks/recipes/useCreateRecipe.hook"
 import { RECIPE_ACTION_MODAL_IDS } from "@/utils/constants/recipes.constants"
 import { useState } from "react"
 
 
 const CreateRecipeManuallyModal = () => {
+
+  //////////////////////////////////
+  // HOOKS /////////////////////////
+  //////////////////////////////////
+
+  const {
+    // newRecipe,
+    isCreatingRecipe,
+    errorCreatingRecipe,
+    createRecipe,
+  } = useCreateRecipe();
 
   //////////////////////////////////
   // STATE /////////////////////////
@@ -14,14 +26,17 @@ const CreateRecipeManuallyModal = () => {
   ] = useState('')
 
   //////////////////////////////////
-  // FUNCTIONS /////////////////////
-  //////////////////////////////////
-
-  //TODO Create recipe
-
-  //////////////////////////////////
   // RENDER ////////////////////////
   //////////////////////////////////
+
+
+  if(isCreatingRecipe) {
+    return <div>Loading...</div>
+  }
+
+  if(errorCreatingRecipe) {
+    return <div>Error: {errorCreatingRecipe.message}</div>
+  }
 
   return (
     <div className="modal" role='dialog'>
@@ -49,7 +64,7 @@ const CreateRecipeManuallyModal = () => {
           {/* ADD NEW RECIPE BUTTON */}
           <button
             className={`btn ml-auto common_btn ${recipeTitle.length > 0 ? '' : 'btn-disabled'}`}
-
+            onClick={() => createRecipe(recipeTitle)}
           >
             Create recipe
           </button>

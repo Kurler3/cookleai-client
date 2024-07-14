@@ -1,25 +1,24 @@
 import { useMutation } from "react-query";
 import useAxios from "../axios/useAxios.hook";
 
-
-
 const useCreateRecipe = () => {
 
     const axios = useAxios();
 
-
     const {
-        data,
+        data: newRecipe,
         isLoading: isCreatingRecipe,
         error: errorCreatingRecipe,
         mutate: createRecipe,
-    } = useMutation(
-        (recipeData: FormData) => axios.post('/recipes', recipeData),
-        { retry: 3 }
-    );
+    } = useMutation({
+        mutationFn: async (title: string) => {
+            const response = await axios.post('/recipes/create', { title });
+            return response.data;
+        }
+    });
 
     return {
-        data,
+        newRecipe,
         isCreatingRecipe,
         errorCreatingRecipe,
         createRecipe,
