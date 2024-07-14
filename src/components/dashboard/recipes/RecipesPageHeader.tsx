@@ -5,6 +5,10 @@ import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import ViewListIcon from '@mui/icons-material/ViewList';
 import GridViewIcon from '@mui/icons-material/GridView';
+import { Link } from 'react-router-dom';
+import { ROUTE_PATHS } from '@/utils/constants';
+import { RECIPE_ACTION_MODAL_IDS } from '@/utils/constants/recipes.constants';
+import CreateRecipeModal from './modal/CreateRecipeModal';
 
 
 type IProps = {
@@ -27,16 +31,20 @@ const RecipesPageHeader: React.FC<IProps> = ({
                 </div>
 
                 <div className="flex justify-center items-center gap-2 flex-col md:flex-row">
-                    <button
+                    <Link
+                        to={ROUTE_PATHS.EXPLORE}
                         className="btn btn-sm md:btn-md text-white flex justify-center items-center"
                     >
                         <ExploreIcon />
                         <div>Explore</div>
-                    </button>
-                    <button className="btn btn-sm md:btn-md flex justify-center items-center common_btn">
+                    </Link>
+                    <label 
+                        htmlFor={RECIPE_ACTION_MODAL_IDS.CREATE}
+                        className="btn btn-sm md:btn-md flex justify-center items-center common_btn"
+                    >
                         <AddIcon />
                         <div>Add</div>
-                    </button>
+                    </label>
                 </div>
 
             </div>
@@ -71,6 +79,11 @@ const RecipesPageHeader: React.FC<IProps> = ({
                     }
                 </button>
             </div>
+
+            {/* CREATE RECIPE MODAL */}
+            <input type="checkbox" id={RECIPE_ACTION_MODAL_IDS.CREATE} className='modal-toggle' />
+            <CreateRecipeModal />
+                
         </>
     )
 };
