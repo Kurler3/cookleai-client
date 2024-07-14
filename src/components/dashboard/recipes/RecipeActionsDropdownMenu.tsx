@@ -4,9 +4,8 @@ import ShareIcon from '@mui/icons-material/Share';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { IRecipe } from '../../../types';
 import AddToCookbookModal from './modal/AddToCookbookModal';
-import { RECIPE_ACTION_MODAL_IDS } from '../../../utils/constants/recipes.constants';
+import { RECIPE_ACTION_MODAL_IDS } from '@/utils/constants/recipes.constants';
 import DeleteRecipeModal from './modal/DeleteRecipeModal';
-
 
 type IProps = {
     recipe: IRecipe;

@@ -23,10 +23,4 @@ export default {
   daisyui: {
     themes: ["dark"]
   },
-  compilerOptions: {
-    baseUrl: ".",
-    paths: {
-      "@/*": ["./src/*"]
-    }
-  }
 }
