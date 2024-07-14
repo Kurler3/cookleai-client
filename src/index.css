@@ -5,28 +5,13 @@
 :root {
     max-width: 100vw;
     overflow-x: hidden;
+    scrollbar-color: #ffff;
 }
 
-/* *,
-*:hover {
-    scrollbar-color: auto;
-} */
 
-/* body::-webkit-scrollbar {
-    width: 20px;
-} */
-
-/*track*/
-/* body::-webkit-scrollbar-track {
-    background: rgba(255, 255, 255, 0);
-} */
-
-/*thumb*/
-/* body::-webkit-scrollbar-thumb {
-    background: rgb(75, 80, 88);
-    border-style: solid;
-    border-radius: 10px;
-} */
+:root:has(:is(.modal-open, .modal:target, .modal-toggle:checked + .modal, .modal[open])) { 
+    scrollbar-gutter: unset;
+}
 
 @layer components {
     .common_btn {

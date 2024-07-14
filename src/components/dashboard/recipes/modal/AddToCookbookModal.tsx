@@ -1,8 +1,9 @@
 import { Link } from "react-router-dom";
-import useGetCookbooks from "../../../hooks/cookbook/useGetCookbooks";
-import { IRecipe } from "../../../types";
-import { ROUTE_PATHS } from "../../../utils/constants";
+import useGetCookbooks from "../../../../hooks/cookbook/useGetCookbooks";
+import { IRecipe } from "../../../../types";
+import { ROUTE_PATHS } from "../../../../utils/constants";
 import { Add } from "@mui/icons-material";
+import { RECIPE_ACTION_MODAL_IDS } from "../../../../utils/constants/recipes.constants";
 
 type IProps = {
     recipe: IRecipe;
@@ -22,11 +23,17 @@ const AddToCookbookModal: React.FC<IProps> = ({
     } = useGetCookbooks();
 
     /////////////////////////////////
+    // FUNCTIONS ////////////////////
+    /////////////////////////////////
+
+    //TODO Add to cookbook
+
+    /////////////////////////////////
     // RENDER ///////////////////////
     /////////////////////////////////
 
     return (
-        <div className="modal" role="dialog">
+        <div  className="modal" role="dialog">
 
             <div className="modal-box flex flex-col gap-2">
                 
@@ -80,7 +87,7 @@ const AddToCookbookModal: React.FC<IProps> = ({
                     
 
             </div>
-            <label className="modal-backdrop" htmlFor="add_to_cookbook">Close</label>
+            <label className="modal-backdrop" htmlFor={RECIPE_ACTION_MODAL_IDS.ADD_TO_ADD_COOKBOOK}>Close</label>
         </div>
     )
 }

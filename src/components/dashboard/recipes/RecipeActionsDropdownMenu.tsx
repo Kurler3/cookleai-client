@@ -2,9 +2,10 @@ import AddIcon from '@mui/icons-material/Add';
 import EditIcon from '@mui/icons-material/Edit';
 import ShareIcon from '@mui/icons-material/Share';
 import DeleteIcon from '@mui/icons-material/Delete';
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { IRecipe } from '../../../types';
-import AddToCookbookModal from './AddToCookbookModal';
+import AddToCookbookModal from './modal/AddToCookbookModal';
+import { RECIPE_ACTION_MODAL_IDS } from '../../../utils/constants/recipes.constants';
+import DeleteRecipeModal from './modal/DeleteRecipeModal';
 
 
 type IProps = {
@@ -40,7 +41,7 @@ const RecipeActionsDropdownMenu: React.FC<IProps> = ({
                 <li className="font-bold">Actions</li>
 
                 {/* ADD TO COOKBOOK */}
-                <label htmlFor="add_to_cookbook" className='menuActionClass'>
+                <label htmlFor={RECIPE_ACTION_MODAL_IDS.ADD_TO_ADD_COOKBOOK} className='menuActionClass'>
                     <AddIcon style={{ height: '20px' }} />
                     Add to cookbook
                 </label>
@@ -61,19 +62,24 @@ const RecipeActionsDropdownMenu: React.FC<IProps> = ({
                 <div className="divider h-2 my-1"></div>
 
                 {/* DELETE */}
-                <div className='menuActionClass text-red-600 hover:bg-red-500 hover:text-white'>
+                <label 
+                    className='menuActionClass text-red-600 hover:bg-red-500 hover:text-white'
+                    htmlFor={RECIPE_ACTION_MODAL_IDS.DELETE}
+                >
                     <DeleteIcon style={{ height: '20px' }} />
                     Delete
-                </div>
+                </label>
             </ul>
 
 
             {/* ADD TO COOKBOOK MODAL */}
-            <input type="checkbox" id="add_to_cookbook" className="modal-toggle" />
+            <input type="checkbox" id={RECIPE_ACTION_MODAL_IDS.ADD_TO_ADD_COOKBOOK} className="modal-toggle" />
+
             <AddToCookbookModal recipe={recipe}/>
 
             {/* DELETE RECIPE MODAL */}
-
+            <input type="checkbox" id={RECIPE_ACTION_MODAL_IDS.DELETE} className='modal-toggle' />
+            <DeleteRecipeModal recipe={recipe} />
 
         </>
 

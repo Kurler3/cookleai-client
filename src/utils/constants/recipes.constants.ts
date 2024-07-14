@@ -104,3 +104,11 @@ export const mockRecipes: IRecipe[] = [
     //     }
     // },
 ];
+
+
+
+// ACTION MODAL IDS
+export const RECIPE_ACTION_MODAL_IDS = {
+    DELETE: 'delete_recipe_modal',
+    ADD_TO_ADD_COOKBOOK: 'add_recipe_to_cookbook_modal'
+}

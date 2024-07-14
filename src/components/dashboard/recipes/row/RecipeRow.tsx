@@ -11,7 +11,7 @@ const RecipeRow: React.FC<IProps> = ({
     recipe,
 }) => {
     return (
-        <tr
+        <div
             // className="max-w-screen flex justify-between items-center h-28 gap-4 p-4 min-w-96 w-full overflow-x-auto overflow-y-hidden border border-gray-600 rounded-md shadow-md mt-4"
             className="flex justify-between items-center h-28 gap-4 p-4 w-full border border-gray-600 rounded-md shadow-md mt-4"
         >
@@ -49,7 +49,7 @@ const RecipeRow: React.FC<IProps> = ({
                 <RecipeActionsDropdownMenu recipe={recipe}/>
             </div>
 
-        </tr>
+        </div>
     )
 };
 
