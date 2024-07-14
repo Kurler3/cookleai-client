@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
-import useGetCookbooks from "../../../../hooks/cookbook/useGetCookbooks";
-import { IRecipe } from "../../../../types";
-import { ROUTE_PATHS } from "../../../../utils/constants";
+import useGetCookbooks from "@/hooks/cookbook/useGetCookbooks";
+import { IRecipe } from "@/types";
+import { ROUTE_PATHS } from "@/utils/constants";
 import { Add } from "@mui/icons-material";
-import { RECIPE_ACTION_MODAL_IDS } from "../../../../utils/constants/recipes.constants";
+import { RECIPE_ACTION_MODAL_IDS } from "@/utils/constants/recipes.constants";
 
 type IProps = {
     recipe: IRecipe;
@@ -57,7 +57,6 @@ const AddToCookbookModal: React.FC<IProps> = ({
                 <div
                     className="flex justify-start items-center flex-col  p-4 gap-3 h-60 overflow-y-auto overflow-x-hidden w-full"
                 >
-
                     {
                         !isLoadingCookbooks ? cookbooks.map((cookbook) => {
                             return (
