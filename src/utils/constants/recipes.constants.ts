@@ -111,5 +111,7 @@ export const mockRecipes: IRecipe[] = [
 export const RECIPE_ACTION_MODAL_IDS = {
     DELETE: 'delete_recipe_modal',
     ADD_TO_ADD_COOKBOOK: 'add_recipe_to_cookbook_modal',
-    CREATE: 'create_recipe_modal'
+    CREATE: 'create_recipe_modal',
+    GENERATE_WITH_AI: 'generate_recipe_with_ai_modal',
+    CREATE_MANUALLY: 'create_recipe_manually_modal',
 }

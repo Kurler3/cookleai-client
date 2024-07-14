@@ -3,6 +3,10 @@ import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
 import EditIcon from '@mui/icons-material/Edit';
 
 const CreateRecipeModal = () => {
+
+
+    const handleCloseModal = () => document.getElementById(RECIPE_ACTION_MODAL_IDS.CREATE)!.checked = false
+ 
     return (
         <div className="modal" role='dialog'>
             
@@ -19,8 +23,12 @@ const CreateRecipeModal = () => {
                     <div className="divider"></div>
 
                     {/* CREATE WITH AI */}
-                    <button className="btn hover:bg-app-green-hover hover:text-white">
-
+                    <label 
+                        htmlFor={RECIPE_ACTION_MODAL_IDS.GENERATE_WITH_AI} 
+                        className="btn hover:bg-app-green-hover hover:text-white"
+                        onClick={handleCloseModal}
+                    >
+                        
                         {/* AI ICON */}
                         <AutoAwesomeIcon 
                             className="text-info"
@@ -29,30 +37,27 @@ const CreateRecipeModal = () => {
                         {/* TEXT */}
                         Generate recipe with AI
 
-                    </button>
+                    </label>
 
                     {/* CREATE MANUALLY */}
-                    <button className="btn hover:bg-app-green-hover hover:text-white">
+                    <label 
+                        htmlFor={RECIPE_ACTION_MODAL_IDS.CREATE_MANUALLY}
+                        className="btn hover:bg-app-green-hover hover:text-white"
+                        onClick={handleCloseModal}
+                    >
 
                         {/* EDIT ICON */}
-                        <EditIcon 
-
-                        />
+                        <EditIcon />
 
                         {/* TEXT */}
                         Create manually
 
-                    </button>
+                    </label>
 
             </div>
             <label className="modal-backdrop" htmlFor={RECIPE_ACTION_MODAL_IDS.CREATE}>Close</label>
 
 
-
-            {/* GENERATE WITH AI MODAL */}
-            
-
-            {/* CREATE MANUALLY MODAL */}
         </div>  
     )
 }
