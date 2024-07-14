@@ -1,11 +1,32 @@
 import { RECIPE_ACTION_MODAL_IDS } from "@/utils/constants/recipes.constants"
+import { useState } from "react"
 
 
 const CreateRecipeManuallyModal = () => {
+
+  //////////////////////////////////
+  // STATE /////////////////////////
+  //////////////////////////////////
+
+  const [
+    recipeTitle,
+    setRecipeTitle,
+  ] = useState('')
+
+  //////////////////////////////////
+  // FUNCTIONS /////////////////////
+  //////////////////////////////////
+
+  //TODO Create recipe
+
+  //////////////////////////////////
+  // RENDER ////////////////////////
+  //////////////////////////////////
+
   return (
     <div className="modal" role='dialog'>
 
-      <div className="modal-box flex items-center flex-col">
+      <div className="modal-box flex items-start flex-col gap-4">
           
           <h3 className="text-lg font-medium text-white">
             Create a new recipe manually
@@ -18,12 +39,20 @@ const CreateRecipeManuallyModal = () => {
           {/* INPUT */}
           <input
             type='text'
-            className='input max-w-sm'
+            className='input input-bordered w-full focus:outline-app-green transition'
             placeholder='Enter the title for your new recipe'
+            value={recipeTitle}
+            onChange={(e) => setRecipeTitle(e.target.value)}
           />
 
 
           {/* ADD NEW RECIPE BUTTON */}
+          <button
+            className={`btn ml-auto common_btn ${recipeTitle.length > 0 ? '' : 'btn-disabled'}`}
+
+          >
+            Create recipe
+          </button>
 
       </div>
 
