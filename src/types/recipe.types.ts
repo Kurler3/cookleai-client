@@ -1,18 +1,42 @@
 import { ICookbook } from "./cookbook.types";
 import { IUser } from "./user.types";
 
+enum IRecipeRole {
+    OWNER = "OWNER",
+    EDITOR = "EDITOR",
+    VIEWER = "VIEWER",
+} 
+
+type INutrients = {
+    calories: number;
+    carbohydrates: number;
+    protein: number;
+    fat: number;
+}
+
+type IRecipeUser = IUser & { role: IRecipeRole };
 
 export type IRecipe = {
     id: number;
     title: string;
-    description: string;
+    description?: string;
     isPublic: boolean;
-    image: string;
+    image?: string;
+    servings?: string;
+    notes?: string;
+    preTime?: number;
+    cookTime?: number;
+    nutrients?: INutrients;
+    cuisine?: string;
+    language?: string;
+    difficulty?: string;
+    rating?: number;
     ingredients: IIngredient[];
     instructions: string[];
     likedBy?: IUser[];
     cookbooks?: ICookbook[];
-    users?: IUsersOnRecipes[];
+    users?: IRecipeUser[];
+    role?: IRecipeRole;
     createdAt: string;
     updatedAt: string;
     updatedBy: number;
@@ -22,12 +46,9 @@ export type IRecipe = {
 };
 
 type IIngredient = {
-    id: number;
     name: string;
     quantity: number;
     unit: string;
-    recipeId: number;
-    recipe?: IRecipe;
 }
 
 type IUsersOnRecipes = {

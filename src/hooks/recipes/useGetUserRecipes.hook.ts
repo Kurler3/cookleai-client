@@ -1,13 +1,26 @@
-import { mockRecipes } from "../../utils/constants/recipes.constants";
+import { useQuery } from "react-query";
+import useAxios from "../axios/useAxios.hook";
+import { IRecipe } from "@/types";
 
 
 const useGetUserRecipes = () => {
 
-    //TODO Make request
-    
+    const axios = useAxios();
+
+    const {
+        isLoading,
+        isFetching,
+        data: recipes,
+        error: errorWhileGettingRecipes,
+    } = useQuery({
+        queryKey: ['my-recipes'],
+        queryFn: ():Promise<IRecipe[]> => axios.get('/recipes/my-recipes').then(res => res.data),
+    })
+
     return {
-        recipes: mockRecipes,
-        isLoadingRecipes: false,
+        recipes,
+        isLoadingRecipes: isLoading || isFetching,
+        errorWhileGettingRecipes,
     }
 };
 
