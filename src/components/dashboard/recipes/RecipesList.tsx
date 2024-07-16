@@ -13,7 +13,7 @@ const RecipesList: React.FC<IProps> = ({ isGrid }) => {
     console.log(recipes)
 
     return (
-        <div className="flex justify-start items-start w-full flex-wrap gap-4">
+        <div className="flex justify-start items-start w-full flex-1 gap-4 max-h-[80%]">
             {!isGrid ? (
                 <RecipesTable
                     recipes={recipes}

@@ -22,7 +22,6 @@ const RecipesPage = () => {
 
             <RecipesList isGrid={isGrid}/>
 
-
             {/* GENERATE WITH AI MODAL */}
             <input type="checkbox" id={RECIPE_ACTION_MODAL_IDS.GENERATE_WITH_AI} className="modal-toggle" />
 
