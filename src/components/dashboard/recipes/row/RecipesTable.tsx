@@ -45,7 +45,7 @@ const RecipesTable: React.FC<IProps> = ({ recipes, isLoadingRecipes }) => {
                     : recipes?.map((recipe, idx) => {
                           const key = `recipe_card_${idx}_${recipe.id}`;
 
-                          return <RecipeRow key={key} recipe={recipe} />;
+                          return <RecipeRow key={key} recipe={recipe} idx={idx} />;
                       })}
             </div>
         </div>

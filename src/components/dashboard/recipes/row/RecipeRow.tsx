@@ -6,10 +6,12 @@ import recipePlaceholderImg from '@/assets/images/recipe_placeholder.png';
 
 type IProps = {
     recipe: IRecipe;
+    idx: number,
 }
 
 const RecipeRow: React.FC<IProps> = ({
     recipe,
+    idx,
 }) => {
     return (
         <div
@@ -43,11 +45,11 @@ const RecipeRow: React.FC<IProps> = ({
                 </div>
             </div>
 
-            {/*TODO: Need to find another way -  ACTIONS */}
-            <div className="dropdown dropdown-bottom dropdown-end">
+            {/* ACTIONS */}
+            <div className={`dropdown dropdown-${idx === 0 ? 'bottom' : 'top'} dropdown-end`}>
                 <div role="button" tabIndex={0} className="cursor-pointer hover:bg-gray-600 hover:text-white transition rounded p-2"> <MoreVertIcon /></div>
 
-                {/* <RecipeActionsDropdownMenu recipe={recipe}/> */}
+                <RecipeActionsDropdownMenu recipe={recipe}/>
             </div>
 
         </div>
