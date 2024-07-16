@@ -43,7 +43,7 @@ const RecipeRow: React.FC<IProps> = ({
                 </div>
             </div>
 
-            {/* ACTIONS */}
+            {/*TODO: Need to find another way -  ACTIONS */}
             <div className="dropdown dropdown-bottom dropdown-end">
                 <div role="button" tabIndex={0} className="cursor-pointer hover:bg-gray-600 hover:text-white transition rounded p-2"> <MoreVertIcon /></div>
 
