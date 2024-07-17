@@ -1,6 +1,5 @@
 import useGetUserRecipes from "../../../hooks/recipes/useGetUserRecipes.hook";
-import RecipeCard from "./grid/RecipeCard";
-import RecipeCardSkeleton from "./grid/RecipeCardSkeleton";
+import RecipeGrid from "./grid/RecipeGrid";
 import RecipesTable from "./row/RecipesTable";
 
 type IProps = {
@@ -8,7 +7,14 @@ type IProps = {
 };
 
 const RecipesList: React.FC<IProps> = ({ isGrid }) => {
-    const { recipes, isLoadingRecipes } = useGetUserRecipes();
+    
+    const { 
+        recipes, 
+        isLoadingRecipes,
+        hasNextPage,
+        fetchNextPage,
+        isFetchingNextPage,
+    } = useGetUserRecipes();
 
     return (
         <div className="flex justify-start items-start w-full flex-1 gap-4 max-h-[80%]">
@@ -16,18 +22,17 @@ const RecipesList: React.FC<IProps> = ({ isGrid }) => {
                 <RecipesTable
                     recipes={recipes}
                     isLoadingRecipes={isLoadingRecipes}
+                    isFetchingNextPage={isFetchingNextPage}
                 />
-            ) : isLoadingRecipes ? (
-                Array.from({ length: 5 }).map((_, idx) => (
-                    <RecipeCardSkeleton key={`recipe_list_card_${idx}`} />
-                ))
             ) : (
-                recipes?.map((recipe, idx) => {
-                    const key = `recipe_card_${idx}_${recipe.id}`;
-
-                    return <RecipeCard key={key} recipe={recipe} />;
-                })
+                <RecipeGrid 
+                    recipes={recipes}
+                    isLoadingRecipes={isLoadingRecipes}
+                    isFetchingNextPage={isFetchingNextPage}
+                />
             )}
+
+            <button onClick={() => fetchNextPage()}>Fetch more</button>
         </div>
     );
 };

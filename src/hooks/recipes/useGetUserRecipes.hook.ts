@@ -2,35 +2,47 @@ import { useInfiniteQuery } from "react-query";
 import useAxios from "../axios/useAxios.hook";
 import { IRecipe } from "@/types";
 
-
-const useGetUserRecipes = () => {
-
+const useGetUserRecipes = (pageSize = 15) => {
     const axios = useAxios();
 
     const {
-        isLoading,
-        isFetching,
+        // isLoading,
+        // isFetching,
         fetchNextPage,
+        isFetchingNextPage,
         data: recipes,
         error: errorWhileGettingRecipes,
+        hasNextPage,
+        status,
     } = useInfiniteQuery({
-        queryKey: ['my-recipes'],
-        queryFn: ({ pageParams }):Promise<IRecipe[]> => axios.get('/recipes/my-recipes', { params: { page: pageParams, } }).then(res => res.data),
+        queryKey: ["my-recipes", pageSize],
+        queryFn: async ({ pageParam = 0 }): Promise<IRecipe[]> => {
+
+            await new Promise((resolve) => setTimeout(resolve, 2000));
+
+            return axios
+            .get("/recipes/my-recipes", {
+                params: { page: pageParam, limit: pageSize },
+            })
+            .then((res) => res.data)
+
+        },
         getNextPageParam: (lastPage, pages) => {
-            console.log({lastPage, pages});
-            // if (lastPage.length < 10) return undefined;
-            // return pages.length + 1;
-        }
+            return lastPage.length ? pages.length : undefined; // If the last page was not empty, then continue fetching, otherwise stop.
+        },
     });
 
-    console.log({recipes})
-    // fetchNextPage();
+    console.log({ recipes });
 
     return {
         recipes: recipes?.pages.flat(),
-        isLoadingRecipes: isLoading || isFetching,
+        isLoadingRecipes: status === 'loading', // isLoading || isFetching,
         errorWhileGettingRecipes,
-    }
+        isFetchingNextPage,
+        fetchNextPage,
+        hasNextPage,
+
+    };
 };
 
 export default useGetUserRecipes;
