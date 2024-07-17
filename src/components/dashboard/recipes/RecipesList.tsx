@@ -11,8 +11,6 @@ const RecipesList: React.FC<IProps> = ({ isGrid }) => {
     const { 
         recipes, 
         isLoadingRecipes,
-        hasNextPage,
-        fetchNextPage,
         isFetchingNextPage,
         lastElementRef,
     } = useGetUserRecipes();
@@ -31,6 +29,7 @@ const RecipesList: React.FC<IProps> = ({ isGrid }) => {
                     recipes={recipes}
                     isLoadingRecipes={isLoadingRecipes}
                     isFetchingNextPage={isFetchingNextPage}
+                    lastElementRef={lastElementRef}
                 />
             )}
         </div>

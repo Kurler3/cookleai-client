@@ -21,9 +21,6 @@ const useGetUserRecipes = (pageSize = 15) => {
     } = useInfiniteQuery({
         queryKey: ["my-recipes", pageSize],
         queryFn: async ({ pageParam = 0 }): Promise<IRecipe[]> => {
-
-            await new Promise((resolve) => setTimeout(resolve, 2000));
-
             return axios
             .get("/recipes/my-recipes", {
                 params: { page: pageParam, limit: pageSize },
@@ -39,10 +36,15 @@ const useGetUserRecipes = (pageSize = 15) => {
     const lastElementRef = useCallback(
         (node: HTMLDivElement) => {
           if (isLoading) return;
-    
+            
+          // If when this func runs there is a observer, disconnect.
           if (observer.current) observer.current.disconnect();
     
+          // Init observer and set in ref
           observer.current = new IntersectionObserver((entries) => {
+            // If the first entry attached to this ref is intersecting the view port and
+            // if there is a next page
+            // and is not currently fetching => fetch next page
             if (entries[0].isIntersecting && hasNextPage && !isFetching) {
               fetchNextPage();
             }
@@ -55,11 +57,9 @@ const useGetUserRecipes = (pageSize = 15) => {
 
     return {
         recipes: recipes?.pages.flat(),
-        isLoadingRecipes: status === 'loading', // isLoading || isFetching,
+        isLoadingRecipes: status === 'loading',
         errorWhileGettingRecipes,
         isFetchingNextPage,
-        fetchNextPage,
-        hasNextPage,
         lastElementRef,
     };
 };

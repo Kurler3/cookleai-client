@@ -17,7 +17,7 @@ const RecipesTable: React.FC<IProps> = ({
 }) => {
     return (
         // min-w-96
-        <div className="w-full overflow-x-auto overflow-y-auto relative h-full">
+        <div className="w-full overflow-x-auto overflow-y-auto no-scrollbar relative h-full">
             {/* HEADERS */}
             <div className="bg-gray-800 z-10 sticky top-0 w-full flex justify-between min-w-[644px] items-center gap-4 px-4 overflow-x-auto overflow-y-hidden border h-12 rounded border-gray-600 text-app-white">
                 {/* IMAGE */}
@@ -51,7 +51,12 @@ const RecipesTable: React.FC<IProps> = ({
                           const key = `recipe_card_${idx}_${recipe.id}`;
 
                           return (
-                              <RecipeRow key={key} recipe={recipe} idx={idx} lastElementRef={lastElementRef}/>
+                              <RecipeRow 
+                                key={key} 
+                                recipe={recipe} 
+                                idx={idx} 
+                                lastElementRef={idx === recipes.length - 1 ? lastElementRef : undefined}
+                            />
                           );
                       })}
 

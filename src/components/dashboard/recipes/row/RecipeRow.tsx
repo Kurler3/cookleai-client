@@ -6,7 +6,7 @@ import recipePlaceholderImg from '@/assets/images/recipe_placeholder.png';
 type IProps = {
     recipe: IRecipe;
     idx: number,
-    lastElementRef: (node: HTMLDivElement) => void;
+    lastElementRef?: (node: HTMLDivElement) => void;
 }
 
 const RecipeRow: React.FC<IProps> = ({
