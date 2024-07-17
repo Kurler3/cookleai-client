@@ -6,8 +6,6 @@ const useGetUserRecipes = (pageSize = 15) => {
     const axios = useAxios();
 
     const {
-        // isLoading,
-        // isFetching,
         fetchNextPage,
         isFetchingNextPage,
         data: recipes,
@@ -32,8 +30,6 @@ const useGetUserRecipes = (pageSize = 15) => {
         },
     });
 
-    console.log({ recipes });
-
     return {
         recipes: recipes?.pages.flat(),
         isLoadingRecipes: status === 'loading', // isLoading || isFetching,
@@ -41,7 +37,6 @@ const useGetUserRecipes = (pageSize = 15) => {
         isFetchingNextPage,
         fetchNextPage,
         hasNextPage,
-
     };
 };
 

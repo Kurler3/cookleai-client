@@ -18,7 +18,7 @@ const RecipeGrid: React.FC<IProps> = ({
         <div className="w-full overflow-x-auto overflow-y-auto relative h-full flex justify-start items-start flex-wrap">
             {
                 isLoadingRecipes ? (
-                    Array.from({ length: 5 }).map((_, idx) => (
+                    Array.from({ length: 3 }).map((_, idx) => (
                         <RecipeCardSkeleton key={`recipe_list_card_${idx}`} />
                     ))
                 ) : (
@@ -32,7 +32,7 @@ const RecipeGrid: React.FC<IProps> = ({
 
             {
                 isFetchingNextPage && (
-                    Array.from({ length: 5 }).map((_, idx) => (
+                    Array.from({ length: 3 }).map((_, idx) => (
                         <RecipeCardSkeleton key={`recipe_list_card_${idx}`} />
                     ))
                 )

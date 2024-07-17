@@ -42,7 +42,7 @@ const RecipesTable: React.FC<IProps> = ({
             {/* BODY */}
             <div className="w-full table min-w-[644px] ">
                 {isLoadingRecipes
-                    ? Array.from({ length: 5 }).map((_, idx) => (
+                    ? Array.from({ length: 3 }).map((_, idx) => (
                           <RecipeRowSkeleton key={`recipe_table_card_${idx}`} />
                       ))
                     : recipes?.map((recipe, idx) => {
@@ -54,7 +54,7 @@ const RecipesTable: React.FC<IProps> = ({
                       })}
 
                 {isFetchingNextPage &&
-                    Array.from({ length: 5 }).map((_, idx) => (
+                    Array.from({ length: 3 }).map((_, idx) => (
                         <RecipeRowSkeleton key={`recipe_table_card_${idx}`} />
                     ))}
             </div>
