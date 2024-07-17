@@ -25,44 +25,46 @@ const RecipeActionsDropdownMenu: React.FC<IProps> = ({ recipe }) => {
     //////////////////////////////////
 
     return (
-        <ul
-            tabIndex={0}
-            className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 shadow gap-2 p-4 font-medium text-white"
-        >
-            {/* TITLE */}
-            <li className="font-bold">Actions</li>
-
-            {/* ADD TO COOKBOOK */}
-            <label
-                htmlFor={RECIPE_ACTION_MODAL_IDS.ADD_TO_ADD_COOKBOOK}
-                className="menuActionClass"
+        <>
+            <ul
+                tabIndex={0}
+                className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 shadow gap-2 p-4 font-medium text-white"
             >
-                <AddIcon style={{ height: "20px" }} />
-                Add to cookbook
-            </label>
+                {/* TITLE */}
+                <li className="font-bold">Actions</li>
 
-            {/* EDIT */}
-            <div className="menuActionClass">
-                <EditIcon style={{ height: "20px" }} />
-                Edit
-            </div>
+                {/* ADD TO COOKBOOK */}
+                <label
+                    htmlFor={RECIPE_ACTION_MODAL_IDS.ADD_TO_ADD_COOKBOOK}
+                    className="menuActionClass"
+                >
+                    <AddIcon style={{ height: "20px" }} />
+                    Add to cookbook
+                </label>
 
-            {/* SHARE */}
-            <div className="menuActionClass">
-                <ShareIcon style={{ height: "20px" }} />
-                Share
-            </div>
+                {/* EDIT */}
+                <div className="menuActionClass">
+                    <EditIcon style={{ height: "20px" }} />
+                    Edit
+                </div>
 
-            <div className="divider h-2 my-1"></div>
+                {/* SHARE */}
+                <div className="menuActionClass">
+                    <ShareIcon style={{ height: "20px" }} />
+                    Share
+                </div>
 
-            {/* DELETE */}
-            <label
-                className="menuActionClass text-red-600 hover:bg-red-500 hover:text-white"
-                htmlFor={RECIPE_ACTION_MODAL_IDS.DELETE}
-            >
-                <DeleteIcon style={{ height: "20px" }} />
-                Delete
-            </label>
+                <div className="divider h-2 my-1"></div>
+
+                {/* DELETE */}
+                <label
+                    className="menuActionClass text-red-600 hover:bg-red-500 hover:text-white"
+                    htmlFor={RECIPE_ACTION_MODAL_IDS.DELETE}
+                >
+                    <DeleteIcon style={{ height: "20px" }} />
+                    Delete
+                </label>
+            </ul>
 
             {/* ADD TO COOKBOOK MODAL */}
             <input
@@ -80,7 +82,7 @@ const RecipeActionsDropdownMenu: React.FC<IProps> = ({ recipe }) => {
                 className="modal-toggle"
             />
             <DeleteRecipeModal recipe={recipe} />
-        </ul>
+        </>
     );
 };
 
