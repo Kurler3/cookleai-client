@@ -6,12 +6,14 @@ type IProps = {
     recipes?: IRecipe[];
     isLoadingRecipes: boolean;
     isFetchingNextPage: boolean;
+    lastElementRef: (node: HTMLDivElement) => void;
 };
 
 const RecipesTable: React.FC<IProps> = ({
     recipes,
     isLoadingRecipes,
     isFetchingNextPage,
+    lastElementRef,
 }) => {
     return (
         // min-w-96
@@ -49,7 +51,7 @@ const RecipesTable: React.FC<IProps> = ({
                           const key = `recipe_card_${idx}_${recipe.id}`;
 
                           return (
-                              <RecipeRow key={key} recipe={recipe} idx={idx} />
+                              <RecipeRow key={key} recipe={recipe} idx={idx} lastElementRef={lastElementRef}/>
                           );
                       })}
 

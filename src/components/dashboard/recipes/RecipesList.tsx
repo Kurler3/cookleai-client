@@ -14,6 +14,7 @@ const RecipesList: React.FC<IProps> = ({ isGrid }) => {
         hasNextPage,
         fetchNextPage,
         isFetchingNextPage,
+        lastElementRef,
     } = useGetUserRecipes();
 
     return (
@@ -23,6 +24,7 @@ const RecipesList: React.FC<IProps> = ({ isGrid }) => {
                     recipes={recipes}
                     isLoadingRecipes={isLoadingRecipes}
                     isFetchingNextPage={isFetchingNextPage}
+                    lastElementRef={lastElementRef}
                 />
             ) : (
                 <RecipeGrid 
@@ -31,8 +33,6 @@ const RecipesList: React.FC<IProps> = ({ isGrid }) => {
                     isFetchingNextPage={isFetchingNextPage}
                 />
             )}
-
-            <button onClick={() => fetchNextPage()}>Fetch more</button>
         </div>
     );
 };

@@ -1,12 +1,18 @@
 import { useInfiniteQuery } from "react-query";
 import useAxios from "../axios/useAxios.hook";
 import { IRecipe } from "@/types";
+import { useCallback, useRef } from "react";
 
 const useGetUserRecipes = (pageSize = 15) => {
+
+    const observer = useRef<IntersectionObserver>();
+
     const axios = useAxios();
 
     const {
         fetchNextPage,
+        isFetching,
+        isLoading,
         isFetchingNextPage,
         data: recipes,
         error: errorWhileGettingRecipes,
@@ -30,6 +36,23 @@ const useGetUserRecipes = (pageSize = 15) => {
         },
     });
 
+    const lastElementRef = useCallback(
+        (node: HTMLDivElement) => {
+          if (isLoading) return;
+    
+          if (observer.current) observer.current.disconnect();
+    
+          observer.current = new IntersectionObserver((entries) => {
+            if (entries[0].isIntersecting && hasNextPage && !isFetching) {
+              fetchNextPage();
+            }
+          });
+    
+          if (node) observer.current.observe(node);
+        },
+        [fetchNextPage, hasNextPage, isFetching, isLoading]
+      );
+
     return {
         recipes: recipes?.pages.flat(),
         isLoadingRecipes: status === 'loading', // isLoading || isFetching,
@@ -37,6 +60,7 @@ const useGetUserRecipes = (pageSize = 15) => {
         isFetchingNextPage,
         fetchNextPage,
         hasNextPage,
+        lastElementRef,
     };
 };
 
