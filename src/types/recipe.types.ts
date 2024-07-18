@@ -51,15 +51,15 @@ type IIngredient = {
     unit: string;
 }
 
-type IUsersOnRecipes = {
-    recipeId: number;
-    recipe?: IRecipe;
-    userId: number;
-    user?: IUser;
-    role: string;
-    addedAt: string;
-    addedBy: number;
-}
+// type IUsersOnRecipes = {
+//     recipeId: number;
+//     recipe?: IRecipe;
+//     userId: number;
+//     user?: IUser;
+//     role: string;
+//     addedAt: string;
+//     addedBy: number;
+// }
 
 export type IGetUserRecipesData = {
     // pageParams: unknown[];

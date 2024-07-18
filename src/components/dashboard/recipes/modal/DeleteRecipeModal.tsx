@@ -13,7 +13,7 @@ const DeleteRecipeModal: React.FC<IProps> = ({ recipe }) => {
     // HOOK //////////////////////////////
     //////////////////////////////////////
 
-    const { deleteRecipe, isDeletingRecipe, deleteRecipeError } =
+    const { deleteRecipe, isDeletingRecipe } =
         useDeleteRecipe(recipe?.id);
 
     //////////////////////////////////////
