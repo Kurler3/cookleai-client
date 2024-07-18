@@ -6,7 +6,7 @@ import { Add } from "@mui/icons-material";
 import { RECIPE_ACTION_MODAL_IDS } from "@/utils/constants/recipes.constants";
 
 type IProps = {
-    recipe: IRecipe;
+    recipe?: IRecipe;
 }
 
 const AddToCookbookModal: React.FC<IProps> = ({

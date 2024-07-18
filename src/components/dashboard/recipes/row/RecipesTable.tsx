@@ -7,6 +7,7 @@ type IProps = {
     isLoadingRecipes: boolean;
     isFetchingNextPage: boolean;
     lastElementRef: (node: HTMLDivElement) => void;
+    setSelectedRecipe: React.Dispatch<React.SetStateAction<IRecipe | undefined>>
 };
 
 const RecipesTable: React.FC<IProps> = ({
@@ -14,7 +15,9 @@ const RecipesTable: React.FC<IProps> = ({
     isLoadingRecipes,
     isFetchingNextPage,
     lastElementRef,
+    setSelectedRecipe,
 }) => {
+    
     return (
         // min-w-96
         <div className="w-full overflow-x-auto overflow-y-auto no-scrollbar relative h-full">
@@ -56,6 +59,7 @@ const RecipesTable: React.FC<IProps> = ({
                                 recipe={recipe} 
                                 idx={idx} 
                                 lastElementRef={idx === recipes.length - 1 ? lastElementRef : undefined}
+                                setSelectedRecipe={setSelectedRecipe}
                             />
                           );
                       })}

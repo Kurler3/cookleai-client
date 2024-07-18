@@ -18,6 +18,7 @@ const useGetUserRecipes = (pageSize = 15) => {
         error: errorWhileGettingRecipes,
         hasNextPage,
         status,
+        refetch,
     } = useInfiniteQuery({
         queryKey: ["my-recipes", pageSize],
         queryFn: async ({ pageParam = 0 }): Promise<IRecipe[]> => {
@@ -61,6 +62,7 @@ const useGetUserRecipes = (pageSize = 15) => {
         errorWhileGettingRecipes,
         isFetchingNextPage,
         lastElementRef,
+        refetchUserRecipes: refetch,
     };
 };
 

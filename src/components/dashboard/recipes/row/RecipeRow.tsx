@@ -7,13 +7,16 @@ type IProps = {
     recipe: IRecipe;
     idx: number,
     lastElementRef?: (node: HTMLDivElement) => void;
+    setSelectedRecipe: React.Dispatch<React.SetStateAction<IRecipe | undefined>>
 }
 
 const RecipeRow: React.FC<IProps> = ({
     recipe,
     idx,
-    lastElementRef
+    lastElementRef,
+    setSelectedRecipe
 }) => {
+
     return (
         <div
             ref={lastElementRef}
@@ -49,8 +52,7 @@ const RecipeRow: React.FC<IProps> = ({
 
             {/* ACTIONS */}
             <div className={`dropdown dropdown-${idx === 0 ? 'bottom' : 'top'} dropdown-end`}>
-                <div role="button" tabIndex={0} className="cursor-pointer hover:bg-gray-600 hover:text-white transition rounded p-2"> <MoreVertIcon /></div>
-
+                <div onClick={() => setSelectedRecipe(recipe)} role="button" tabIndex={0} className="cursor-pointer hover:bg-gray-600 hover:text-white transition rounded p-2"> <MoreVertIcon /></div>
                 <RecipeActionsDropdownMenu recipe={recipe}/>
             </div>
 

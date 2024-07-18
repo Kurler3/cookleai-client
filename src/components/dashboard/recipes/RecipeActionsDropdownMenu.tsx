@@ -3,9 +3,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import ShareIcon from "@mui/icons-material/Share";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { IRecipe } from "../../../types";
-import AddToCookbookModal from "./modal/AddToCookbookModal";
 import { RECIPE_ACTION_MODAL_IDS } from "@/utils/constants/recipes.constants";
-import DeleteRecipeModal from "./modal/DeleteRecipeModal";
 import { ROUTE_PATHS } from "@/utils/constants";
 import { Link } from "react-router-dom";
 
@@ -14,12 +12,18 @@ type IProps = {
 };
 
 const RecipeActionsDropdownMenu: React.FC<IProps> = ({ recipe }) => {
+
     //////////////////////////////////
     // GET COOKBOOKS /////////////////
     //////////////////////////////////
 
+
     //////////////////////////////////
     // FUNCTIONS /////////////////////
+    //////////////////////////////////
+
+    //////////////////////////////////
+    // CONSTANTS /////////////////////
     //////////////////////////////////
 
     //////////////////////////////////
@@ -67,23 +71,8 @@ const RecipeActionsDropdownMenu: React.FC<IProps> = ({ recipe }) => {
                     Delete
                 </label>
             </ul>
-
-            {/* ADD TO COOKBOOK MODAL */}
-            <input
-                type="checkbox"
-                id={RECIPE_ACTION_MODAL_IDS.ADD_TO_ADD_COOKBOOK}
-                className="modal-toggle"
-            />
-
-            <AddToCookbookModal recipe={recipe} />
-
-            {/* DELETE RECIPE MODAL */}
-            <input
-                type="checkbox"
-                id={RECIPE_ACTION_MODAL_IDS.DELETE}
-                className="modal-toggle"
-            />
-            <DeleteRecipeModal recipe={recipe} />
+            
+            
         </>
     );
 };

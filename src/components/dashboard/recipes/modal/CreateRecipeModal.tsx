@@ -1,12 +1,10 @@
 import { RECIPE_ACTION_MODAL_IDS } from "@/utils/constants/recipes.constants";
+import { handleCloseModal } from "@/utils/functions/closeModal";
 import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
 import EditIcon from '@mui/icons-material/Edit';
 
 const CreateRecipeModal = () => {
 
-
-    const handleCloseModal = () => document.getElementById(RECIPE_ACTION_MODAL_IDS.CREATE)!.checked = false
- 
     return (
         <div className="modal" role='dialog'>
             
@@ -26,7 +24,7 @@ const CreateRecipeModal = () => {
                     <label 
                         htmlFor={RECIPE_ACTION_MODAL_IDS.GENERATE_WITH_AI} 
                         className="btn hover:bg-app-green-hover hover:text-white"
-                        onClick={handleCloseModal}
+                        onClick={() => handleCloseModal(RECIPE_ACTION_MODAL_IDS.CREATE)}
                     >
                         
                         {/* AI ICON */}
@@ -43,7 +41,7 @@ const CreateRecipeModal = () => {
                     <label 
                         htmlFor={RECIPE_ACTION_MODAL_IDS.CREATE_MANUALLY}
                         className="btn hover:bg-app-green-hover hover:text-white"
-                        onClick={handleCloseModal}
+                        onClick={() => handleCloseModal(RECIPE_ACTION_MODAL_IDS.CREATE)}
                     >
 
                         {/* EDIT ICON */}

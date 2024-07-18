@@ -2,6 +2,7 @@ import { useState } from "react";
 import { IRecipe } from "../../../../types";
 import { RECIPE_ACTION_MODAL_IDS } from "../../../../utils/constants/recipes.constants";
 import ReportProblemIcon from '@mui/icons-material/ReportProblem';
+import useDeleteRecipe from "@/hooks/recipes/useDeleteRecipe.hook";
 
 type IProps = {
     recipe: IRecipe;
@@ -12,19 +13,36 @@ const DeleteRecipeModal: React.FC<IProps> = ({
 }) => {
 
     //////////////////////////////////////
+    // HOOK //////////////////////////////
+    //////////////////////////////////////
+
+    const {
+        deleteRecipe,
+        isDeletingRecipe,
+        deleteRecipeError
+    } = useDeleteRecipe();
+
+    //////////////////////////////////////
     // STATE /////////////////////////////
     //////////////////////////////////////
 
     // Confirm input state
     const [confirmInputText, setConfirmInputText] = useState('');
 
-    const canDelete = confirmInputText === 'confirm';
+    const canDelete = confirmInputText === 'confirm' && !isDeletingRecipe;
 
     //////////////////////////////////////
     // FUNCTIONS /////////////////////////
     //////////////////////////////////////
 
     //TODO Handle confirm delete recipe
+    const handleConfirmDelete = () => {
+
+        if(canDelete) {
+            console.log("Confirm delete recipe", recipe.id);
+            deleteRecipe(recipe.id);
+        }
+    }
 
     //////////////////////////////////////
     // RENDER ////////////////////////////
@@ -37,7 +55,6 @@ const DeleteRecipeModal: React.FC<IProps> = ({
 
                 {/* ALERT ICON */}
                 <ReportProblemIcon style={{ width: '45px', height: '45px', color: 'yellow' }} />
-
 
                 <p>
                    Are you sure you want to delete this recipe? This action can't be reversed. To continue type <b>confirm</b> below
@@ -57,7 +74,11 @@ const DeleteRecipeModal: React.FC<IProps> = ({
                 <div className="w-full flex justify-center items-center gap-4 m-auto">
 
                     {/* CONFIRM DELETE BTN */}
-                    <button className={`btn btn-error ${!canDelete ? 'btn-disabled' : ''}`}>
+                    <button 
+                        className={`btn btn-error ${!canDelete ? 'btn-disabled' : ''}`}
+                        onClick={() => canDelete ? handleConfirmDelete() : {}}
+                    >
+                        { isDeletingRecipe && <span className="loading loading-spinner"></span> }
                         Delete
                     </button>
 
