@@ -60,3 +60,8 @@ type IUsersOnRecipes = {
     addedAt: string;
     addedBy: number;
 }
+
+export type IGetUserRecipesData = {
+    // pageParams: unknown[];
+    pages: IRecipe[][]
+}

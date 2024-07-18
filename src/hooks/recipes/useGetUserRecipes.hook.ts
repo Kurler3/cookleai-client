@@ -1,7 +1,7 @@
 import { useInfiniteQuery } from "react-query";
 import useAxios from "../axios/useAxios.hook";
 import { IRecipe } from "@/types";
-import { useCallback, useRef } from "react";
+import { useCallback, useMemo, useRef } from "react";
 
 const useGetUserRecipes = (pageSize = 15) => {
 
@@ -20,7 +20,7 @@ const useGetUserRecipes = (pageSize = 15) => {
         status,
         refetch,
     } = useInfiniteQuery({
-        queryKey: ["my-recipes", pageSize],
+        queryKey: ["my-recipes"],
         queryFn: async ({ pageParam = 0 }): Promise<IRecipe[]> => {
             return axios
             .get("/recipes/my-recipes", {
@@ -56,13 +56,30 @@ const useGetUserRecipes = (pageSize = 15) => {
         [fetchNextPage, hasNextPage, isFetching, isLoading]
       );
 
-    return {
+
+      // Map between recipeId to pageIndex + indexInPage (will be faster when deleting)
+      const recipeIdToIndexMap = useMemo(() => {
+
+          const recipeMap = new Map();
+
+          recipes?.pages.forEach((page, pageIndex) => {
+              page.forEach((recipe, indexInPage) => {
+                  recipeMap.set(recipe.id, { pageIndex, indexInPage });
+              });
+          });
+
+          return recipeMap;
+      }, [recipes?.pages])
+
+
+      return {
         recipes: recipes?.pages.flat(),
         isLoadingRecipes: status === 'loading',
         errorWhileGettingRecipes,
         isFetchingNextPage,
         lastElementRef,
         refetchUserRecipes: refetch,
+        recipeIdToIndexMap,
     };
 };
 
