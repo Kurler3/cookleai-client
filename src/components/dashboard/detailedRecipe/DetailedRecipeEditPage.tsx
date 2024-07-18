@@ -2,8 +2,9 @@ import useGetRecipe from "@/hooks/recipes/useGetRecipe.hook";
 import { useParams } from "react-router-dom";
 
 
-const DetailedRecipePage = () => {
-
+//TODO
+const DetailedRecipeEditPage = () => {
+    
   const { recipeId } = useParams();
 
   const {
@@ -11,11 +12,12 @@ const DetailedRecipePage = () => {
     errorWhileGettingRecipe,
     recipe,
   } = useGetRecipe(recipeId);
-      
 
-  return (
-    <div>DetailedRecipePage</div>
+return (
+    <div>
+      {recipeId}
+    </div>
   )
 }
 
-export default DetailedRecipePage
+export default DetailedRecipeEditPage

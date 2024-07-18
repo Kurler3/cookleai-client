@@ -13,6 +13,7 @@ import RecipesPage from "./components/dashboard/recipes/RecipesPage";
 import { ROUTE_PATHS } from "./utils/constants";
 import CookbooksPage from "./components/dashboard/cookbooks/CookbooksPage";
 import DetailedRecipePage from "./components/dashboard/detailedRecipe/DetailedRecipePage";
+import DetailedRecipeEditPage from "./components/dashboard/detailedRecipe/DetailedRecipeEditPage";
 
 const App = () => {
     return (
@@ -40,11 +41,18 @@ const App = () => {
                                 <Route
                                     path={ROUTE_PATHS.DASHBOARD}
                                     element={<RecipesPage />}
+                                ></Route>
+
+                                {/* DETAILED RECIPE PAGE */}
+                                <Route
+                                    path={`${ROUTE_PATHS.RECIPE}`}
+                                    element={<DetailedRecipePage />}
                                 />
 
+                                {/* DETAILED RECIPE EDIT PAGE */}
                                 <Route
-                                    path={`${ROUTE_PATHS.RECIPES}/:id`}
-                                    element={<DetailedRecipePage />}
+                                    path={`${ROUTE_PATHS.RECIPE}/edit`}
+                                    element={<DetailedRecipeEditPage />}
                                 />
 
                                 {/* COOKBOOKS */}

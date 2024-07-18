@@ -6,6 +6,8 @@ import { IRecipe } from "../../../types";
 import AddToCookbookModal from "./modal/AddToCookbookModal";
 import { RECIPE_ACTION_MODAL_IDS } from "@/utils/constants/recipes.constants";
 import DeleteRecipeModal from "./modal/DeleteRecipeModal";
+import { ROUTE_PATHS } from "@/utils/constants";
+import { Link } from "react-router-dom";
 
 type IProps = {
     recipe: IRecipe;
@@ -43,10 +45,10 @@ const RecipeActionsDropdownMenu: React.FC<IProps> = ({ recipe }) => {
                 </label>
 
                 {/* EDIT */}
-                <div className="menuActionClass">
+                <Link to={`${ROUTE_PATHS.RECIPES}/${recipe.id}/edit`} className="menuActionClass">
                     <EditIcon style={{ height: "20px" }} />
                     Edit
-                </div>
+                </Link>
 
                 {/* SHARE */}
                 <div className="menuActionClass">
