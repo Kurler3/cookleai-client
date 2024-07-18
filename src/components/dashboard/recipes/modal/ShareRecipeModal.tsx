@@ -67,6 +67,15 @@ const ShareRecipeModal: React.FC<IProps> = ({ recipe }) => {
                 }
 
                 {/* //TODO: SWITCH TO PRIVATE/PUBLIC */}
+                <div className="flex justify-start items-start flex-col gap-2">
+
+                    {/* GENERAL ACCESS */}
+
+                    {/* DROPDOWN */}
+
+
+                    
+                </div>
 
 
                 {/* //TODO: COPY LINK */}
