@@ -114,4 +114,5 @@ export const RECIPE_ACTION_MODAL_IDS = {
     CREATE: 'create_recipe_modal',
     GENERATE_WITH_AI: 'generate_recipe_with_ai_modal',
     CREATE_MANUALLY: 'create_recipe_manually_modal',
+    SHARE_RECIPE: 'share_recipe_modal'
 }

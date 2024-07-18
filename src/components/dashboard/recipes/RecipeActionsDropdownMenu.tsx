@@ -55,10 +55,13 @@ const RecipeActionsDropdownMenu: React.FC<IProps> = ({ recipe }) => {
                 </Link>
 
                 {/* SHARE */}
-                <div className="menuActionClass">
+                <label 
+                    className="menuActionClass"
+                    htmlFor={RECIPE_ACTION_MODAL_IDS.SHARE_RECIPE}
+                >
                     <ShareIcon style={{ height: "20px" }} />
                     Share
-                </div>
+                </label>
 
                 <div className="divider h-2 my-1"></div>
 

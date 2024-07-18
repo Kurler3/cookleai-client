@@ -6,6 +6,7 @@ import { IRecipe } from "@/types";
 import DeleteRecipeModal from "./modal/DeleteRecipeModal";
 import { RECIPE_ACTION_MODAL_IDS } from "@/utils/constants/recipes.constants";
 import AddToCookbookModal from "./modal/AddToCookbookModal";
+import ShareRecipeModal from "./modal/ShareRecipeModal";
 
 type IProps = {
     isGrid: boolean;
@@ -16,7 +17,7 @@ const RecipesList: React.FC<IProps> = ({ isGrid }) => {
         useGetUserRecipes();
 
     const [selectedRecipe, setSelectedRecipe] = useState<IRecipe | undefined>();
-    console.log(selectedRecipe)
+  
     return (
         <div className="flex justify-start items-start w-full flex-1 gap-4 max-h-[80%]">
             {!isGrid ? (
@@ -60,6 +61,17 @@ const RecipesList: React.FC<IProps> = ({ isGrid }) => {
                         key={`recipe_delete_modal_${selectedRecipe?.id}`}
                         recipe={selectedRecipe}
                     />
+
+                    {/* SHARE RECIPE MODAL */}
+                    <input
+                        type="checkbox"
+                        id={
+                            RECIPE_ACTION_MODAL_IDS.SHARE_RECIPE
+                        }
+                        className="modal-toggle"
+                    />
+
+                    <ShareRecipeModal  recipe={selectedRecipe} />
                 </>
             )}
         </div>
