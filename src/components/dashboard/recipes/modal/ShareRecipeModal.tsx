@@ -1,7 +1,12 @@
 import { IRecipe } from "@/types";
 import { RECIPE_ACTION_MODAL_IDS } from "@/utils/constants/recipes.constants"
-import React from "react";
+import React, { useEffect, useState } from "react";
 import QRCode from "react-qr-code";
+import LockOpenIcon from '@mui/icons-material/LockOpen';
+import LockIcon from '@mui/icons-material/Lock';
+import InsertLinkIcon from '@mui/icons-material/InsertLink';
+import CheckIcon from '@mui/icons-material/Check';
+
 
 type IProps = {
     recipe: IRecipe;
@@ -9,10 +14,43 @@ type IProps = {
 
 const ShareRecipeModal: React.FC<IProps> = ({ recipe }) => {
 
+    const recipeUrl = `http://localhost:5173/dashboard/recipes/${recipe.id}`
+
+    const [
+        copiedLink,
+        setCopiedLink,
+    ] = useState(false);
+
+    // Copy link
+    const copyLink = () => {
+
+        if (copiedLink) return;
+
+
+        // Copy to clipboard
+        navigator.clipboard.writeText(recipeUrl)
+
+        // Update state
+        setCopiedLink(true);
+    }
+
+
+    useEffect(() => {
+
+
+        // as soon as the link is copied, reset the button after 2 secs
+        if (copiedLink) {
+            setInterval(() => {
+                setCopiedLink(false);
+            }, 2000)
+        }
+
+    }, [copiedLink])
+
     return (
         <div className="modal" role="dialog">
 
-            <div className="modal-box flex flex-col gap-4   ">
+            <div className="modal-box flex flex-col gap-4 h-fit" style={{ maxHeight: '100%' }}>
 
                 {/* TITLE */}
                 <div className="text-xl font-bold text-left text-white">
@@ -67,18 +105,51 @@ const ShareRecipeModal: React.FC<IProps> = ({ recipe }) => {
                 }
 
                 {/* //TODO: SWITCH TO PRIVATE/PUBLIC */}
-                <div className="flex justify-start items-start flex-col gap-2">
-
-                    {/* GENERAL ACCESS */}
-
-                    {/* DROPDOWN */}
-
-
-                    
+                <div className="dropdown dropdown-bottom">
+                    <div tabIndex={0} role="button" className="btn m-1">Click</div>
+                    <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow">
+                        <li>
+                            <a>
+                                Private
+                            </a>
+                        </li>
+                        <li>
+                            <a>
+                                Public
+                            </a>
+                        </li>
+                    </ul>
                 </div>
 
 
+                <p className="text-base font-medium">
+                    Link
+                </p>
+
                 {/* //TODO: COPY LINK */}
+                <div className="cursor-not-allowed w-full text-center p-2 bg-base-200 rounded-lg  border-2 border-app-green">
+                    {
+                        recipeUrl
+                    }
+                </div>
+
+                {/* COPY LINK BTN */}
+                <button className="btn w-fit ml-auto" onClick={copyLink}>
+                    {
+                        !copiedLink ? (
+                            <>
+                                <InsertLinkIcon /> Copy Link
+                            </>
+                        ) : (
+                            <>
+                                <CheckIcon />
+                                Link copied
+                            </>
+                        )
+
+                    }
+
+                </button>
 
             </div>
 
