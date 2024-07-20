@@ -5,6 +5,7 @@ import { handleCloseModal } from "@/utils/functions/closeModal";
 import { RECIPE_ACTION_MODAL_IDS } from "@/utils/constants/recipes.constants";
 import { IAxiosNetworkError, IGetUserRecipesData } from "@/types";
 import useGetUserRecipes from "./useGetUserRecipes.hook";
+import axiosNetworkErrorHandler from "@/utils/functions/axiosNetworkErrorHandler";
 
 
 const useDeleteRecipe = (recipeId?: number) => {
@@ -13,7 +14,7 @@ const useDeleteRecipe = (recipeId?: number) => {
     const axios = useAxios();
 
     const { recipeIdToIndexMap } = useGetUserRecipes();
-    console.log({recipeIdToIndexMap})
+    
     const {
         mutate: deleteRecipe,
         isLoading: isDeletingRecipe,
@@ -30,7 +31,7 @@ const useDeleteRecipe = (recipeId?: number) => {
             // Delete the recipe from the cache
             queryClient.setQueryData("my-recipes", (oldData: unknown) => {
 
-                const recipeIndexes = recipeIdToIndexMap.get(recipeId);
+                const recipeIndexes = recipeIdToIndexMap.get(recipeId!);
 
                 if(!recipeIndexes) return oldData;
 
@@ -42,12 +43,7 @@ const useDeleteRecipe = (recipeId?: number) => {
             // Close modal
             handleCloseModal(RECIPE_ACTION_MODAL_IDS.DELETE);
         },
-        onError: (error: IAxiosNetworkError) => {
-
-            const msg = error.response?.data?.message || "An error occurred while deleting the recipe";
-
-            toast.error(msg);
-        },
+        onError: axiosNetworkErrorHandler("An error occurred while deleting the recipe"),
         retry: false,
     });
 

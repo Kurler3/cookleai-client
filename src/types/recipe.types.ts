@@ -65,3 +65,7 @@ export type IGetUserRecipesData = {
     // pageParams: unknown[];
     pages: IRecipe[][]
 }
+
+export type IUpdateRecipe = Partial<IRecipe> & {
+    id: number;
+}

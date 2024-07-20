@@ -6,6 +6,8 @@ import LockOpenIcon from '@mui/icons-material/LockOpen';
 import LockIcon from '@mui/icons-material/Lock';
 import InsertLinkIcon from '@mui/icons-material/InsertLink';
 import CheckIcon from '@mui/icons-material/Check';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import { FRONT_END_BASE_URL } from "@/utils/constants";
 
 
 type IProps = {
@@ -14,7 +16,9 @@ type IProps = {
 
 const ShareRecipeModal: React.FC<IProps> = ({ recipe }) => {
 
-    const recipeUrl = `http://localhost:5173/dashboard/recipes/${recipe.id}`
+    
+
+    const recipeUrl = `${FRONT_END_BASE_URL}/dashboard/recipes/${recipe.id}`
 
     const [
         copiedLink,
@@ -33,7 +37,6 @@ const ShareRecipeModal: React.FC<IProps> = ({ recipe }) => {
         // Update state
         setCopiedLink(true);
     }
-
 
     useEffect(() => {
 
@@ -68,7 +71,7 @@ const ShareRecipeModal: React.FC<IProps> = ({ recipe }) => {
                     className="border-2 shadow-lg p-4 bg-white   border-app-green m-auto rounded-[10px]"
                 >
                     <QRCode
-                        value={`https://google.com`}
+                        value={recipeUrl}
                         style={{
                             borderRadius: '10px'
                         }}
@@ -106,16 +109,56 @@ const ShareRecipeModal: React.FC<IProps> = ({ recipe }) => {
 
                 {/* //TODO: SWITCH TO PRIVATE/PUBLIC */}
                 <div className="dropdown dropdown-bottom">
-                    <div tabIndex={0} role="button" className="btn m-1">Click</div>
-                    <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow">
+                    <div
+                        tabIndex={0}
+                        role="button"
+                        className="rounded-lg p-3 m-1 w-full border border-app-green text-white bg-base-300 flex justify-between items-center hover:border hover:border-app-green-hover"
+                    >
+
+                        <div className="flex justify-start items-center gap-2">
+                            {
+                                recipe.isPublic ? (
+                                    <>
+                                        <LockOpenIcon />
+
+                                        Public
+                                    </>
+                                ) : (
+                                    <>
+                                        <LockIcon />
+
+                                        Private
+                                    </>
+                                )
+                            }
+                        </div>
+
+
+                        {/* DOWN ARROW */}
+                        <KeyboardArrowDownIcon />
+
+                    </div>
+                    <ul tabIndex={0} className="dropdown-content menu bg-base-300 rounded-box z-[1] p-2 shadow w-full">
+
                         <li>
                             <a>
-                                Private
-                            </a>
-                        </li>
-                        <li>
-                            <a>
-                                Public
+
+                                {
+                                    recipe.isPublic ? (
+                                        <>
+
+                                            <LockIcon /> Private
+
+                                        </>
+                                    ) : (
+                                        <>
+
+                                            <LockOpenIcon /> Public
+
+                                        </>
+                                    )
+                                }
+
                             </a>
                         </li>
                     </ul>

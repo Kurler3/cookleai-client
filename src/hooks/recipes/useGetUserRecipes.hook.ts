@@ -58,7 +58,7 @@ const useGetUserRecipes = (pageSize = 15) => {
 
 
       // Map between recipeId to pageIndex + indexInPage (will be faster when deleting)
-      const recipeIdToIndexMap = useMemo(() => {
+      const recipeIdToIndexMap:Map<number, { pageIndex: number; indexInPage: number; }> = useMemo(() => {
 
           const recipeMap = new Map();
 
