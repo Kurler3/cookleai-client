@@ -71,7 +71,10 @@ const RecipesList: React.FC<IProps> = ({ isGrid }) => {
                         className="modal-toggle"
                     />
 
-                    <ShareRecipeModal  recipe={selectedRecipe} />
+                    <ShareRecipeModal  
+                        recipe={selectedRecipe} 
+                        setSelectedRecipe={setSelectedRecipe} 
+                    />
                 </>
             )}
         </div>

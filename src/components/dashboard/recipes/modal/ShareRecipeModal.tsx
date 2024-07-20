@@ -13,15 +13,15 @@ import useEditRecipe from "@/hooks/recipes/useEditRecipe.hook";
 
 type IProps = {
     recipe: IRecipe;
+    setSelectedRecipe: React.Dispatch<React.SetStateAction<IRecipe | undefined>>;
 }
 
-const ShareRecipeModal: React.FC<IProps> = ({ recipe }) => {
+const ShareRecipeModal: React.FC<IProps> = ({ recipe, setSelectedRecipe }) => {
 
 
     const {
         editRecipe,
         isEditingRecipe,
-        editRecipeError,
     } = useEditRecipe();
 
     const recipeUrl = `${FRONT_END_BASE_URL}/dashboard/recipes/${recipe.id}`
@@ -30,12 +30,20 @@ const ShareRecipeModal: React.FC<IProps> = ({ recipe }) => {
         copiedLink,
         setCopiedLink,
     ] = useState(false);
-
+   
     const handleChangeRecipeVisibility = useCallback(() => {
 
         editRecipe({
             id: recipe.id,
             isPublic: !recipe.isPublic,
+        });
+
+        setSelectedRecipe((prevSelectedRecipe) => {
+            if(!prevSelectedRecipe) return undefined;
+            return {
+                ...(prevSelectedRecipe),
+                isPublic: !prevSelectedRecipe?.isPublic,
+            }
         })
 
     }, [])
@@ -58,9 +66,13 @@ const ShareRecipeModal: React.FC<IProps> = ({ recipe }) => {
 
         // as soon as the link is copied, reset the button after 2 secs
         if (copiedLink) {
-            setInterval(() => {
+            const intervalId = setInterval(() => {
                 setCopiedLink(false);
             }, 2000)
+
+            return () => {
+                clearInterval(intervalId)
+            }
         }
 
     }, [copiedLink])
@@ -201,7 +213,7 @@ const ShareRecipeModal: React.FC<IProps> = ({ recipe }) => {
                 </div>
 
                 {/* COPY LINK BTN */}
-                <button className="btn w-fit ml-auto" onClick={copyLink}>
+                <button className="btn w-fit ml-auto transition" onClick={copyLink}>
                     {
                         !copiedLink ? (
                             <>

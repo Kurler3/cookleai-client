@@ -26,7 +26,7 @@ const useEditRecipe = () => {
         mutationFn: async (
             recipeUpdateObject: IUpdateRecipe,
         ) => {
-            const res = await axios.patch(`/recipes/${recipeUpdateObject.id}`); 
+            const res = await axios.patch(`/recipes/${recipeUpdateObject.id}`, recipeUpdateObject); 
             return res.data;
         },
         onSuccess: (editedReciped: IRecipe) => {
