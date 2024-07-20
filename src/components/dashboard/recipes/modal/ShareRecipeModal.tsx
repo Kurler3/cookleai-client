@@ -1,6 +1,6 @@
 import { IRecipe } from "@/types";
 import { RECIPE_ACTION_MODAL_IDS } from "@/utils/constants/recipes.constants"
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import QRCode from "react-qr-code";
 import LockOpenIcon from '@mui/icons-material/LockOpen';
 import LockIcon from '@mui/icons-material/Lock';
@@ -8,6 +8,7 @@ import InsertLinkIcon from '@mui/icons-material/InsertLink';
 import CheckIcon from '@mui/icons-material/Check';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { FRONT_END_BASE_URL } from "@/utils/constants";
+import useEditRecipe from "@/hooks/recipes/useEditRecipe.hook";
 
 
 type IProps = {
@@ -16,7 +17,12 @@ type IProps = {
 
 const ShareRecipeModal: React.FC<IProps> = ({ recipe }) => {
 
-    
+
+    const {
+        editRecipe,
+        isEditingRecipe,
+        editRecipeError,
+    } = useEditRecipe();
 
     const recipeUrl = `${FRONT_END_BASE_URL}/dashboard/recipes/${recipe.id}`
 
@@ -25,8 +31,17 @@ const ShareRecipeModal: React.FC<IProps> = ({ recipe }) => {
         setCopiedLink,
     ] = useState(false);
 
+    const handleChangeRecipeVisibility = useCallback(() => {
+
+        editRecipe({
+            id: recipe.id,
+            isPublic: !recipe.isPublic,
+        })
+
+    }, [])
+ 
     // Copy link
-    const copyLink = () => {
+    const copyLink = useCallback(() => {
 
         if (copiedLink) return;
 
@@ -36,7 +51,7 @@ const ShareRecipeModal: React.FC<IProps> = ({ recipe }) => {
 
         // Update state
         setCopiedLink(true);
-    }
+    }, [])
 
     useEffect(() => {
 
@@ -112,10 +127,14 @@ const ShareRecipeModal: React.FC<IProps> = ({ recipe }) => {
                     <div
                         tabIndex={0}
                         role="button"
-                        className="rounded-lg p-3 m-1 w-full border border-app-green text-white bg-base-300 flex justify-between items-center hover:border hover:border-app-green-hover"
+                        className={`${isEditingRecipe && 'opacity-[0.4] cursor-not-allowed hover:border-app-green'} rounded-lg p-3 m-1 w-full border border-app-green text-white bg-base-300 flex justify-between 
+                            items-center hover:border hover:border-app-green-hover`}
                     >
 
                         <div className="flex justify-start items-center gap-2">
+
+                            {isEditingRecipe && (<span className="loading loading-spinner"></span>)}
+
                             {
                                 recipe.isPublic ? (
                                     <>
@@ -138,9 +157,11 @@ const ShareRecipeModal: React.FC<IProps> = ({ recipe }) => {
                         <KeyboardArrowDownIcon />
 
                     </div>
-                    <ul tabIndex={0} className="dropdown-content menu bg-base-300 rounded-box z-[1] p-2 shadow w-full">
+                    {
+                        !isEditingRecipe && (
+                            <ul tabIndex={0} className="dropdown-content menu bg-base-300 rounded-box z-[1] p-2 shadow w-full">
 
-                        <li>
+                        <li onClick={handleChangeRecipeVisibility}>
                             <a>
 
                                 {
@@ -162,6 +183,9 @@ const ShareRecipeModal: React.FC<IProps> = ({ recipe }) => {
                             </a>
                         </li>
                     </ul>
+                        )
+                    }
+                    
                 </div>
 
 
