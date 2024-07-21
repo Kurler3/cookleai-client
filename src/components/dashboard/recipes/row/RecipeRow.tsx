@@ -16,7 +16,7 @@ const RecipeRow: React.FC<IProps> = ({
     lastElementRef,
     setSelectedRecipe
 }) => {
-
+    
     return (
         <div
             ref={lastElementRef}
@@ -32,14 +32,16 @@ const RecipeRow: React.FC<IProps> = ({
             />
 
             {/* TITLE */}
-            <div className="text-center flex-1 h-full flex justify-center items-center font-medium text-app-white min-w-52">
+            {/* min-w-52 */}
+            <div className="text-center flex-1 h-full flex justify-center items-center font-medium text-app-white"> 
                 {
                     recipe.title
                 }
             </div>
 
             {/* AUTHOR */}
-            <div className="flex justify-center items-center gap-4 flex-1 h-full text-app-white min-w-44">
+            {/* min-w-44 */}
+            <div className="flex justify-center items-center gap-4 flex-1 h-full text-app-white">
                 <div className="avatar">
                     <div className="w-8 rounded-full">
                         <img src={recipe.createdByUser!.avatar} />
@@ -49,10 +51,22 @@ const RecipeRow: React.FC<IProps> = ({
                     {recipe.createdByUser!.firstName}
                 </div>
             </div>
+            
+            {/* VISIBILITY */}
+            <div className="flex-1 text-center">
+                {
+                    recipe.isPublic ? 'Public' : 'Private'
+                }
+            </div>
 
             {/* ACTIONS */}
-            <div className={`dropdown dropdown-${idx === 0 ? 'bottom' : 'top'} dropdown-end`}>
-                <div onClick={() => setSelectedRecipe(recipe)} role="button" tabIndex={0} className="cursor-pointer hover:bg-gray-600 hover:text-white transition rounded p-2"> <MoreVertIcon /></div>
+            <div className={`dropdown dropdown-${idx === 0 ? 'bottom' : 'top'} dropdown-end w-[54px]`}>
+                <div 
+                    onClick={() => setSelectedRecipe(recipe)} role="button" tabIndex={0} 
+                    className="cursor-pointer hover:bg-gray-600 hover:text-white transition rounded p-2 flex justify-center items-center"
+                    > 
+                        <MoreVertIcon />
+                    </div>
                 <RecipeActionsDropdownMenu recipe={recipe}/>
             </div>
 

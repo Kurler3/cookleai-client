@@ -34,8 +34,13 @@ const RecipesTable: React.FC<IProps> = ({
                 </div>
 
                 {/* AUTHOR */}
-                <div className="text-app-white flex-1 min-w-44 font-medium text-center">
+                <div className="text-app-white flex-1  font-medium text-center">
                     Author
+                </div>
+
+                {/* VISIBILITY */}
+                <div className="text-app-white font-medium text-center flex-1">
+                    Visibility
                 </div>
 
                 {/* ACTIONS */}
