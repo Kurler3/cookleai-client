@@ -2,6 +2,8 @@ import { IRecipe } from "../../../../types";
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import RecipeActionsDropdownMenu from "../RecipeActionsDropdownMenu";
 import recipePlaceholderImg from '@/assets/images/recipe_placeholder.png';
+import LockOpenIcon from '@mui/icons-material/LockOpen';
+import LockIcon from '@mui/icons-material/Lock';
 
 type IProps = {
     recipe: IRecipe;
@@ -55,8 +57,14 @@ const RecipeRow: React.FC<IProps> = ({
             {/* VISIBILITY */}
             <div className="flex-1 text-center">
                 {
-                    recipe.isPublic ? 'Public' : 'Private'
+                    recipe.isPublic ? (
+                        <LockOpenIcon />
+                    ) : (
+                        <LockIcon />
+                    )
                 }
+
+                
             </div>
 
             {/* ACTIONS */}
