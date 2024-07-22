@@ -29,7 +29,6 @@ const DetailedRecipeEditPage = () => {
 
             </div>
 
-
             {/* CONTENT */}
 
 
