@@ -4,7 +4,6 @@ import { IRecipe } from "@/types";
 import { useCallback, useMemo, useRef } from "react";
 
 const useGetUserRecipes = (pageSize = 15) => {
-
     const observer = useRef<IntersectionObserver>();
 
     const axios = useAxios();
@@ -23,11 +22,10 @@ const useGetUserRecipes = (pageSize = 15) => {
         queryKey: ["my-recipes"],
         queryFn: async ({ pageParam = 0 }): Promise<IRecipe[]> => {
             return axios
-            .get("/recipes/my-recipes", {
-                params: { page: pageParam, limit: pageSize },
-            })
-            .then((res) => res.data)
-
+                .get("/recipes/my-recipes", {
+                    params: { page: pageParam, limit: pageSize },
+                })
+                .then((res) => res.data);
         },
         getNextPageParam: (lastPage, pages) => {
             return lastPage.length ? pages.length : undefined; // If the last page was not empty, then continue fetching, otherwise stop.
@@ -36,45 +34,45 @@ const useGetUserRecipes = (pageSize = 15) => {
 
     const lastElementRef = useCallback(
         (node: HTMLDivElement) => {
-          if (isLoading) return;
-            
-          // If when this func runs there is a observer, disconnect.
-          if (observer.current) observer.current.disconnect();
-    
-          // Init observer and set in ref
-          observer.current = new IntersectionObserver((entries) => {
-            // If the first entry attached to this ref is intersecting the view port and
-            // if there is a next page
-            // and is not currently fetching => fetch next page
-            if (entries[0].isIntersecting && hasNextPage && !isFetching) {
-              fetchNextPage();
-            }
-          });
-    
-          if (node) observer.current.observe(node);
+            if (isLoading) return;
+
+            // If when this func runs there is a observer, disconnect.
+            if (observer.current) observer.current.disconnect();
+
+            // Init observer and set in ref
+            observer.current = new IntersectionObserver((entries) => {
+                // If the first entry attached to this ref is intersecting the view port and
+                // if there is a next page
+                // and is not currently fetching => fetch next page
+                if (entries[0].isIntersecting && hasNextPage && !isFetching) {
+                    fetchNextPage();
+                }
+            });
+
+            if (node) observer.current.observe(node);
         },
         [fetchNextPage, hasNextPage, isFetching, isLoading]
-      );
+    );
 
+    // Map between recipeId to pageIndex + indexInPage (will be faster when deleting)
+    const recipeIdToIndexMap: Map<
+        number,
+        { pageIndex: number; indexInPage: number }
+    > = useMemo(() => {
+        const recipeMap = new Map();
 
-      // Map between recipeId to pageIndex + indexInPage (will be faster when deleting)
-      const recipeIdToIndexMap:Map<number, { pageIndex: number; indexInPage: number; }> = useMemo(() => {
+        recipes?.pages.forEach((page, pageIndex) => {
+            page.forEach((recipe, indexInPage) => {
+                recipeMap.set(recipe.id, { pageIndex, indexInPage });
+            });
+        });
 
-          const recipeMap = new Map();
+        return recipeMap;
+    }, [recipes?.pages]);
 
-          recipes?.pages.forEach((page, pageIndex) => {
-              page.forEach((recipe, indexInPage) => {
-                  recipeMap.set(recipe.id, { pageIndex, indexInPage });
-              });
-          });
-
-          return recipeMap;
-      }, [recipes?.pages])
-
-
-      return {
+    return {
         recipes: recipes?.pages.flat(),
-        isLoadingRecipes: status === 'loading',
+        isLoadingRecipes: status === "loading",
         errorWhileGettingRecipes,
         isFetchingNextPage,
         lastElementRef,

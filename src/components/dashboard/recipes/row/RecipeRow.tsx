@@ -55,7 +55,10 @@ const RecipeRow: React.FC<IProps> = ({
             </div>
             
             {/* VISIBILITY */}
-            <div className="flex-1 text-center">
+            <div className="flex-1 text-center tooltip" data-tip={
+                recipe.isPublic ? 'This recipe can be viewed by anyone in the world!' : 'This recipe can only be viewed by people you added'
+            }>
+             
                 {
                     recipe.isPublic ? (
                         <LockOpenIcon />
