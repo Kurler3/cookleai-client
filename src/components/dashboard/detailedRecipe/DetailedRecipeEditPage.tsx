@@ -1,6 +1,7 @@
 import useGetRecipe from "@/hooks/recipes/useGetRecipe.hook";
 import { useParams } from "react-router-dom";
 import EditRecipeSection from "./edit/EditRecipeSection";
+import CameraAltIcon from '@mui/icons-material/CameraAlt';
 
 const DetailedRecipeEditPage = () => {
     const { recipeId } = useParams();
@@ -37,7 +38,21 @@ const DetailedRecipeEditPage = () => {
                     />
                 </div>
 
-                {/*  */}
+                {/* IMAGE */}
+                <div className="flex justify-start items-center gap-4 w-full">
+
+                    <p className="w-[30%] font-medium text-gray-200">Image</p>
+                    
+                    <button className="btn">
+
+                        <CameraAltIcon />
+
+                        Edit Image
+
+                    </button>
+
+                </div>
+
             </EditRecipeSection>
 
             {/* CONTENT */}
@@ -47,6 +62,13 @@ const DetailedRecipeEditPage = () => {
             {/* EXTRA */}
 
             {/* DELETE / SAVE BUTTONS */}
+
+
+
+
+
+            {/* MODALS */}
+            
         </div>
     );
 };
