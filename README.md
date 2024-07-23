@@ -12,3 +12,4 @@ CookleAI is an app where you can generate a recipe with AI, manage them and shar
 - TS
 - React Query
 - DaisyUI
+- Google OAuth
