@@ -7,6 +7,7 @@ import DeleteRecipeModal from "./modal/DeleteRecipeModal";
 import { RECIPE_ACTION_MODAL_IDS } from "@/utils/constants/recipes.constants";
 import AddToCookbookModal from "./modal/AddToCookbookModal";
 import ShareRecipeModal from "./modal/ShareRecipeModal";
+import AddYourFirstRecipe from "./AddYourFirstRecipe";
 
 type IProps = {
     isGrid: boolean;
@@ -17,10 +18,14 @@ const RecipesList: React.FC<IProps> = ({ isGrid }) => {
         useGetUserRecipes();
 
     const [selectedRecipe, setSelectedRecipe] = useState<IRecipe | undefined>();
-  
+
     return (
         <div className="flex justify-start items-start w-full flex-1 gap-4 max-h-[80%]">
-            {!isGrid ? (
+            {
+            !isLoadingRecipes && recipes?.length === 0 ? (
+                <AddYourFirstRecipe />
+            ) :
+            !isGrid ? (
                 <RecipesTable
                     recipes={recipes}
                     isLoadingRecipes={isLoadingRecipes}
@@ -52,9 +57,7 @@ const RecipesList: React.FC<IProps> = ({ isGrid }) => {
                     {/* DELETE RECIPE MODAL */}
                     <input
                         type="checkbox"
-                        id={
-                            RECIPE_ACTION_MODAL_IDS.DELETE
-                        }
+                        id={RECIPE_ACTION_MODAL_IDS.DELETE}
                         className="modal-toggle"
                     />
                     <DeleteRecipeModal
@@ -65,15 +68,13 @@ const RecipesList: React.FC<IProps> = ({ isGrid }) => {
                     {/* SHARE RECIPE MODAL */}
                     <input
                         type="checkbox"
-                        id={
-                            RECIPE_ACTION_MODAL_IDS.SHARE_RECIPE
-                        }
+                        id={RECIPE_ACTION_MODAL_IDS.SHARE_RECIPE}
                         className="modal-toggle"
                     />
 
-                    <ShareRecipeModal  
-                        recipe={selectedRecipe} 
-                        setSelectedRecipe={setSelectedRecipe} 
+                    <ShareRecipeModal
+                        recipe={selectedRecipe}
+                        setSelectedRecipe={setSelectedRecipe}
                     />
                 </>
             )}

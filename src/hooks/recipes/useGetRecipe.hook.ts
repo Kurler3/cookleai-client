@@ -3,7 +3,7 @@ import useAxios from "../axios/useAxios.hook";
 import { useNavigate } from "react-router-dom";
 import { RECIPE_ROLES, ROUTE_PATHS } from "@/utils/constants";
 import toast from "react-hot-toast";
-import { INetworkError } from "@/types";
+import { INetworkError, IRecipe } from "@/types";
 import { getMinutesInMs } from "@/utils/functions";
 import { useEffect } from "react";
 import useIsInEditPage from "../common/useIsInEditPage";
@@ -24,7 +24,7 @@ const useGetRecipe = (recipeId?: string) => {
         queryKey: ["recipe", recipeId],
 
         // Set the query function
-        queryFn: async () => {
+        queryFn: async (): Promise<IRecipe> => {
             const { data } = await axios.get(`/recipes/${recipeId}`);
             return data;
         },
