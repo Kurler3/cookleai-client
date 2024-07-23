@@ -1,7 +1,9 @@
 import useGetRecipe from "@/hooks/recipes/useGetRecipe.hook";
 import { useParams } from "react-router-dom";
 import EditRecipeSection from "./edit/EditRecipeSection";
-import CameraAltIcon from '@mui/icons-material/CameraAlt';
+import CameraAltIcon from "@mui/icons-material/CameraAlt";
+import { RECIPE_ACTION_MODAL_IDS } from "@/utils/constants";
+import EditRecipeImageModal from "./edit/modal/EditRecipeImageModal";
 
 const DetailedRecipeEditPage = () => {
     const { recipeId } = useParams();
@@ -40,19 +42,16 @@ const DetailedRecipeEditPage = () => {
 
                 {/* IMAGE */}
                 <div className="flex justify-start items-center gap-4 w-full">
-
                     <p className="w-[30%] font-medium text-gray-200">Image</p>
-                    
-                    <button className="btn">
 
+                    <label
+                        htmlFor={RECIPE_ACTION_MODAL_IDS.EDIT_IMAGE}
+                        className="btn"
+                    >
                         <CameraAltIcon />
-
                         Edit Image
-
-                    </button>
-
+                    </label>
                 </div>
-
             </EditRecipeSection>
 
             {/* CONTENT */}
@@ -63,12 +62,15 @@ const DetailedRecipeEditPage = () => {
 
             {/* DELETE / SAVE BUTTONS */}
 
-
-
-
-
             {/* MODALS */}
-            
+
+            {/* EDIT RECIPE IMAGE MODAL */}
+            <input
+                type="checkbox"
+                id={RECIPE_ACTION_MODAL_IDS.EDIT_IMAGE}
+                className="modal-toggle"
+            />
+            <EditRecipeImageModal recipe={recipe} />
         </div>
     );
 };
