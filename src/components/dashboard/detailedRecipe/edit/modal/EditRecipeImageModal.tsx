@@ -6,17 +6,24 @@ import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import recipePlaceholderImg from "@/assets/images/recipe_placeholder.png";
 import { useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
+import useUploadRecipeImage from "@/hooks/recipes/useUploadRecipeImage.hook";
 
 type IProps = {
     recipe: IRecipe;
 };
 
 const EditRecipeImageModal: React.FC<IProps> = ({ recipe }) => {
+    
     const fileInputRef = useRef<HTMLInputElement>(null);
 
     const [selectedImageSrc, setSelectedImageSrc] = useState<
         string | undefined
     >(recipe.image);
+
+    const {
+        uploadImage,
+        isUploadingImage,
+    } = useUploadRecipeImage();
 
     // On file change
     const handleOnFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -34,9 +41,15 @@ const EditRecipeImageModal: React.FC<IProps> = ({ recipe }) => {
 
             // When finished loading the img => store the src of it
             reader.onloadend = () => {
+
+
                 setSelectedImageSrc(reader.result as string);
 
-                //TODO Upload the image!
+                uploadImage({
+                    recipeId: recipe.id,
+                    img: file,
+                });
+
             };
 
             // Read the file
@@ -49,7 +62,7 @@ const EditRecipeImageModal: React.FC<IProps> = ({ recipe }) => {
     };
 
     const handleClickSelectImage = () => {
-        if (fileInputRef.current) {
+        if (fileInputRef.current && !isUploadingImage) {
             fileInputRef.current.click();
         }
     };
@@ -91,9 +104,17 @@ const EditRecipeImageModal: React.FC<IProps> = ({ recipe }) => {
 
                 {/* UPLOAD IMAGE BUTTON */}
                 <button
-                    className="btn w-full common_btn text-white flex-1"
+                    className={`
+                        btn w-full common_btn text-white flex-1 
+                        ${isUploadingImage ? "btn-disabled" : ""}
+                    `}
                     onClick={handleClickSelectImage}
                 >
+                    {
+                        isUploadingImage && (
+                            <span className="loading loading-spinner"></span>
+                        )
+                    }
                     <UploadIcon />
                     Select Image
                 </button>
@@ -118,6 +139,7 @@ const EditRecipeImageModal: React.FC<IProps> = ({ recipe }) => {
                 accept=".jpg,.jpeg,.png,.webp"
                 onChange={handleOnFileChange}
                 readOnly
+                disabled={isUploadingImage}
             />
 
             {/* SMALL DISCLAIMER */}
