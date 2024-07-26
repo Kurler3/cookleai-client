@@ -1,4 +1,4 @@
-import { useMutation, useQuery, useQueryClient } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 import useAxios from "../axios/useAxios.hook";
 import axiosNetworkErrorHandler from "@/utils/functions/axiosNetworkErrorHandler";
 import { IRecipe } from "@/types";
@@ -47,6 +47,11 @@ const useUploadRecipeImage = () => {
             uploadedImgUrl
         }) => {
 
+            console.log({
+                recipe,
+                uploadedImgUrl
+            })
+
             // Only set the new image url if it didn't have one previously
             // If it had an image before, the new url is going to be the same
             // Because the image is replaced.
@@ -55,8 +60,14 @@ const useUploadRecipeImage = () => {
                 ["recipe", recipe.id],
                 (oldData: unknown) => {
 
+                    // const newData = { ...(oldData as IRecipe) };
+                   
+                    // newData.image = uploadedImgUrl;
+
+                    // console.log('New recipe: ', newData)
+
                     return {
-                        ...(oldData as IRecipe),
+                        ...recipe,
                         image: uploadedImgUrl
                     };
 

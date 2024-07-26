@@ -47,10 +47,10 @@ const useGetRecipe = (recipeId?: string) => {
             navigate(ROUTE_PATHS.RECIPES);
         },
         retry: false,
+        staleTime: getMinutesInMs(3),
         // Refetch the data in the background
         refetchIntervalInBackground: true,
         refetchInterval: getMinutesInMs(3),
-        staleTime: getMinutesInMs(3),
     });
 
     // If role is viewer, and trying to edit => redirect back
