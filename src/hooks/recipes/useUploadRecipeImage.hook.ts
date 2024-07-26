@@ -1,11 +1,13 @@
-import { useMutation } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import useAxios from "../axios/useAxios.hook";
 import axiosNetworkErrorHandler from "@/utils/functions/axiosNetworkErrorHandler";
+import { IRecipe } from "@/types";
+import toast from "react-hot-toast";
 
 
 type IUploadRecipeImageInput = {
     img: File;
-    recipeId: number;
+    recipe: IRecipe;
 }
 
 
@@ -13,28 +15,59 @@ const useUploadRecipeImage = () => {
 
     const axios = useAxios();
 
+    const queryClient = useQueryClient();
+
     const {
         isLoading: isUploadingImage,
         error: uploadImageError,
         mutate: uploadImage,
     } = useMutation({
         mutationKey: ["uploadRecipeImage"],
-        mutationFn: ({
+        mutationFn: async ({
             img,
-            recipeId,
+            recipe,
         }: IUploadRecipeImageInput) => {
-            
+
             const formData = new FormData();
             formData.append("img", img);
-            
-            return axios.post(`/recipes/${recipeId}/upload-image`, formData, {
+
+            const uploadedImgUrl = await axios.post(`/recipes/${recipe.id}/upload-image`, formData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                 },
             });
+
+            return {
+                recipe,
+                uploadedImgUrl: uploadedImgUrl.data.data
+            };
         },
-        onSuccess: (data) => {
-            console.log({UploadImgData: data});
+        onSuccess: ({
+            recipe,
+            uploadedImgUrl
+        }) => {
+
+            // Only set the new image url if it didn't have one previously
+            // If it had an image before, the new url is going to be the same
+            // Because the image is replaced.
+
+            queryClient.setQueryData(
+                ["recipe", recipe.id],
+                (oldData: unknown) => {
+
+                    return {
+                        ...(oldData as IRecipe),
+                        image: uploadedImgUrl
+                    };
+
+                }
+            )
+
+
+            // Success toast
+            toast.success('Image uploaded successfully!')
+
+
         },
         onError: axiosNetworkErrorHandler(),
     });

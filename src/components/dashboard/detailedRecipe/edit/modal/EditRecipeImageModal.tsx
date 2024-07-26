@@ -4,7 +4,7 @@ import { RECIPE_ACTION_MODAL_IDS } from "@/utils/constants";
 import UploadIcon from "@mui/icons-material/Upload";
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import recipePlaceholderImg from "@/assets/images/recipe_placeholder.png";
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 import toast from "react-hot-toast";
 import useUploadRecipeImage from "@/hooks/recipes/useUploadRecipeImage.hook";
 
@@ -15,10 +15,6 @@ type IProps = {
 const EditRecipeImageModal: React.FC<IProps> = ({ recipe }) => {
     
     const fileInputRef = useRef<HTMLInputElement>(null);
-
-    const [selectedImageSrc, setSelectedImageSrc] = useState<
-        string | undefined
-    >(recipe.image);
 
     const {
         uploadImage,
@@ -42,11 +38,8 @@ const EditRecipeImageModal: React.FC<IProps> = ({ recipe }) => {
             // When finished loading the img => store the src of it
             reader.onloadend = () => {
 
-
-                setSelectedImageSrc(reader.result as string);
-
                 uploadImage({
-                    recipeId: recipe.id,
+                    recipe,
                     img: file,
                 });
 
@@ -69,14 +62,8 @@ const EditRecipeImageModal: React.FC<IProps> = ({ recipe }) => {
 
     //TODO Handle reset image
     const handleResetImage = () => {
-        setSelectedImageSrc(undefined);
+        // setSelectedImageSrc(undefined);
     }
-
-    useEffect(() => {
-        if (recipe) {
-            setSelectedImageSrc(recipe.image);
-        }
-    }, [recipe]);
 
     return (
         <Modal
@@ -94,7 +81,7 @@ const EditRecipeImageModal: React.FC<IProps> = ({ recipe }) => {
 
             {/* CURRENT IMAGE */}
             <img
-                src={selectedImageSrc ?? recipePlaceholderImg}
+                src={recipe.image ?? recipePlaceholderImg}
                 alt="Recipe image"
                 className="border bg-base-100 rounded-md border-gray-600 h-[450px] w-full"
             />
@@ -120,7 +107,7 @@ const EditRecipeImageModal: React.FC<IProps> = ({ recipe }) => {
                 </button>
 
                 {
-                    selectedImageSrc && (
+                    recipe.image && (
                         <button 
                             onClick={handleResetImage}
                             className="btn border border-red-500 text-red-500 hover:border-red-500 hover:bg-red-500 hover:text-white transition"

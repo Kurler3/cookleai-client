@@ -69,6 +69,7 @@ const DetailedRecipeEditPage = () => {
                 type="checkbox"
                 id={RECIPE_ACTION_MODAL_IDS.EDIT_IMAGE}
                 className="modal-toggle"
+
             />
             <EditRecipeImageModal recipe={recipe} />
         </div>
