@@ -1,4 +1,4 @@
-import { useMutation, useQueryClient } from "react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import useAxios from "../axios/useAxios.hook";
 import toast from "react-hot-toast";
 import { handleCloseModal } from "@/utils/functions/closeModal";
@@ -17,7 +17,7 @@ const useDeleteRecipe = (recipeId?: number) => {
     
     const {
         mutate: deleteRecipe,
-        isLoading: isDeletingRecipe,
+        isPending: isDeletingRecipe,
         error: deleteRecipeError,
     } = useMutation({
         mutationKey: ["deleteRecipe", ],
@@ -29,7 +29,8 @@ const useDeleteRecipe = (recipeId?: number) => {
             toast.success("Recipe deleted successfully");
 
             // Delete the recipe from the cache
-            queryClient.setQueryData("my-recipes", (oldData: unknown) => {
+            queryClient.setQueryData(
+                ["my-recipes"], (oldData: unknown) => {
 
                 const recipeIndexes = recipeIdToIndexMap.get(recipeId!);
 

@@ -37,6 +37,7 @@ const App = () => {
                         <Route path="/" element={<ProtectedRoutes />}>
                             {/* DASHBOARD */}
                             <Route path="/dashboard" element={<Dashboard />}>
+                            
                                 {/* RECIPES */}
                                 <Route
                                     path={ROUTE_PATHS.DASHBOARD}

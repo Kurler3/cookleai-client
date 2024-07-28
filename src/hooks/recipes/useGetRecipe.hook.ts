@@ -1,12 +1,12 @@
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
 import useAxios from "../axios/useAxios.hook";
 import { useNavigate } from "react-router-dom";
 import { RECIPE_ROLES, ROUTE_PATHS } from "@/utils/constants";
 import toast from "react-hot-toast";
 import { INetworkError, IRecipe } from "@/types";
-import { getMinutesInMs } from "@/utils/functions";
 import { useEffect } from "react";
 import useIsInEditPage from "../common/useIsInEditPage";
+import { getMinutesInMs } from "@/utils/functions";
 
 const useGetRecipe = (recipeId?: string) => {
     const navigate = useNavigate();
@@ -21,7 +21,7 @@ const useGetRecipe = (recipeId?: string) => {
         data: recipe,
     } = useQuery({
         // Set the query key
-        queryKey: ["recipe", recipeId],
+        queryKey: ['recipe', recipeId],
 
         // Set the query function
         queryFn: async (): Promise<IRecipe> => {
@@ -48,9 +48,7 @@ const useGetRecipe = (recipeId?: string) => {
         },
         retry: false,
         staleTime: getMinutesInMs(3),
-        // Refetch the data in the background
-        refetchIntervalInBackground: true,
-        refetchInterval: getMinutesInMs(3),
+        
     });
 
     // If role is viewer, and trying to edit => redirect back

@@ -1,4 +1,4 @@
-import { useInfiniteQuery } from "react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import useAxios from "../axios/useAxios.hook";
 import { IRecipe } from "@/types";
 import { useCallback, useMemo, useRef } from "react";
@@ -30,6 +30,7 @@ const useGetUserRecipes = (pageSize = 15) => {
         getNextPageParam: (lastPage, pages) => {
             return lastPage.length ? pages.length : undefined; // If the last page was not empty, then continue fetching, otherwise stop.
         },
+        initialPageParam: 0,
     });
 
     const lastElementRef = useCallback(
@@ -72,7 +73,7 @@ const useGetUserRecipes = (pageSize = 15) => {
 
     return {
         recipes: recipes?.pages.flat(),
-        isLoadingRecipes: status === "loading",
+        isLoadingRecipes: status === "pending",
         errorWhileGettingRecipes,
         isFetchingNextPage,
         lastElementRef,

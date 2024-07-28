@@ -12,7 +12,6 @@ const DetailedRecipePage = () => {
     recipe,
   } = useGetRecipe(recipeId);
       
-
   return (
     <div>DetailedRecipePage</div>
   )

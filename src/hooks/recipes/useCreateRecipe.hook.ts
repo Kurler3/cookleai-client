@@ -1,4 +1,4 @@
-import { useMutation } from "react-query";
+import { useMutation } from "@tanstack/react-query";
 import useAxios from "../axios/useAxios.hook";
 import { useNavigate } from "react-router-dom";
 import { ROUTE_PATHS } from "@/utils/constants";
@@ -11,7 +11,7 @@ const useCreateRecipe = () => {
 
     const {
         data: newRecipe,
-        isLoading: isCreatingRecipe,
+        isPending: isCreatingRecipe,
         error: errorCreatingRecipe,
         mutate: createRecipe,
     } = useMutation({

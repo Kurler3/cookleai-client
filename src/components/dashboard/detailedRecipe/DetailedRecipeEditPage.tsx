@@ -71,7 +71,7 @@ const DetailedRecipeEditPage = () => {
                 className="modal-toggle"
 
             />
-            <EditRecipeImageModal recipe={recipe} />
+            <EditRecipeImageModal recipe={recipe}/>
         </div>
     );
 };

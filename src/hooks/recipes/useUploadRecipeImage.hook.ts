@@ -1,4 +1,4 @@
-import { useMutation, useQueryClient } from "react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import useAxios from "../axios/useAxios.hook";
 import axiosNetworkErrorHandler from "@/utils/functions/axiosNetworkErrorHandler";
 import { IRecipe } from "@/types";
@@ -18,7 +18,7 @@ const useUploadRecipeImage = () => {
     const queryClient = useQueryClient();
 
     const {
-        isLoading: isUploadingImage,
+        isPending: isUploadingImage,
         error: uploadImageError,
         mutate: uploadImage,
     } = useMutation({
@@ -57,8 +57,15 @@ const useUploadRecipeImage = () => {
             // Because the image is replaced.
 
             queryClient.setQueryData(
-                ["recipe", recipe.id],
+                ["recipe", recipe.id.toString()],
                 (oldData: unknown) => {
+
+                    if(!oldData) {
+                        console.warn('Cache data not found for recipe: ', recipe.id);
+                        return;
+                    }
+
+                    console.log('useUploadRecipeImage: ', recipe.id, oldData);
 
                     // const newData = { ...(oldData as IRecipe) };
                    

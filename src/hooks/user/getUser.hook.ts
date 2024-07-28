@@ -1,4 +1,4 @@
-import { useQuery } from "react-query"
+import { useQuery } from "@tanstack/react-query"
 import { getMinutesInMs } from "../../utils/functions"
 import { COOKLEAI_ACCESS_TOKEN } from "../../utils/constants"
 import { IUser } from "../../types"

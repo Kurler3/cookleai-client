@@ -1,4 +1,4 @@
-import { useMutation, useQueryClient } from "react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import useAxios from "../axios/useAxios.hook";
 import useGetUserRecipes from "./useGetUserRecipes.hook";
 import { IGetUserRecipesData, IRecipe, IUpdateRecipe } from "@/types";
@@ -19,7 +19,7 @@ const useEditRecipe = () => {
 
     const {
         mutate: editRecipe,
-        isLoading: isEditingRecipe,
+        isPending: isEditingRecipe,
         error: editRecipeError,
     } = useMutation({
         mutationKey: ['editRecipe'],
@@ -31,7 +31,7 @@ const useEditRecipe = () => {
         },
         onSuccess: (editedReciped: IRecipe) => {
 
-            queryClient.setQueryData('my-recipes', (oldData: unknown) => {
+            queryClient.setQueryData(["my-recipes"], (oldData: unknown) => {
 
                 const recipeIndexes = recipeIdToIndexMap.get(
                     editedReciped.id,
