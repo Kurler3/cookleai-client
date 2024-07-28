@@ -5,7 +5,7 @@ enum IRecipeRole {
     OWNER = "OWNER",
     EDITOR = "EDITOR",
     VIEWER = "VIEWER",
-} 
+}
 
 type INutrients = {
     calories: number;
@@ -46,9 +46,9 @@ export type IRecipe = {
 };
 
 export type IIngredient = {
-    name: string;
-    quantity: number;
-    unit: string;
+    name?: string;
+    quantity?: number;
+    unit?: string;
 }
 
 // type IUsersOnRecipes = {
@@ -68,4 +68,18 @@ export type IGetUserRecipesData = {
 
 export type IUpdateRecipe = Partial<IRecipe> & {
     id: number;
+}
+
+export type IRecipeEditState = {
+    title?: string;
+    servings?: string;
+    notes?: string;
+    preTime?: number;
+    cookTime?: number;
+    nutrients?: INutrients;
+    cuisine?: string;
+    language?: string;
+    difficulty?: string;
+    ingredients?: IIngredient[];
+    instructions?: string[];
 }

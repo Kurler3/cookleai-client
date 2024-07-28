@@ -1,13 +1,11 @@
-import { IRecipe } from "@/types";
-
-
+import { IRecipe, IRecipeEditState } from "@/types";
 
 
 const getEditRecipeInitialState = (
     recipe?: IRecipe,
-) => {
+): IRecipeEditState => {
 
-    return recipe ?? {
+    return (recipe as IRecipeEditState) ?? {
         title: undefined,
         servings: undefined,
         notes: undefined,
@@ -25,7 +23,6 @@ const getEditRecipeInitialState = (
         ingredients: [],
         instructions: [],
     }
-
 }
 
 export default getEditRecipeInitialState;

@@ -4,8 +4,10 @@ import EditRecipeSection from "./edit/EditRecipeSection";
 import CameraAltIcon from "@mui/icons-material/CameraAlt";
 import { RECIPE_ACTION_MODAL_IDS } from "@/utils/constants";
 import EditRecipeImageModal from "./edit/modal/EditRecipeImageModal";
-import { useEffect, useState } from "react";
+import { ChangeEvent, useCallback, useEffect, useState } from "react";
 import getEditRecipeInitialState from "@/utils/functions/recipe/getEditRecipeInitialState";
+import { IRecipeEditState } from "@/types";
+import EditRecipeIngredients from "./edit/inputs/EditRecipeIngredients";
 
 const DetailedRecipeEditPage = () => {
 
@@ -19,18 +21,44 @@ const DetailedRecipeEditPage = () => {
         setEditRecipeState,
     ] = useState(getEditRecipeInitialState(recipe));
 
-    console.log(recipe?.title, editRecipeState.title)
-    
+    ////////////////////////////////////////////////////////
+    // ON CHANGE EDIT RECIPE STATE /////////////////////////
+    ////////////////////////////////////////////////////////
+
+    const onChangeEditRecipeState = useCallback((
+        updateStateObj: Partial<IRecipeEditState>   
+    ) => {  
+        setEditRecipeState((prevEditRecipeState) => {
+            return {
+                ...prevEditRecipeState,
+                ...updateStateObj,
+            }
+        });
+    }, [])
+
+    //TODO Handle on change of inputs
+    const handleOnChange = useCallback((event: ChangeEvent<HTMLInputElement>
+    ) => {
+
+        const {
+            name,
+            value,
+        } = event.target;
+
+        onChangeEditRecipeState({ [name]: value });
+
+    }, [onChangeEditRecipeState])  
+
     ////////////////////////////////////////////////////////
     // AS SOON AS RECIPE CHANGES => UPDATE EDIT STATE //////
     ////////////////////////////////////////////////////////
 
     useEffect(() => {
-        if(recipe) {
-            setEditRecipeState(recipe);
+        if (recipe) {
+            onChangeEditRecipeState(getEditRecipeInitialState(recipe));
         }
-    }, [])
- 
+    }, [recipe])
+
 
     ///////////////////////////////////
     // RETURN /////////////////////////
@@ -42,8 +70,6 @@ const DetailedRecipeEditPage = () => {
     }
 
     if (!recipe) return null;
-
-    
 
     return (
         <div className="flex justify-start items-start flex-col gap-4 h-full w-full">
@@ -59,18 +85,20 @@ const DetailedRecipeEditPage = () => {
                 sectionInputs={[
                     {
                         title: 'Title',
-                        inputElement: () => (
+                        inputElement: (
                             <input
                                 type="text"
                                 className="input flex-1 p-2 bg-base-300 focus:outline-app-green h-10"
                                 placeholder="Give your recipe a name..."
-                                value={recipe.title}
+                                value={editRecipeState.title}
+                                onChange={handleOnChange}
+                                name='title'
                             />
                         )
                     },
-                    {   
+                    {
                         title: 'Image',
-                        inputElement: () => (
+                        inputElement: (
                             <label
                                 htmlFor={RECIPE_ACTION_MODAL_IDS.EDIT_IMAGE}
                                 className="btn"
@@ -89,27 +117,43 @@ const DetailedRecipeEditPage = () => {
                 labelText="Only the title is required. You can edit the recipe at
                         any time."
                 sectionInputs={[
-                   {
-                    title: 'Servings',
-                    titleTooltipText: 'Use numbers, such as 3. You can also enter a range, such as 3-5.',
-                    inputElement: () => (
-                        <input 
-                            type="text"
-                            className="input flex-1 p-2 bg-base-300 focus:outline-app-green h-10"
-                            placeholder="Servings"
-                            value={recipe.servings}
-                        />
-                    )
-                   },
+
+                    //Servings
+                    {
+                        title: 'Servings',
+                        titleTooltipText: 'Use numbers, such as 3. You can also enter a range, such as 3-5.',
+                        inputElement: (
+                            <input
+                                type="text"
+                                className="input flex-1 p-2 bg-base-300 focus:outline-app-green h-10"
+                                placeholder="Servings"
+                                value={editRecipeState.servings}
+                                onChange={handleOnChange}
+                                name='servings'
+                            />
+                        )
+                    },
+                    // INGREDIENTS - Add and delete ingredients, each one has name, quantity and unit.
+                    {
+                        title: 'Ingredients',
+                        titleTooltipText: 'Add, remove and edit any ingredients for this recipe',
+                        inputElement: (
+                            <EditRecipeIngredients 
+                                ingredients={editRecipeState.ingredients}
+                                onChangeEditRecipeState={onChangeEditRecipeState}
+                            />
+                        )
+                    }
+
+                    // INSTRUCTIONS - Array of strings that can be dragged and dropped to change order.
+
+                    // NOTES - area
+
+                    // PREPARATION TIME - number input (mins)
+
+                    // COOKTIME - number input (mins)
 
                 ]}
-                // SERVINGS - Normal string input
-                // INGREDIENTS - Add and delete ingredients, each one has name, quantity and unit.
-                // INSTRUCTIONS - Array of strings that can be dragged and dropped to change order.
-                // NOTES - area
-                // PREPARATION TIME - number input (mins)
-                // COOKTIME - number input (mins)
-                 
             />
 
 

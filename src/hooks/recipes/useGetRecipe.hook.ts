@@ -30,13 +30,20 @@ const useGetRecipe = (recipeId?: string) => {
         },
         // Only launch request if there is a recipeId
         enabled: !!recipeId,
+        retry: false,
+        staleTime: getMinutesInMs(3),
+        
+    });
 
-        // When an error occurs, display a toast, and redirect the user back to his recipes.
-        onError: (error: INetworkError) => {
+    useEffect(() => {
+
+        // If there's an error
+        if(errorWhileGettingRecipe) {
+
             let toastErrMsg: string;
 
             // If unauthorized
-            if (error.statusCode === 401) {
+            if ((errorWhileGettingRecipe as INetworkError).statusCode === 401) {
                 toastErrMsg = "You are not authorized to view this recipe";
             } else {
                 toastErrMsg = "An error occurred while getting the recipe";
@@ -45,11 +52,9 @@ const useGetRecipe = (recipeId?: string) => {
             toast.error(toastErrMsg);
 
             navigate(ROUTE_PATHS.RECIPES);
-        },
-        retry: false,
-        staleTime: getMinutesInMs(3),
-        
-    });
+
+        }
+    }, []);
 
     // If role is viewer, and trying to edit => redirect back
     useEffect(() => {

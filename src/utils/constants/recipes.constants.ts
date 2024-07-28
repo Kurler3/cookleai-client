@@ -15,3 +15,12 @@ export const RECIPE_ROLES = {
     EDITOR: 'EDITOR',
     VIEWER: 'VIEWER'
 }
+
+export const EDIT_RECIPE_ATTRIBUTES = [
+    'title', 'servings',
+    'notes', 'preTime',
+    'cookTime', 'nutrients',
+    'cuisine', 'language',
+    'difficulty', 'ingredients',
+    'instructions'
+]

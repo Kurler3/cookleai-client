@@ -4,7 +4,7 @@ import React from "react";
 type IEditRecipeSectionInput = {
     title: string;
     titleTooltipText?: string;
-    inputElement: React.FC;
+    inputElement: React.ReactNode;
 }
 
 type IProps = {
@@ -35,11 +35,11 @@ const EditRecipeSection: React.FC<IProps> = ({
                     return (
                         <div
                             key={`recipe_edit_section_${sectionInput.title}`}
-                            className="flex justify-start items-center gap-4 w-full"
+                            className="flex justify-start items-start gap-4 w-full"
                         >
 
                             {/* Title */}
-                            <div className="w-[30%] flex justify-start items-center gap-3">
+                            <div className="w-[30%] flex justify-start items-start gap-3">
 
                                 <p className="font-medium text-gray-200">
                                     {sectionInput.title}
@@ -66,16 +66,12 @@ const EditRecipeSection: React.FC<IProps> = ({
                             </div>
 
                             {/* INPUT */}
-                            <sectionInput.inputElement />
+                            {sectionInput.inputElement}
 
                         </div>
                     )
                 })
             }
-
-            {/* {
-                children
-            } */}
         </div>
     )
 
