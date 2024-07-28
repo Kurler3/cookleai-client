@@ -45,7 +45,7 @@ export type IRecipe = {
     createdByUser?: IUser;
 };
 
-type IIngredient = {
+export type IIngredient = {
     name: string;
     quantity: number;
     unit: string;
