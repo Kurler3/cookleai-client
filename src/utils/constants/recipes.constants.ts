@@ -1,3 +1,4 @@
+import { IIngredientKeys } from "@/types"
 
 // ACTION MODAL IDS
 export const RECIPE_ACTION_MODAL_IDS = {
@@ -24,3 +25,5 @@ export const EDIT_RECIPE_ATTRIBUTES = [
     'difficulty', 'ingredients',
     'instructions'
 ]
+
+export const INGREDIENT_KEYS = ['name', 'quantity', 'unit'] as IIngredientKeys;

@@ -51,6 +51,8 @@ export type IIngredient = {
     unit?: string;
 }
 
+export type IIngredientKeys = (keyof IIngredient)[];
+
 // type IUsersOnRecipes = {
 //     recipeId: number;
 //     recipe?: IRecipe;

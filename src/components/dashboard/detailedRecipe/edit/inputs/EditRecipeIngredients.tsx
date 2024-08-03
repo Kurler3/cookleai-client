@@ -1,5 +1,7 @@
-import { IIngredient, IRecipeEditState } from "@/types";
-import React from "react";
+import { IIngredient, IIngredientKeys, IRecipeEditState } from "@/types";
+import React, { useMemo } from "react";
+import IngredientRow from "./IngredientRow";
+import { INGREDIENT_KEYS } from "@/utils/constants";
 
 
 type IProps = {
@@ -13,6 +15,36 @@ const EditRecipeIngredients: React.FC<IProps> = ({
     ingredients=[],
     onChangeEditRecipeState,
 }) => {
+
+    //////////////////////////////////////
+    // MEMO //////////////////////////////
+    //////////////////////////////////////
+
+    // Map to know which ingredients need to be completed and the missing attributes.
+    // Build map: key: ingredientId => attributes missing
+    const incompleteIngredientsMap = useMemo(() => {
+
+        const map = new Map<number, IIngredientKeys>();
+
+        ingredients.forEach((ingredient, index) => {
+            let incompleteKeys = [] as IIngredientKeys
+
+            INGREDIENT_KEYS.forEach((key) => {
+                if(!ingredient[key]) incompleteKeys.push(key);
+            })
+
+            if(incompleteKeys.length > 0) {
+                map.set(index, incompleteKeys)
+            }
+        })
+
+        return map;
+    }, [ingredients.length]);
+
+    
+    //////////////////////////////////////
+    // FUNCTIONS /////////////////////////
+    //////////////////////////////////////
 
     const addIngredient = () => {
 
@@ -30,8 +62,12 @@ const EditRecipeIngredients: React.FC<IProps> = ({
         });
     }
 
+    //////////////////////////////////////
+    // RETURN ////////////////////////////
+    //////////////////////////////////////
+
     return (
-        <div className="flex-1 flex justify-start items-start flex-col">
+        <div className="flex-1 flex justify-start items-start flex-col gap-4">
 
             {/* ADD INGREDIENT BUTTON */}
             <button 
@@ -45,12 +81,15 @@ const EditRecipeIngredients: React.FC<IProps> = ({
             {
                 ingredients.map((ingredient, index) => {
 
+                    // Incomplete keys
+                    const incompleteKeys = incompleteIngredientsMap.get(index) || [];
+
                     return (
-                        <div
+                        <IngredientRow
                             key={`recipe_ingredient_${index}`}
-                        >
-                            INGREDIENT {index}
-                        </div>
+                            ingredient={ingredient}
+                            incompleteKeys={incompleteKeys}
+                        />
                     )
 
                 })
