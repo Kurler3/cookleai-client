@@ -62,6 +62,24 @@ const EditRecipeIngredients: React.FC<IProps> = ({
         });
     }
 
+    const editIngredient = (
+        ingredientIndex: number,
+        key: keyof IIngredient,
+        value: string | number,
+    ) => {
+
+
+        // Change the ingredient
+        const newIngredients = ingredients.map((ingredient, index) => {
+
+            return index === ingredientIndex ? {...ingredient, [key]: value} : ingredient;
+        })
+
+        // Update state
+        onChangeEditRecipeState({ ingredients: newIngredients })
+
+    }
+
     //////////////////////////////////////
     // RETURN ////////////////////////////
     //////////////////////////////////////
@@ -89,6 +107,8 @@ const EditRecipeIngredients: React.FC<IProps> = ({
                             key={`recipe_ingredient_${index}`}
                             ingredient={ingredient}
                             incompleteKeys={incompleteKeys}
+                            editIngredient={editIngredient}
+                            ingredientIndex={index}
                         />
                     )
 

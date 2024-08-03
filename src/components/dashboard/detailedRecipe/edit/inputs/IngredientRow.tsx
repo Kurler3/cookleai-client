@@ -1,18 +1,31 @@
 import { IIngredient, IIngredientKeys } from "@/types";
-import { FC } from "react";
+import { FC, ChangeEvent} from "react";
 
 
 type IProps = {
     ingredient: IIngredient;
     incompleteKeys: IIngredientKeys;
+    editIngredient: (ingredientIndex: number, key: keyof IIngredient, value: string | number) => void;
+    ingredientIndex: number;
 }
 
 const IngredientRow: FC<IProps> = ({
     ingredient,
+    ingredientIndex,
     incompleteKeys,
+    editIngredient,
 }) => {
 
 
+    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+
+        editIngredient(
+            ingredientIndex,
+            (e.target.name as keyof IIngredient),
+            e.target.value,
+        )
+
+    }
 
     return (
         <div className={`
@@ -48,7 +61,7 @@ const IngredientRow: FC<IProps> = ({
                 className="input flex-1 p-2 bg-base-300 focus:outline-app-green h-10"
                 placeholder="Name"
                 value={ingredient.name}
-                // onChange={handleOnChange}
+                onChange={handleChange}
                 name='name'
             />
 
@@ -58,7 +71,7 @@ const IngredientRow: FC<IProps> = ({
                 className="input flex-1 p-2 bg-base-300 focus:outline-app-green h-10"
                 placeholder="Quantity"
                 value={ingredient.quantity}
-                // onChange={handleOnChange}
+                onChange={handleChange}
                 name='quantity'
             />
 
@@ -68,7 +81,7 @@ const IngredientRow: FC<IProps> = ({
                 className="input flex-1 p-2 bg-base-300 focus:outline-app-green h-10"
                 placeholder="Unit"
                 value={ingredient.unit}
-                // onChange={handleOnChange}
+                onChange={handleChange}
                 name='unit'
             />
 
