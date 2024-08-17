@@ -8,6 +8,7 @@ import { ChangeEvent, useCallback, useEffect, useState } from "react";
 import getEditRecipeInitialState from "@/utils/functions/recipe/getEditRecipeInitialState";
 import { IRecipeEditState } from "@/types";
 import EditRecipeIngredients from "./edit/inputs/EditRecipeIngredients";
+import EditRecipeInstructions from "./edit/inputs/EditRecipeInstructions";
 
 const DetailedRecipeEditPage = () => {
 
@@ -72,7 +73,7 @@ const DetailedRecipeEditPage = () => {
     if (!recipe) return null;
 
     return (
-        <div className="flex justify-start items-start flex-col gap-4 h-full w-full">
+        <div className="flex justify-start items-start flex-col gap-4 h-full w-full overflow-auto">
             {/* TITLE */}
             <h3 className="font-medium text-white text-2xl">Edit Recipe</h3>
 
@@ -143,9 +144,19 @@ const DetailedRecipeEditPage = () => {
                                 onChangeEditRecipeState={onChangeEditRecipeState}
                             />
                         )
-                    }
+                    },
 
                     // INSTRUCTIONS - Array of strings that can be dragged and dropped to change order.
+                    {
+                        title: 'Instructions',
+                        titleTooltipText: 'Manage the instructions for this recipe. You can order, add, edit and delete them.',
+                        inputElement: (
+                            <EditRecipeInstructions 
+                            instructions={editRecipeState.instructions}
+                            onChangeEditRecipeState={onChangeEditRecipeState}
+                            />
+                        )
+                    }
 
                     // NOTES - area
 
