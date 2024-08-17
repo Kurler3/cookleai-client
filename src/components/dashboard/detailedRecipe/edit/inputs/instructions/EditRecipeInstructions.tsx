@@ -1,5 +1,6 @@
 import { IRecipeEditState } from "@/types";
 import { FC } from "react";
+import InstructionRow from "./InstructionRow";
 
 
 type IProps = {
@@ -53,6 +54,19 @@ const EditRecipeInstructions: FC<IProps> = ({
                 Add Instruction
             </button>
 
+            {/* INSTRUCTIONS LIST */}
+            {
+                instructions?.map((instruction, index) => {
+
+                    return (
+                        <InstructionRow 
+                            key={`recipe_instruction_row_${index}`}
+                            instruction={instruction}
+                        />
+                    )
+
+                })
+            }
 
         </div>
     )

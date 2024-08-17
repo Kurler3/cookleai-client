@@ -7,8 +7,8 @@ import EditRecipeImageModal from "./edit/modal/EditRecipeImageModal";
 import { ChangeEvent, useCallback, useEffect, useState } from "react";
 import getEditRecipeInitialState from "@/utils/functions/recipe/getEditRecipeInitialState";
 import { IRecipeEditState } from "@/types";
-import EditRecipeIngredients from "./edit/inputs/EditRecipeIngredients";
-import EditRecipeInstructions from "./edit/inputs/EditRecipeInstructions";
+import EditRecipeIngredients from "./edit/inputs/ingredients/EditRecipeIngredients";
+import EditRecipeInstructions from "./edit/inputs/instructions/EditRecipeInstructions";
 
 const DetailedRecipeEditPage = () => {
 
