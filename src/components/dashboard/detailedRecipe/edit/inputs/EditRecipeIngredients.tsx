@@ -1,7 +1,6 @@
-import { IIngredient, IIngredientKeys, IRecipeEditState } from "@/types";
-import React, { useMemo } from "react";
+import { IIngredient, IRecipeEditState } from "@/types";
+import React from "react";
 import IngredientRow from "./IngredientRow";
-import { INGREDIENT_KEYS } from "@/utils/constants";
 
 
 type IProps = {
@@ -19,27 +18,6 @@ const EditRecipeIngredients: React.FC<IProps> = ({
     //////////////////////////////////////
     // MEMO //////////////////////////////
     //////////////////////////////////////
-
-    // Map to know which ingredients need to be completed and the missing attributes.
-    // Build map: key: ingredientId => attributes missing
-    const incompleteIngredientsMap = useMemo(() => {
-
-        const map = new Map<number, IIngredientKeys>();
-
-        ingredients.forEach((ingredient, index) => {
-            let incompleteKeys = [] as IIngredientKeys
-
-            INGREDIENT_KEYS.forEach((key) => {
-                if(!ingredient[key]) incompleteKeys.push(key);
-            })
-
-            if(incompleteKeys.length > 0) {
-                map.set(index, incompleteKeys)
-            }
-        })
-
-        return map;
-    }, [ingredients.length]);
 
     
     //////////////////////////////////////
@@ -99,16 +77,14 @@ const EditRecipeIngredients: React.FC<IProps> = ({
             {
                 ingredients.map((ingredient, index) => {
 
-                    // Incomplete keys
-                    const incompleteKeys = incompleteIngredientsMap.get(index) || [];
-
                     return (
                         <IngredientRow
                             key={`recipe_ingredient_${index}`}
                             ingredient={ingredient}
-                            incompleteKeys={incompleteKeys}
                             editIngredient={editIngredient}
                             ingredientIndex={index}
+
+                            //TODO: Pass func to remove ingredient
                         />
                     )
 

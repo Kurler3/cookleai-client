@@ -1,10 +1,10 @@
 import { IIngredient, IIngredientKeys } from "@/types";
-import { FC, ChangeEvent} from "react";
+import { INGREDIENT_KEYS } from "@/utils/constants";
+import { FC, ChangeEvent, useMemo } from "react";
 
 
 type IProps = {
     ingredient: IIngredient;
-    incompleteKeys: IIngredientKeys;
     editIngredient: (ingredientIndex: number, key: keyof IIngredient, value: string | number) => void;
     ingredientIndex: number;
 }
@@ -12,7 +12,6 @@ type IProps = {
 const IngredientRow: FC<IProps> = ({
     ingredient,
     ingredientIndex,
-    incompleteKeys,
     editIngredient,
 }) => {
 
@@ -26,6 +25,18 @@ const IngredientRow: FC<IProps> = ({
         )
 
     }
+
+    const incompleteKeys = useMemo(() => {
+
+        let incompleteKeys = [] as IIngredientKeys
+
+        INGREDIENT_KEYS.forEach((key) => {
+            if (!ingredient[key]) incompleteKeys.push(key);
+        })
+
+        return incompleteKeys;
+
+    }, [ingredient]);
 
     return (
         <div className={`
@@ -68,7 +79,7 @@ const IngredientRow: FC<IProps> = ({
             {/* QUANTITY */}
             <input
                 type="number"
-                className="input flex-1 p-2 bg-base-300 focus:outline-app-green h-10"
+                className="input flex-1 bg-base-300 focus:outline-app-green h-10"
                 placeholder="Quantity"
                 value={ingredient.quantity}
                 onChange={handleChange}
@@ -85,8 +96,10 @@ const IngredientRow: FC<IProps> = ({
                 name='unit'
             />
 
-
-
+            {/* REMOVE BUTTON */}
+            <button className="btn btn-error">
+                Remove  
+            </button>
 
         </div>
     )
