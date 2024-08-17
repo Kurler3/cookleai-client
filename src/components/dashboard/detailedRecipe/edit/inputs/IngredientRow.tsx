@@ -7,12 +7,14 @@ type IProps = {
     ingredient: IIngredient;
     editIngredient: (ingredientIndex: number, key: keyof IIngredient, value: string | number) => void;
     ingredientIndex: number;
+    removeIngredient: (idx: number) => void;
 }
 
 const IngredientRow: FC<IProps> = ({
     ingredient,
     ingredientIndex,
     editIngredient,
+    removeIngredient,
 }) => {
 
 
@@ -39,7 +41,7 @@ const IngredientRow: FC<IProps> = ({
     }, [ingredient]);
 
     return (
-        <div className={`
+        <div className={` 
             flex gap-4 p-4 rounded-lg items-center flex-wrap border-gray-600 border-2
             ${incompleteKeys.length > 0 ? 'border-amber-500' : ''}
         `}>
@@ -51,6 +53,7 @@ const IngredientRow: FC<IProps> = ({
                         incompleteKeys.reduce((pv, cu, index) => {
                             return pv + (index > 0 ? ', ' : '') + cu;
                         }, 'Missing: ')
+
                     }>
                         <svg width="30px" height="30px" viewBox="-0.5 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#f59e0b">
 
@@ -67,38 +70,57 @@ const IngredientRow: FC<IProps> = ({
             }
 
             {/* NAME */}
-            <input
-                type="text"
-                className="input flex-1 p-2 bg-base-300 focus:outline-app-green h-10"
-                placeholder="Name"
-                value={ingredient.name}
-                onChange={handleChange}
-                name='name'
-            />
+            <label className="form-control flex-1">
+                <div className="label">
+                    <span className="label-text">Name</span>
+                </div>
+                <input
+                    type="text"
+                    className="input p-2 bg-base-300 focus:outline-app-green h-10"
+                    placeholder="Name"
+                    value={ingredient.name}
+                    onChange={handleChange}
+                    name='name'
+                />
+
+            </label>
 
             {/* QUANTITY */}
-            <input
-                type="number"
-                className="input flex-1 bg-base-300 focus:outline-app-green h-10"
-                placeholder="Quantity"
-                value={ingredient.quantity}
-                onChange={handleChange}
-                name='quantity'
-            />
+            <label className="form-control flex-1">
+                <div className="label">
+                    <span className="label-text">Quantity</span>
+                </div>
+                <input
+                    type="number"
+                    className="input  bg-base-300 focus:outline-app-green h-10"
+                    placeholder="Quantity"
+                    value={ingredient.quantity}
+                    onChange={handleChange}
+                    name='quantity'
+                />
+
+            </label>
+
 
             {/* UNIT */}
-            <input
-                type="text"
-                className="input flex-1 p-2 bg-base-300 focus:outline-app-green h-10"
-                placeholder="Unit"
-                value={ingredient.unit}
-                onChange={handleChange}
-                name='unit'
-            />
+            <label className="form-control flex-1">
+                <div className="label">
+                    <span className="label-text">Unit</span>
+                </div>
+                <input
+                    type="text"
+                    className="input p-2 bg-base-300 focus:outline-app-green h-10"
+                    placeholder="Unit"
+                    value={ingredient.unit}
+                    onChange={handleChange}
+                    name='unit'
+                />
+            </label>
+
 
             {/* REMOVE BUTTON */}
-            <button className="btn btn-error">
-                Remove  
+            <button className="btn btn-error" onClick={() => removeIngredient(ingredientIndex)}>
+                Remove
             </button>
 
         </div>

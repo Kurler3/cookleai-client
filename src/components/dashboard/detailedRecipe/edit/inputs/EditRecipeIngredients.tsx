@@ -38,14 +38,13 @@ const EditRecipeIngredients: React.FC<IProps> = ({
                 ...ingredients,
             ]
         });
-    }
+    };
 
     const editIngredient = (
         ingredientIndex: number,
         key: keyof IIngredient,
         value: string | number,
     ) => {
-
 
         // Change the ingredient
         const newIngredients = ingredients.map((ingredient, index) => {
@@ -57,6 +56,14 @@ const EditRecipeIngredients: React.FC<IProps> = ({
         onChangeEditRecipeState({ ingredients: newIngredients })
 
     }
+
+    // Remove ingredient.
+    const removeIngredient = (ingredientIdxToRemove: number) => {
+        const newIngredients = [...ingredients];
+        newIngredients.splice(ingredientIdxToRemove, 1);
+        onChangeEditRecipeState({ ingredients: newIngredients });
+    }  
+
 
     //////////////////////////////////////
     // RETURN ////////////////////////////
@@ -83,8 +90,7 @@ const EditRecipeIngredients: React.FC<IProps> = ({
                             ingredient={ingredient}
                             editIngredient={editIngredient}
                             ingredientIndex={index}
-
-                            //TODO: Pass func to remove ingredient
+                            removeIngredient={removeIngredient}
                         />
                     )
 
