@@ -1,16 +1,20 @@
 import useGetRecipe from "@/hooks/recipes/useGetRecipe.hook";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import EditRecipeSection from "./edit/EditRecipeSection";
 import CameraAltIcon from "@mui/icons-material/CameraAlt";
-import { CUISINE_TYPES, RECIPE_ACTION_MODAL_IDS, RECIPE_DIFFICULTY } from "@/utils/constants";
+import { CUISINE_TYPES, RECIPE_ACTION_MODAL_IDS, RECIPE_DIFFICULTY, ROUTE_PATHS } from "@/utils/constants";
 import EditRecipeImageModal from "./edit/modal/EditRecipeImageModal";
 import { ChangeEvent, useCallback, useEffect, useState } from "react";
 import getEditRecipeInitialState from "@/utils/functions/recipe/getEditRecipeInitialState";
 import { IRecipeEditState } from "@/types";
 import EditRecipeIngredients from "./edit/inputs/ingredients/EditRecipeIngredients";
 import EditRecipeInstructions from "./edit/inputs/instructions/EditRecipeInstructions";
+import DeleteRecipeModal from "../recipes/modal/DeleteRecipeModal";
+import { DeleteIcon } from "@chakra-ui/icons";
 
 const DetailedRecipeEditPage = () => {
+
+    const navigate = useNavigate();
 
     const { recipeId } = useParams();
 
@@ -392,6 +396,20 @@ const DetailedRecipeEditPage = () => {
 
 
             {/* //TODO DELETE / SAVE BUTTONS */}
+            <div className="w-full flex flex-between items-center">
+
+                {/* DELETE */}
+                <label
+                    className="btn btn-error  hover:bg-red-500"
+                    htmlFor={RECIPE_ACTION_MODAL_IDS.DELETE}
+                >
+                    <DeleteIcon style={{ height: "20px" }} />
+                    Delete
+                </label>
+
+                {/* SAVE CHANGES */}
+                
+            </div>
 
             {/* MODALS */}
 
@@ -403,7 +421,20 @@ const DetailedRecipeEditPage = () => {
 
             />
 
-            {/* //TODO: Delete recipe modal */}
+            {/* Delete recipe modal */}
+            <input
+                type="checkbox"
+                id={RECIPE_ACTION_MODAL_IDS.DELETE}
+                className="modal-toggle"
+            />
+            <DeleteRecipeModal
+                key={`recipe_delete_modal_${recipe.id}`}
+                recipe={recipe}
+                onSuccessCallback={() => {
+                    navigate(ROUTE_PATHS.RECIPES);
+                }}
+            />
+
             <EditRecipeImageModal recipe={recipe} />
         </div>
     );

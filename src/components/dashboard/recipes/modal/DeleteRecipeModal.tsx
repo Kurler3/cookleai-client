@@ -6,15 +6,19 @@ import useDeleteRecipe from "@/hooks/recipes/useDeleteRecipe.hook";
 
 type IProps = {
     recipe: IRecipe;
+    onSuccessCallback?: () => void;
 };
 
-const DeleteRecipeModal: React.FC<IProps> = ({ recipe }) => {
+const DeleteRecipeModal: React.FC<IProps> = ({ recipe, onSuccessCallback }) => {
     //////////////////////////////////////
     // HOOK //////////////////////////////
     //////////////////////////////////////
 
     const { deleteRecipe, isDeletingRecipe } =
-        useDeleteRecipe(recipe?.id);
+        useDeleteRecipe(
+            recipe?.id,
+            onSuccessCallback
+        );
 
     //////////////////////////////////////
     // STATE /////////////////////////////

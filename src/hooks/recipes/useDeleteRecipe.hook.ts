@@ -3,12 +3,12 @@ import useAxios from "../axios/useAxios.hook";
 import toast from "react-hot-toast";
 import { handleCloseModal } from "@/utils/functions/closeModal";
 import { RECIPE_ACTION_MODAL_IDS } from "@/utils/constants/recipes.constants";
-import { IAxiosNetworkError, IGetUserRecipesData } from "@/types";
+import { IGetUserRecipesData } from "@/types";
 import useGetUserRecipes from "./useGetUserRecipes.hook";
 import axiosNetworkErrorHandler from "@/utils/functions/axiosNetworkErrorHandler";
 
 
-const useDeleteRecipe = (recipeId?: number) => {
+const useDeleteRecipe = (recipeId?: number, onSuccessCallback?: () => void) => {
     
     const queryClient = useQueryClient();
     const axios = useAxios();
@@ -43,6 +43,8 @@ const useDeleteRecipe = (recipeId?: number) => {
 
             // Close modal
             handleCloseModal(RECIPE_ACTION_MODAL_IDS.DELETE);
+
+            onSuccessCallback?.();
         },
         onError: axiosNetworkErrorHandler("An error occurred while deleting the recipe"),
         retry: false,
