@@ -9,7 +9,7 @@ const getEditRecipeInitialState = (
         title: undefined,
         servings: undefined,
         notes: undefined,
-        preTime: undefined,
+        prepTime: undefined,
         cookTime: undefined,
         nutrients: {
             calories: undefined,

@@ -24,7 +24,7 @@ export type IRecipe = {
     image?: string;
     servings?: string;
     notes?: string;
-    preTime?: number;
+    prepTime?: number;
     cookTime?: number;
     nutrients?: INutrients;
     cuisine?: string;
@@ -76,7 +76,7 @@ export type IRecipeEditState = {
     title?: string;
     servings?: string;
     notes?: string;
-    preTime?: number;
+    prepTime?: number;
     cookTime?: number;
     nutrients?: INutrients;
     cuisine?: string;

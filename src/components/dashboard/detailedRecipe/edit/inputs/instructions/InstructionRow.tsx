@@ -50,7 +50,7 @@ const InstructionRow: FC<IProps> = ({
                         placeholder="Instruction"
                         value={instruction}
                         onChange={handleChangeInstruction}
-                        className="textarea textarea-md  min-h-[200px] w-full resize-none bg-base-300">
+                        className="textarea textarea-md  min-h-[100px] w-full  bg-base-300">
                     </textarea>
 
                     {/* REMOVE BUTTON */}

@@ -19,7 +19,7 @@ export const RECIPE_ROLES = {
 
 export const EDIT_RECIPE_ATTRIBUTES = [
     'title', 'servings',
-    'notes', 'preTime',
+    'notes', 'prepTime',
     'cookTime', 'nutrients',
     'cuisine', 'language',
     'difficulty', 'ingredients',

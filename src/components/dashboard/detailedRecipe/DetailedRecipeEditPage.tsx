@@ -27,8 +27,8 @@ const DetailedRecipeEditPage = () => {
     ////////////////////////////////////////////////////////
 
     const onChangeEditRecipeState = useCallback((
-        updateStateObj: Partial<IRecipeEditState>   
-    ) => {  
+        updateStateObj: Partial<IRecipeEditState>
+    ) => {
         setEditRecipeState((prevEditRecipeState) => {
             return {
                 ...prevEditRecipeState,
@@ -38,7 +38,7 @@ const DetailedRecipeEditPage = () => {
     }, [])
 
     //TODO Handle on change of inputs
-    const handleOnChange = useCallback((event: ChangeEvent<HTMLInputElement>
+    const handleOnChange = useCallback((event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
     ) => {
 
         const {
@@ -48,7 +48,7 @@ const DetailedRecipeEditPage = () => {
 
         onChangeEditRecipeState({ [name]: value });
 
-    }, [onChangeEditRecipeState])  
+    }, [onChangeEditRecipeState])
 
     ////////////////////////////////////////////////////////
     // AS SOON AS RECIPE CHANGES => UPDATE EDIT STATE //////
@@ -139,7 +139,7 @@ const DetailedRecipeEditPage = () => {
                         title: 'Ingredients',
                         titleTooltipText: 'Add, remove and edit any ingredients for this recipe',
                         inputElement: (
-                            <EditRecipeIngredients 
+                            <EditRecipeIngredients
                                 ingredients={editRecipeState.ingredients}
                                 onChangeEditRecipeState={onChangeEditRecipeState}
                             />
@@ -151,23 +151,76 @@ const DetailedRecipeEditPage = () => {
                         title: 'Instructions',
                         titleTooltipText: 'Manage the instructions for this recipe. You can order, add, edit and delete them.',
                         inputElement: (
-                            <EditRecipeInstructions 
-                            instructions={editRecipeState.instructions}
-                            onChangeEditRecipeState={onChangeEditRecipeState}
+                            <EditRecipeInstructions
+                                instructions={editRecipeState.instructions}
+                                onChangeEditRecipeState={onChangeEditRecipeState}
                             />
+                        )
+                    },
+
+                    // NOTES - area
+                    {
+                        title: 'Notes',
+                        titleTooltipText: 'Add any extra notes for this recipe',
+                        inputElement: (
+                            <textarea
+                                className="textarea flex-1 p-2 bg-base-300 focus:outline-app-green"
+                                placeholder="Add any extra notes for this recipe"
+                                value={editRecipeState.notes}
+                                onChange={handleOnChange}
+                                name='notes'
+                            />
+                        )
+                    },
+
+                    // PREPARATION TIME - number input (mins)
+                    {
+                        title: 'Preparation Time',
+                        titleTooltipText: 'Enter the preparation time in minutes',
+                        inputElement: (
+                            <div className="flex justify-center items-center gap-4">
+                                <input
+                                    type="number"
+                                    className="input flex-1 py-2 bg-base-300 focus:outline-app-green h-10"
+                                    placeholder="Preparation Time"
+                                    value={editRecipeState.prepTime}
+                                    onChange={handleOnChange}
+                                    name='preparationTime'
+                                    min={1}
+                                />
+
+                                <p className="text-white">
+                                    Minutes
+                                </p>
+                            </div>
+                        )
+                    },
+
+                    // COOKTIME - number input (mins)
+                    {
+                        title: 'Cook Time',
+                        titleTooltipText: 'Enter the cook time in minutes',
+                        inputElement: (
+                            <div className="flex justify-center items-center gap-4">
+                                <input
+                                    type="number"
+                                    className="input flex-1 py-2 bg-base-300 focus:outline-app-green h-10"
+                                    placeholder="Cook Time"
+                                    value={editRecipeState.cookTime}
+                                    onChange={handleOnChange}
+                                    name='cookTime'
+                                    min={1}
+                                />
+
+                                <p className="text-white">
+                                    Minutes
+                                </p>
+                            </div>
                         )
                     }
 
-                    // NOTES - area
-
-                    // PREPARATION TIME - number input (mins)
-
-                    // COOKTIME - number input (mins)
-
                 ]}
             />
-
-
 
 
             {/* //TODO: NUTRIENTS */}
