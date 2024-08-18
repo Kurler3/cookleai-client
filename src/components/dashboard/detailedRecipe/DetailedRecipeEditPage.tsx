@@ -2,7 +2,7 @@ import useGetRecipe from "@/hooks/recipes/useGetRecipe.hook";
 import { useParams } from "react-router-dom";
 import EditRecipeSection from "./edit/EditRecipeSection";
 import CameraAltIcon from "@mui/icons-material/CameraAlt";
-import { RECIPE_ACTION_MODAL_IDS } from "@/utils/constants";
+import { CUISINE_TYPES, RECIPE_ACTION_MODAL_IDS, RECIPE_DIFFICULTY } from "@/utils/constants";
 import EditRecipeImageModal from "./edit/modal/EditRecipeImageModal";
 import { ChangeEvent, useCallback, useEffect, useState } from "react";
 import getEditRecipeInitialState from "@/utils/functions/recipe/getEditRecipeInitialState";
@@ -38,7 +38,7 @@ const DetailedRecipeEditPage = () => {
     }, [])
 
     //TODO Handle on change of inputs
-    const handleOnChange = useCallback((event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    const handleOnChange = useCallback((event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
     ) => {
 
         const {
@@ -46,9 +46,25 @@ const DetailedRecipeEditPage = () => {
             value,
         } = event.target;
 
-        onChangeEditRecipeState({ [name]: value });
+        onChangeEditRecipeState({ [name]: value === '' ? null : value });
 
-    }, [onChangeEditRecipeState])
+    }, [onChangeEditRecipeState]);
+
+    const handleOnChangeNutrients = (event: ChangeEvent<HTMLInputElement>) => {
+
+        const {
+            name,
+            value,
+        } = event.target;
+
+        onChangeEditRecipeState({
+            nutrients: {
+                ...(editRecipeState.nutrients ?? {}),
+                [name]: value,
+            }
+        });
+
+    };
 
     ////////////////////////////////////////////////////////
     // AS SOON AS RECIPE CHANGES => UPDATE EDIT STATE //////
@@ -72,8 +88,10 @@ const DetailedRecipeEditPage = () => {
 
     if (!recipe) return null;
 
+    console.log(editRecipeState.difficulty)
+
     return (
-        <div className="flex justify-start items-start flex-col gap-4 h-full w-full overflow-auto">
+        <div className="flex justify-start items-start flex-col gap-4 h-full w-full overflow-auto px-2" >
             {/* TITLE */}
             <h3 className="font-medium text-white text-2xl">Edit Recipe</h3>
 
@@ -178,7 +196,7 @@ const DetailedRecipeEditPage = () => {
                         title: 'Preparation Time',
                         titleTooltipText: 'Enter the preparation time in minutes',
                         inputElement: (
-                            <div className="flex justify-center items-center gap-4">
+                            <div className="flex flex-1 justify-center items-center gap-4">
                                 <input
                                     type="number"
                                     className="input flex-1 py-2 bg-base-300 focus:outline-app-green h-10"
@@ -201,7 +219,7 @@ const DetailedRecipeEditPage = () => {
                         title: 'Cook Time',
                         titleTooltipText: 'Enter the cook time in minutes',
                         inputElement: (
-                            <div className="flex justify-center items-center gap-4">
+                            <div className="flex flex-1 justify-center items-center gap-4">
                                 <input
                                     type="number"
                                     className="input flex-1 py-2 bg-base-300 focus:outline-app-green h-10"
@@ -223,11 +241,157 @@ const DetailedRecipeEditPage = () => {
             />
 
 
-            {/* //TODO: NUTRIENTS */}
+            {/* NUTRIENTS */}
+            <EditRecipeSection
+                title="Nutrients"
+                labelText="Enhance the recipe with nutritional information."
+                sectionInputs={[
+                    // CALORIES
+                    {
+                        title: 'Calories',
+                        titleTooltipText: 'Enter the total calories for this recipe',
+                        inputElement: (
+                            <div className="flex flex-1 justify-center items-center gap-4">
+                                <input
+                                    type="number"
+                                    className="input flex-1 py-2 bg-base-300 focus:outline-app-green h-10"
+                                    placeholder="Calories"
+                                    value={editRecipeState.nutrients?.calories}
+                                    onChange={handleOnChangeNutrients}
+                                    name='calories'
+                                    min={1}
+                                />
 
-            {/* EXTRA */}
+                                <p className="text-white">
+                                    Kcal
+                                </p>
+                            </div>
+                        )
+                    },
 
-            {/* DELETE / SAVE BUTTONS */}
+                    // CARBOHYDRATES
+                    {
+                        title: 'Carbohydrates',
+                        titleTooltipText: 'Enter the total carbohydrates for this recipe',
+                        inputElement: (
+                            <div className="flex flex-1 justify-center items-center gap-4">
+                                <input
+                                    type="number"
+                                    className="input flex-1 py-2 bg-base-300 focus:outline-app-green h-10"
+                                    placeholder="Carbohydrates"
+                                    value={editRecipeState.nutrients?.carbohydrates}
+                                    onChange={handleOnChangeNutrients}
+                                    name='carbohydrates'
+                                    min={1}
+                                />
+
+                                <p className="text-white">
+                                    g
+                                </p>
+                            </div>
+                        )
+                    },
+
+                    // PROTEIN
+                    {
+                        title: 'Protein',
+                        titleTooltipText: 'Enter the total protein for this recipe',
+                        inputElement: (
+                            <div className="flex flex-1 justify-center items-center gap-4">
+                                <input
+                                    type="number"
+                                    className="input flex-1 py-2 bg-base-300 focus:outline-app-green h-10"
+                                    placeholder="Protein"
+                                    value={editRecipeState.nutrients?.protein}
+                                    onChange={handleOnChangeNutrients}
+                                    name='protein'
+                                    min={1}
+                                />
+
+                                <p className="text-white">
+                                    g
+                                </p>
+                            </div>
+                        )
+                    },
+
+                    // FAT
+                    {
+                        title: 'Fat',
+                        titleTooltipText: 'Enter the total fat for this recipe',
+                        inputElement: (
+                            <div className="flex flex-1 justify-center items-center gap-4">
+                                <input
+                                    type="number"
+                                    className="input flex-1 py-2 bg-base-300 focus:outline-app-green h-10"
+                                    placeholder="Fat"
+                                    value={editRecipeState.nutrients?.fat}
+                                    onChange={handleOnChangeNutrients}
+                                    name='fat'
+                                    min={1}
+                                />
+
+                                <p className="text-white">
+                                    g
+                                </p>
+                            </div>
+                        )
+                    }
+
+                ]}
+            />
+
+            {/* //TODO EXTRA */}
+            <EditRecipeSection
+                title="Extra"
+                labelText="Add extra information to your recipe."
+                sectionInputs={[
+                    // CUISINE
+                    {
+                        title: 'Cuisine',
+                        titleTooltipText: 'Enter the cuisine for this recipe',
+                        inputElement: (
+                            <select
+                                className="select bg-base-300 focus:outline-app-green h-10 flex-1"
+                                onChange={handleOnChange}
+                                value={editRecipeState.cuisine}
+                                name='cuisine'
+                            >
+                                <option value="" selected>Select a cuisine</option>
+                                {CUISINE_TYPES.map((cuisine, index) => (
+                                    <option key={index} value={cuisine}>
+                                        {cuisine}
+                                    </option>
+                                ))}
+                            </select>
+                        )
+                    },
+
+                    // DIFFICULTY
+                    {
+                        title: 'Difficulty',
+                        titleTooltipText: 'Enter the difficulty for this recipe',
+                        inputElement: (
+                            <select
+                                className="select bg-base-300 focus:outline-app-green h-10 flex-1"
+                                onChange={handleOnChange}
+                                value={editRecipeState.difficulty}
+                                name='difficulty'
+                            >
+                                <option value="" selected>Select a difficulty</option>
+                                {RECIPE_DIFFICULTY.map((difficulty, index) => (
+                                    <option key={index} value={difficulty}>
+                                        {difficulty}
+                                    </option>
+                                ))}
+                            </select>
+                        )
+                    }
+                ]}
+            />
+
+
+            {/* //TODO DELETE / SAVE BUTTONS */}
 
             {/* MODALS */}
 
@@ -238,6 +402,8 @@ const DetailedRecipeEditPage = () => {
                 className="modal-toggle"
 
             />
+
+            {/* //TODO: Delete recipe modal */}
             <EditRecipeImageModal recipe={recipe} />
         </div>
     );

@@ -27,3 +27,36 @@ export const EDIT_RECIPE_ATTRIBUTES = [
 ]
 
 export const INGREDIENT_KEYS = ['name', 'quantity', 'unit'] as IIngredientKeys;
+
+
+// CUISINE TYPES
+export const CUISINE_TYPES = [
+    "Italian",
+    "Chinese",
+    "Indian",
+    "Mexican",
+    "Thai",
+    "Japanese",
+    "French",
+    "Greek",
+    "Spanish",
+    "Lebanese",
+    "Turkish",
+    "Vietnamese",
+    "Korean",
+    "American",
+    "Caribbean",
+    "Brazilian",
+    "Ethiopian",
+    "Moroccan",
+    "German",
+    "British"
+];
+
+// RECIPE DIFFICULTY
+export const RECIPE_DIFFICULTY = [
+    "Easy",
+    "Medium",
+    "Hard",
+    "Michelin Star Chef"
+];

@@ -8,10 +8,10 @@ enum IRecipeRole {
 }
 
 type INutrients = {
-    calories: number;
-    carbohydrates: number;
-    protein: number;
-    fat: number;
+    calories?: number;
+    carbohydrates?: number;
+    protein?: number;
+    fat?: number;
 }
 
 type IRecipeUser = IUser & { role: IRecipeRole };

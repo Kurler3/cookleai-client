@@ -118,7 +118,7 @@ const EditRecipeInstructions: FC<IProps> = ({
                         <div
                             {...provided.droppableProps}
                             ref={provided.innerRef}
-                            className="w-full"
+                            className="w-full flex flex-col justify-start items-center gap-2"
                             //   style={getListStyle(snapshot.isDraggingOver)}
                         >
                             {instructions?.map((instruction, index) => (

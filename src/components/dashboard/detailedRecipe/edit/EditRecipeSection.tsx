@@ -48,7 +48,7 @@ const EditRecipeSection: React.FC<IProps> = ({
                                 {/* TOOLTIP */}
                                 {
                                     sectionInput.titleTooltipText && (
-                                        <div className="tooltip z-10" data-tip={sectionInput.titleTooltipText} >
+                                        <div className="tooltip tooltip-right cursor-help" data-tip={sectionInput.titleTooltipText} >
                                             <svg
                                                 xmlns="http://www.w3.org/2000/svg"
                                                 fill="none"
