@@ -1,6 +1,8 @@
 import { IRecipeEditState } from "@/types";
 import { FC } from "react";
 import InstructionRow from "./InstructionRow";
+import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
+
 
 
 type IProps = {
@@ -20,7 +22,7 @@ const EditRecipeInstructions: FC<IProps> = ({
     //////////////////////////////////////
 
 
-    //TODO: Add instruction*
+    // Add instruction*
     const addInstruction = () => {
         const newInstruction = "";
         onChangeEditRecipeState({
@@ -31,11 +33,63 @@ const EditRecipeInstructions: FC<IProps> = ({
         });
     }
 
-    //TODO: Edit instruction
+    // Edit instruction
+    const editInstruction = (
+        instructionIdx: number,
+        newInstruction: string,
+    ) => {
 
-    //TODO: Delete instruction
+        const newInstructions = [...instructions!];
+
+        newInstructions[instructionIdx] = newInstruction;
+
+        onChangeEditRecipeState({ instructions: newInstructions });
+    }
+
+    // Delete instruction
+    const deleteInstruction = (
+        instructionIdx: number,
+    ) => {
+
+        const newInstructions = [...instructions!];
+
+        newInstructions.splice(instructionIdx, 1);
+
+        onChangeEditRecipeState({ instructions: newInstructions });
+    }
 
     //TODO: Order instruction
+    const onDragInstructionEnd = (result: DropResult) => {
+
+        // {
+        //     "draggableId": "1",
+        //     "type": "DEFAULT",
+        //     "source": {
+        //         "index": 1,
+        //         "droppableId": "droppable"
+        //     },
+        //     "reason": "DROP",
+        //     "mode": "FLUID",
+        //     "destination": {
+        //         "droppableId": "droppable",
+        //         "index": 0
+        //     },
+        //     "combine": null
+        // }
+
+        // If the destination is invalid => skip func
+        if(!result.destination) return;
+
+        // Reorder instructions
+        const newInstructions = [...instructions!];
+
+        const sourceIdx = result.source.index;
+        const destinationIdx = result.destination.index;
+
+        [newInstructions[sourceIdx], newInstructions[destinationIdx]] = [newInstructions[destinationIdx], newInstructions[sourceIdx]]; 
+
+        onChangeEditRecipeState({ instructions: newInstructions });
+    }
 
 
     //////////////////////////////////////
@@ -55,18 +109,35 @@ const EditRecipeInstructions: FC<IProps> = ({
             </button>
 
             {/* INSTRUCTIONS LIST */}
-            {
-                instructions?.map((instruction, index) => {
+            <DragDropContext onDragEnd={onDragInstructionEnd}>
+                <Droppable
+                    droppableId="droppable"
+                >
 
-                    return (
-                        <InstructionRow 
-                            key={`recipe_instruction_row_${index}`}
-                            instruction={instruction}
-                        />
-                    )
+                    {(provided, _snapshot) => (
+                        <div
+                            {...provided.droppableProps}
+                            ref={provided.innerRef}
+                            className="w-full"
+                            //   style={getListStyle(snapshot.isDraggingOver)}
+                        >
+                            {instructions?.map((instruction, index) => (
+                                <InstructionRow
+                                    key={`recipe_instruction_row_${index}`}
+                                    instruction={instruction}
+                                    instructionIdx={index}
+                                    editInstruction={editInstruction}
+                                    deleteInstruction={deleteInstruction}
+                                />
 
-                })
-            }
+                            ))}
+                            {provided.placeholder}
+                        </div>
+                    )}
+                </Droppable>
+
+            </DragDropContext>
+
 
         </div>
     )
