@@ -408,7 +408,9 @@ const DetailedRecipeEditPage = () => {
                 </label>
 
                 {/* SAVE CHANGES */}
-                
+                <button className="btn btn-success">
+                    Save Changes
+                </button>
             </div>
 
             {/* MODALS */}
