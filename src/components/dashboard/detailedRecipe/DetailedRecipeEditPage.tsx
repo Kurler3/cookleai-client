@@ -4,13 +4,15 @@ import EditRecipeSection from "./edit/EditRecipeSection";
 import CameraAltIcon from "@mui/icons-material/CameraAlt";
 import { CUISINE_TYPES, RECIPE_ACTION_MODAL_IDS, RECIPE_DIFFICULTY, ROUTE_PATHS } from "@/utils/constants";
 import EditRecipeImageModal from "./edit/modal/EditRecipeImageModal";
-import { ChangeEvent, useCallback, useEffect, useState } from "react";
+import { ChangeEvent, useCallback, useEffect, useMemo, useState } from "react";
 import getEditRecipeInitialState from "@/utils/functions/recipe/getEditRecipeInitialState";
 import { IRecipeEditState } from "@/types";
 import EditRecipeIngredients from "./edit/inputs/ingredients/EditRecipeIngredients";
 import EditRecipeInstructions from "./edit/inputs/instructions/EditRecipeInstructions";
 import DeleteRecipeModal from "../recipes/modal/DeleteRecipeModal";
 import { DeleteIcon } from "@chakra-ui/icons";
+import SaveIcon from '@mui/icons-material/Save';
+import useEditRecipe from "@/hooks/recipes/useEditRecipe.hook";
 
 const DetailedRecipeEditPage = () => {
 
@@ -18,13 +20,38 @@ const DetailedRecipeEditPage = () => {
 
     const { recipeId } = useParams();
 
+    // Use get recipe
     const { isLoadingRecipe, recipe } = useGetRecipe(recipeId);
+
+    //TODO Use edit recipe
+    const {
+        editRecipe,
+        isEditingRecipe,
+    } = useEditRecipe();
 
     // STATE FOR FORM
     const [
         editRecipeState,
         setEditRecipeState,
     ] = useState(getEditRecipeInitialState(recipe));
+
+    ////////////////////////////////////////////////////////
+    // CHECK IF THERES ANY CHANGES /////////////////////////
+    ////////////////////////////////////////////////////////
+
+    const isThereChanges = useMemo(() => {
+
+        // If the objects are completly the same
+        if(JSON.stringify(recipe) === JSON.stringify(editRecipeState)) return false;
+
+        //TODO Check if there's any invalid ingredient.
+        // const editStateHasInvalidIngredient = editRecipeState.ingredients?.
+
+        //TODO Check if there's any empty instruction.
+
+    }, [editRecipeState, recipe])
+
+    console.log(isThereChanges);
 
     ////////////////////////////////////////////////////////
     // ON CHANGE EDIT RECIPE STATE /////////////////////////
@@ -41,7 +68,7 @@ const DetailedRecipeEditPage = () => {
         });
     }, [])
 
-    //TODO Handle on change of inputs
+    // Handle on change of inputs
     const handleOnChange = useCallback((event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
     ) => {
 
@@ -70,6 +97,12 @@ const DetailedRecipeEditPage = () => {
 
     };
 
+    const handleSaveChanges = useCallback(() => {
+
+        // If can't save changes
+
+    }, []);
+
     ////////////////////////////////////////////////////////
     // AS SOON AS RECIPE CHANGES => UPDATE EDIT STATE //////
     ////////////////////////////////////////////////////////
@@ -78,7 +111,7 @@ const DetailedRecipeEditPage = () => {
         if (recipe) {
             onChangeEditRecipeState(getEditRecipeInitialState(recipe));
         }
-    }, [recipe])
+    }, [onChangeEditRecipeState, recipe])
 
 
     ///////////////////////////////////
@@ -92,10 +125,8 @@ const DetailedRecipeEditPage = () => {
 
     if (!recipe) return null;
 
-    console.log(editRecipeState.difficulty)
-
     return (
-        <div className="flex justify-start items-start flex-col gap-4 h-full w-full overflow-auto px-2" >
+        <div className="flex justify-start items-start flex-col gap-4 h-full w-full overflow-auto px-2">
             {/* TITLE */}
             <h3 className="font-medium text-white text-2xl">Edit Recipe</h3>
 
@@ -345,7 +376,7 @@ const DetailedRecipeEditPage = () => {
                 ]}
             />
 
-            {/* //TODO EXTRA */}
+            {/* EXTRA */}
             <EditRecipeSection
                 title="Extra"
                 labelText="Add extra information to your recipe."
@@ -396,11 +427,11 @@ const DetailedRecipeEditPage = () => {
 
 
             {/* //TODO DELETE / SAVE BUTTONS */}
-            <div className="w-full flex flex-between items-center">
+            <div className="w-full flex px-4 justify-between items-center">
 
                 {/* DELETE */}
                 <label
-                    className="btn btn-error  hover:bg-red-500"
+                    className="btn btn-error  hover:bg-red-500 text-white"
                     htmlFor={RECIPE_ACTION_MODAL_IDS.DELETE}
                 >
                     <DeleteIcon style={{ height: "20px" }} />
@@ -408,7 +439,18 @@ const DetailedRecipeEditPage = () => {
                 </label>
 
                 {/* SAVE CHANGES */}
-                <button className="btn btn-success">
+                <button 
+                    className='btn btn-success text-white'
+                    onClick={handleSaveChanges}
+                >
+                    {
+                        isEditingRecipe ? (
+                            <span className="loading loading-spinner"></span>
+                        ) : (
+                            <SaveIcon />
+                        )
+                    }
+                   
                     Save Changes
                 </button>
             </div>
