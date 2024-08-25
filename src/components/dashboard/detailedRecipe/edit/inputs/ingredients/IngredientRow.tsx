@@ -17,15 +17,12 @@ const IngredientRow: FC<IProps> = ({
     removeIngredient,
 }) => {
 
-
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-
         editIngredient(
             ingredientIndex,
             (e.target.name as keyof IIngredient),
             e.target.value,
         )
-
     }
 
     const incompleteKeys = useMemo(() => {
@@ -42,9 +39,11 @@ const IngredientRow: FC<IProps> = ({
 
     return (
         <div className={` 
-            flex gap-4 p-4 rounded-lg items-center flex-wrap border-gray-600 border-2
-            ${incompleteKeys.length > 0 ? 'border-amber-500' : ''}
-        `}>
+                flex gap-4 p-4 rounded-lg items-center flex-wrap border-gray-600 border-2
+                ${incompleteKeys.length > 0 ? 'border-amber-500' : ''}
+            `}
+            key={`recipe_ingredient_${ingredientIndex}`}
+        >
 
             {/* IF ANY ATTRIBUTES MISSING */}
             {

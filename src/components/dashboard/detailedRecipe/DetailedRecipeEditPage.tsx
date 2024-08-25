@@ -146,6 +146,7 @@ const DetailedRecipeEditPage = () => {
         }
     }, [onChangeEditRecipeState, recipe])
 
+    console.log(changes)
 
     ///////////////////////////////////
     // RETURN /////////////////////////
@@ -495,8 +496,10 @@ const DetailedRecipeEditPage = () => {
                 type="checkbox"
                 id={RECIPE_ACTION_MODAL_IDS.EDIT_IMAGE}
                 className="modal-toggle"
-
             />
+            
+            <EditRecipeImageModal recipe={recipe} />
+
 
             {/* Delete recipe modal */}
             <input
@@ -511,8 +514,6 @@ const DetailedRecipeEditPage = () => {
                     navigate(ROUTE_PATHS.RECIPES);
                 }}
             />
-
-            <EditRecipeImageModal recipe={recipe} />
         </div>
     );
 };

@@ -34,8 +34,8 @@ const EditRecipeIngredients: React.FC<IProps> = ({
 
         onChangeEditRecipeState({
             ingredients: [
-                newIngredient,
                 ...ingredients,
+                newIngredient
             ]
         });
     };
@@ -54,7 +54,6 @@ const EditRecipeIngredients: React.FC<IProps> = ({
 
         // Update state
         onChangeEditRecipeState({ ingredients: newIngredients })
-
     }
 
     // Remove ingredient.

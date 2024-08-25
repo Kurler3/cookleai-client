@@ -65,6 +65,7 @@ const EditRecipeImageModal: React.FC<IProps> = ({ recipe }) => {
         // setSelectedImageSrc(undefined);
     }
 
+    
     return (
         <Modal
             modalId={RECIPE_ACTION_MODAL_IDS.EDIT_IMAGE}
