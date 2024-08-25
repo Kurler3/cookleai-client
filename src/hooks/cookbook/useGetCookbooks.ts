@@ -37,14 +37,6 @@ const useGetCookbooks = ({
             excludedRecipeId,
         }],
         queryFn: async ({ pageParam = 0 }): Promise<ICookbook[]> => {
-
-            //?? cookbook/my-cookbooks
-                // Query params:
-                    // search
-                    // selection
-                    // page
-                    // limit
-                    // excludedRecipeId
             return axios
                 .get("/cookbooks/my-cookbooks", {
                     params: {
@@ -63,6 +55,7 @@ const useGetCookbooks = ({
         initialPageParam: 0,
     });
 
+    console.log(data)
 
     const {
         lastElementRef,

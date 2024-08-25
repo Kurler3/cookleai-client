@@ -5,6 +5,8 @@ import { ROUTE_PATHS } from "@/utils/constants";
 import { Add } from "@mui/icons-material";
 import { RECIPE_ACTION_MODAL_IDS } from "@/utils/constants/recipes.constants";
 import ClearIcon from '@mui/icons-material/Clear';
+import useAddRecipeToCookbook from "@/hooks/cookbook/useAddRecipeToCookbook";
+import { useCallback } from "react";
 
 type IProps = {
     recipe?: IRecipe;
@@ -18,31 +20,43 @@ const AddToCookbookModal: React.FC<IProps> = ({
     // GET COOKBOOKS ////////////////
     /////////////////////////////////
 
+    const getCookbookQueryParams = {
+        selection: 'title',
+        excludedRecipeId: recipe?.id,
+    }
+
     const {
         cookbooks,
         isLoadingCookbooks,
         lastElementRef,
         errorWhileGettingCookbooks,
         refetchUserCookbooks,
-    } = useGetCookbooks({
-        selection: 'title',
-        excludedRecipeId: recipe?.id,
-    });
+    } = useGetCookbooks(getCookbookQueryParams);
 
-    //TODO: Add recipe to cookbook hook.
-        // Need to remove cookbooks from this
+    const {
+        addRecipeToCookbook,
+        isAddingRecipeToCookbook,
+    } = useAddRecipeToCookbook(getCookbookQueryParams)
+
 
     /////////////////////////////////
     // FUNCTIONS ////////////////////
     /////////////////////////////////
 
-    //TODO Add to cookbook
+    // Add recipe to cookbook func.
+    const handleAddRecipeToCookbook = useCallback((cookbookId: number) => {
+        if (isAddingRecipeToCookbook) return;
+        addRecipeToCookbook({
+            recipeId: recipe?.id!,
+            cookbookId,
+        });
+    }, []);
 
     /////////////////////////////////
     // RENDER ///////////////////////
     /////////////////////////////////
 
-    console.log("Total cookbook count: ", cookbooks?.length);
+    console.log("Total cookbook count: ", cookbooks);
 
     return (
         <div className="modal" role="dialog">
@@ -93,6 +107,7 @@ const AddToCookbookModal: React.FC<IProps> = ({
                                                 ref={idx === cookbooks.length - 1 ? lastElementRef : undefined}
                                                 key={`add_modal_cookbook_${cookbook.id}`}
                                                 className="p-2 text-white font-medium text-base rounded cursor-pointer hover:bg-app-green-hover transition w-full text-center bg-base-200"
+                                                onClick={() => handleAddRecipeToCookbook(cookbook.id)}
                                             >
                                                 {
                                                     cookbook.title
