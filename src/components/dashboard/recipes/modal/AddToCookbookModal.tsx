@@ -5,7 +5,6 @@ import { ROUTE_PATHS } from "@/utils/constants";
 import { Add } from "@mui/icons-material";
 import { RECIPE_ACTION_MODAL_IDS } from "@/utils/constants/recipes.constants";
 import ClearIcon from '@mui/icons-material/Clear';
-import { identity } from "lodash";
 
 type IProps = {
     recipe?: IRecipe;
