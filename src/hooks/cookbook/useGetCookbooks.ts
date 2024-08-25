@@ -3,11 +3,19 @@ import useAxios from "../axios/useAxios.hook";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { useInfinityQueryFunctions } from "../common/useInfinityQueryFunctions";
 
-const useGetCookbooks = (
-    search?: string,
-    selection?: string,
+type IProps = {
+    search?: string;
+    selection?: string;
+    pageSize?: number;
+    excludedRecipeId?: number,
+}
+
+const useGetCookbooks = ({
+    search,
+    selection,
+    excludedRecipeId,
     pageSize = 15,
-) => {
+}: IProps ={}) => {
 
     const axios = useAxios();
 
@@ -22,7 +30,12 @@ const useGetCookbooks = (
         status,
         refetch,
     } = useInfiniteQuery({
-        queryKey: ["cookbooks", search, selection],
+        queryKey: ["cookbooks", {
+            search,
+            selection,
+            pageSize,
+            excludedRecipeId,
+        }],
         queryFn: async ({ pageParam = 0 }): Promise<ICookbook[]> => {
 
             //?? cookbook/my-cookbooks
@@ -31,6 +44,7 @@ const useGetCookbooks = (
                     // selection
                     // page
                     // limit
+                    // excludedRecipeId
             return axios
                 .get("/cookbooks/my-cookbooks", {
                     params: {
@@ -38,6 +52,7 @@ const useGetCookbooks = (
                         limit: pageSize,
                         selection,
                         search,
+                        excludedRecipeId,
                     },
                 })
                 .then((res) => res.data);
