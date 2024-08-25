@@ -14,7 +14,6 @@ const useEditRecipe = () => {
 
     const { recipeIdToIndexMap } = useGetUserRecipes();
 
-
     const {
         mutate: editRecipe,
         isPending: isEditingRecipe,
@@ -29,6 +28,7 @@ const useEditRecipe = () => {
         },
         onSuccess: (editedReciped: IRecipe) => {
 
+            // Update cache in list
             queryClient.setQueryData(["my-recipes"], (oldData: unknown) => {
 
                 const recipeIndexes = recipeIdToIndexMap.get(
@@ -40,7 +40,13 @@ const useEditRecipe = () => {
                 (oldData as IGetUserRecipesData).pages[recipeIndexes.pageIndex][recipeIndexes.indexInPage] = editedReciped;
 
                 return oldData;
-            })  
+            });
+
+            // Update cache of single recipe
+            queryClient.setQueryData(
+                ["recipe", editedReciped.id.toString()], 
+                () => editedReciped,
+            );
 
             toast.success('Recipe edited successfully!')
         },

@@ -29,8 +29,9 @@ const useUploadRecipeImage = () => {
         }: IUploadRecipeImageInput) => {
 
             const formData = new FormData();
-            formData.append("img", img);
 
+            formData.append("img", img);
+            
             const uploadedImgUrl = await axios.post(`/recipes/${recipe.id}/upload-image`, formData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
@@ -47,11 +48,6 @@ const useUploadRecipeImage = () => {
             uploadedImgUrl
         }) => {
 
-            console.log({
-                recipe,
-                uploadedImgUrl
-            })
-
             // Only set the new image url if it didn't have one previously
             // If it had an image before, the new url is going to be the same
             // Because the image is replaced.
@@ -64,14 +60,6 @@ const useUploadRecipeImage = () => {
                         console.warn('Cache data not found for recipe: ', recipe.id);
                         return;
                     }
-
-                    console.log('useUploadRecipeImage: ', recipe.id, oldData);
-
-                    // const newData = { ...(oldData as IRecipe) };
-                   
-                    // newData.image = uploadedImgUrl;
-
-                    // console.log('New recipe: ', newData)
 
                     return {
                         ...recipe,

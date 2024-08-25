@@ -7,6 +7,7 @@ import recipePlaceholderImg from "@/assets/images/recipe_placeholder.png";
 import { useRef } from "react";
 import toast from "react-hot-toast";
 import useUploadRecipeImage from "@/hooks/recipes/useUploadRecipeImage.hook";
+import useEditRecipe from "@/hooks/recipes/useEditRecipe.hook";
 
 type IProps = {
     recipe: IRecipe;
@@ -20,6 +21,13 @@ const EditRecipeImageModal: React.FC<IProps> = ({ recipe }) => {
         uploadImage,
         isUploadingImage,
     } = useUploadRecipeImage();
+
+    // Use edit recipe
+    const {
+        editRecipe,
+        isEditingRecipe,
+    } = useEditRecipe();
+
 
     // On file change
     const handleOnFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -55,14 +63,21 @@ const EditRecipeImageModal: React.FC<IProps> = ({ recipe }) => {
     };
 
     const handleClickSelectImage = () => {
-        if (fileInputRef.current && !isUploadingImage) {
+        if (fileInputRef.current && !isUploadingImage && !isEditingRecipe) {
             fileInputRef.current.click();
         }
     };
 
-    //TODO Handle reset image
+    // Handle reset image
     const handleResetImage = () => {
-        // setSelectedImageSrc(undefined);
+
+        if(isEditingRecipe || isUploadingImage) return;
+
+        editRecipe({
+            id: recipe.id,
+            image: null,
+        });
+
     }
 
     
@@ -95,7 +110,7 @@ const EditRecipeImageModal: React.FC<IProps> = ({ recipe }) => {
                 <button
                     className={`
                         btn w-full common_btn text-white flex-1 
-                        ${isUploadingImage ? "btn-disabled" : ""}
+                        ${isUploadingImage || isEditingRecipe ? "btn-disabled" : ""}
                     `}
                     onClick={handleClickSelectImage}
                 >
@@ -113,7 +128,10 @@ const EditRecipeImageModal: React.FC<IProps> = ({ recipe }) => {
                         <button 
                             onClick={handleResetImage}
                             className="btn border border-red-500 text-red-500 hover:border-red-500 hover:bg-red-500 hover:text-white transition"
-                        >
+                        >   
+                            {
+                                isEditingRecipe && <span className="loading loading-spinner"></span>
+                            }
                             <DeleteOutlineIcon />
                         </button>
                     )

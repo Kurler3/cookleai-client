@@ -6,7 +6,7 @@ import { CUISINE_TYPES, RECIPE_ACTION_MODAL_IDS, RECIPE_DIFFICULTY, ROUTE_PATHS 
 import EditRecipeImageModal from "./edit/modal/EditRecipeImageModal";
 import { ChangeEvent, useCallback, useEffect, useMemo, useState } from "react";
 import getEditRecipeInitialState from "@/utils/functions/recipe/getEditRecipeInitialState";
-import { INutrients, IRecipeEditState } from "@/types";
+import { INutrients, IRecipeEditState, IUpdateRecipe } from "@/types";
 import EditRecipeIngredients from "./edit/inputs/ingredients/EditRecipeIngredients";
 import EditRecipeInstructions from "./edit/inputs/instructions/EditRecipeInstructions";
 import DeleteRecipeModal from "../recipes/modal/DeleteRecipeModal";
@@ -25,7 +25,7 @@ const DetailedRecipeEditPage = () => {
     // Use get recipe
     const { isLoadingRecipe, recipe } = useGetRecipe(recipeId);
 
-    //TODO Use edit recipe
+    // Use edit recipe
     const {
         editRecipe,
         isEditingRecipe,
@@ -133,8 +133,15 @@ const DetailedRecipeEditPage = () => {
     const handleSaveChanges = useCallback(() => {
 
         // If can't save changes
+        if(!canSave) return;
 
-    }, []);
+        // If is already saving => return
+        if(isEditingRecipe) return;
+
+        // Edit recipe.
+        editRecipe(changes as IUpdateRecipe);
+
+    }, [changes]);
 
     ////////////////////////////////////////////////////////
     // AS SOON AS RECIPE CHANGES => UPDATE EDIT STATE //////
@@ -145,8 +152,6 @@ const DetailedRecipeEditPage = () => {
             onChangeEditRecipeState(getEditRecipeInitialState(recipe));
         }
     }, [onChangeEditRecipeState, recipe])
-
-    console.log(changes)
 
     ///////////////////////////////////
     // RETURN /////////////////////////
@@ -475,7 +480,7 @@ const DetailedRecipeEditPage = () => {
                 {/* SAVE CHANGES */}
                 <button
                     className={`btn btn-success text-white ${!canSave && 'btn-disabled'}`}
-                    onClick={canSave ? handleSaveChanges : () => { }}
+                    onClick={!canSave || isEditingRecipe ? () => {} : handleSaveChanges}
                 >
                     {
                         isEditingRecipe ? (

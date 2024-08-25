@@ -21,7 +21,7 @@ export type IRecipe = {
     title: string;
     description?: string;
     isPublic: boolean;
-    image?: string;
+    image?: string | null;
     servings?: string;
     notes?: string;
     prepTime?: number;
