@@ -1,10 +1,9 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 import useAxios from "../axios/useAxios.hook";
 import { IRecipe } from "@/types";
-import { useCallback, useMemo, useRef } from "react";
+import { useInfinityQueryFunctions } from "../common/useInfinityQueryFunctions";
 
 const useGetUserRecipes = (pageSize = 15) => {
-    const observer = useRef<IntersectionObserver>();
 
     const axios = useAxios();
 
@@ -33,43 +32,17 @@ const useGetUserRecipes = (pageSize = 15) => {
         initialPageParam: 0,
     });
 
-    const lastElementRef = useCallback(
-        (node: HTMLDivElement) => {
-            if (isLoading) return;
+    const {
+        lastElementRef,
+        itemIdToIndexesMap: recipeIdToIndexMap,
+    } = useInfinityQueryFunctions<IRecipe>({
+        isLoading,
+        hasNextPage,
+        fetchNextPage,
+        isFetching,
+        data: recipes,
+    });
 
-            // If when this func runs there is a observer, disconnect.
-            if (observer.current) observer.current.disconnect();
-
-            // Init observer and set in ref
-            observer.current = new IntersectionObserver((entries) => {
-                // If the first entry attached to this ref is intersecting the view port and
-                // if there is a next page
-                // and is not currently fetching => fetch next page
-                if (entries[0].isIntersecting && hasNextPage && !isFetching) {
-                    fetchNextPage();
-                }
-            });
-
-            if (node) observer.current.observe(node);
-        },
-        [fetchNextPage, hasNextPage, isFetching, isLoading]
-    );
-
-    // Map between recipeId to pageIndex + indexInPage (will be faster when deleting)
-    const recipeIdToIndexMap: Map<
-        number,
-        { pageIndex: number; indexInPage: number }
-    > = useMemo(() => {
-        const recipeMap = new Map();
-
-        recipes?.pages.forEach((page, pageIndex) => {
-            page.forEach((recipe, indexInPage) => {
-                recipeMap.set(recipe.id, { pageIndex, indexInPage });
-            });
-        });
-
-        return recipeMap;
-    }, [recipes?.pages]);
 
     return {
         recipes: recipes?.pages.flat(),

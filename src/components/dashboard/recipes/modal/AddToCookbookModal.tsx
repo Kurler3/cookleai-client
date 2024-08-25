@@ -32,6 +32,11 @@ const AddToCookbookModal: React.FC<IProps> = ({
     // RENDER ///////////////////////
     /////////////////////////////////
 
+    // If there's an error
+    
+
+
+
     return (
         <div  className="modal" role="dialog">
 
@@ -58,7 +63,7 @@ const AddToCookbookModal: React.FC<IProps> = ({
                     className="flex justify-start items-center flex-col  p-4 gap-3 h-60 overflow-y-auto overflow-x-hidden w-full"
                 >
                     {
-                        !isLoadingCookbooks ? cookbooks.map((cookbook) => {
+                        !isLoadingCookbooks ? cookbooks?.map((cookbook) => {
                             return (
                                 <div
                                     key={`add_modal_cookbook_${cookbook.id}`}
