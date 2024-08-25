@@ -9,6 +9,7 @@ import CheckIcon from '@mui/icons-material/Check';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { FRONT_END_BASE_URL } from "@/utils/constants";
 import useEditRecipe from "@/hooks/recipes/useEditRecipe.hook";
+import EditRecipeVisibilityInput from "../EditRecipeVisibilityInput";
 
 
 type IProps = {
@@ -134,78 +135,18 @@ const ShareRecipeModal: React.FC<IProps> = ({ recipe, setSelectedRecipe }) => {
                     )
                 }
 
-                {/* //TODO: SWITCH TO PRIVATE/PUBLIC */}
-                <div className="dropdown dropdown-bottom">
-                    <div
-                        tabIndex={0}
-                        role="button"
-                        className={`${isEditingRecipe && 'opacity-[0.4] cursor-not-allowed hover:border-app-green'} rounded-lg p-3 m-1 w-full border border-app-green text-white bg-base-300 flex justify-between 
-                            items-center hover:border hover:border-app-green-hover`}
-                    >
-
-                        <div className="flex justify-start items-center gap-2">
-
-                            {isEditingRecipe && (<span className="loading loading-spinner"></span>)}
-
-                            {
-                                recipe.isPublic ? (
-                                    <>
-                                        <LockOpenIcon />
-
-                                        Public
-                                    </>
-                                ) : (
-                                    <>
-                                        <LockIcon />
-
-                                        Private
-                                    </>
-                                )
-                            }
-                        </div>
-
-
-                        {/* DOWN ARROW */}
-                        <KeyboardArrowDownIcon />
-
-                    </div>
-                    {
-                        !isEditingRecipe && (
-                            <ul tabIndex={0} className="dropdown-content menu bg-base-300 rounded-box z-[1] p-2 shadow w-full">
-
-                        <li onClick={handleChangeRecipeVisibility}>
-                            <a>
-
-                                {
-                                    recipe.isPublic ? (
-                                        <>
-
-                                            <LockIcon /> Private
-
-                                        </>
-                                    ) : (
-                                        <>
-
-                                            <LockOpenIcon /> Public
-
-                                        </>
-                                    )
-                                }
-
-                            </a>
-                        </li>
-                    </ul>
-                        )
-                    }
-                    
-                </div>
-
+                {/* // SWITCH TO PRIVATE/PUBLIC */}
+                <EditRecipeVisibilityInput 
+                    isEditingRecipe={isEditingRecipe}
+                    recipe={recipe}
+                    handleChangeRecipeVisibility={handleChangeRecipeVisibility}
+                />
 
                 <p className="text-base font-medium">
                     Link
                 </p>
 
-                {/* //TODO: COPY LINK */}
+                {/* // COPY LINK */}
                 <div className="cursor-not-allowed w-full text-center p-2 bg-base-200 rounded-lg  border-2 border-app-green">
                     {
                         recipeUrl

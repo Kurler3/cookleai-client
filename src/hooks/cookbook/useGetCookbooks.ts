@@ -8,7 +8,7 @@ const useGetCookbooks = () => {
 
     return {
         cookbooks: mockCookbooks,
-        isLoadingCookbooks: false,
+        isLoadingCookbooks: true,
     }
 };
 

@@ -15,6 +15,7 @@ import SaveIcon from '@mui/icons-material/Save';
 import useEditRecipe from "@/hooks/recipes/useEditRecipe.hook";
 import _ from 'lodash'
 import getObjectDifferences from "@/utils/functions/getObjectsDifferences";
+import EditRecipeVisibilityInput from "../recipes/EditRecipeVisibilityInput";
 
 const DetailedRecipeEditPage = () => {
 
@@ -142,6 +143,16 @@ const DetailedRecipeEditPage = () => {
         editRecipe(changes as IUpdateRecipe);
 
     }, [changes]);
+
+    const handleChangeRecipeVisibility = useCallback(() => {
+
+        if(isEditingRecipe) return;
+
+        editRecipe({
+            id: recipe?.id!,
+            isPublic: !recipe?.isPublic,
+        });
+    }, []);
 
     ////////////////////////////////////////////////////////
     // AS SOON AS RECIPE CHANGES => UPDATE EDIT STATE //////
@@ -476,6 +487,14 @@ const DetailedRecipeEditPage = () => {
                     <DeleteIcon style={{ height: "20px" }} />
                     Delete
                 </label>
+
+                {/* EDIT VISIBILITY */}
+                <EditRecipeVisibilityInput 
+                    isEditingRecipe={isEditingRecipe}
+                    recipe={recipe}
+                    handleChangeRecipeVisibility={handleChangeRecipeVisibility}
+                    dropdownDirection="right"
+                />
 
                 {/* SAVE CHANGES */}
                 <button
