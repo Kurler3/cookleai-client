@@ -6,13 +6,15 @@ import { CUISINE_TYPES, RECIPE_ACTION_MODAL_IDS, RECIPE_DIFFICULTY, ROUTE_PATHS 
 import EditRecipeImageModal from "./edit/modal/EditRecipeImageModal";
 import { ChangeEvent, useCallback, useEffect, useMemo, useState } from "react";
 import getEditRecipeInitialState from "@/utils/functions/recipe/getEditRecipeInitialState";
-import { IRecipeEditState } from "@/types";
+import { INutrients, IRecipeEditState } from "@/types";
 import EditRecipeIngredients from "./edit/inputs/ingredients/EditRecipeIngredients";
 import EditRecipeInstructions from "./edit/inputs/instructions/EditRecipeInstructions";
 import DeleteRecipeModal from "../recipes/modal/DeleteRecipeModal";
 import { DeleteIcon } from "@chakra-ui/icons";
 import SaveIcon from '@mui/icons-material/Save';
 import useEditRecipe from "@/hooks/recipes/useEditRecipe.hook";
+import _ from 'lodash'
+import getObjectDifferences from "@/utils/functions/getObjectsDifferences";
 
 const DetailedRecipeEditPage = () => {
 
@@ -39,19 +41,41 @@ const DetailedRecipeEditPage = () => {
     // CHECK IF THERES ANY CHANGES /////////////////////////
     ////////////////////////////////////////////////////////
 
-    const isThereChanges = useMemo(() => {
+    const canSave = useMemo(() => {
 
         // If the objects are completly the same
-        if(JSON.stringify(recipe) === JSON.stringify(editRecipeState)) return false;
+        if (_.isEqual(recipe, editRecipeState)) return false;
 
-        //TODO Check if there's any invalid ingredient.
-        // const editStateHasInvalidIngredient = editRecipeState.ingredients?.
+        // Check if there's any invalid ingredient.
+        const editStateHasInvalidIngredient = editRecipeState.ingredients?.some(ingredient => {
+            return !ingredient.name || !ingredient.quantity || !ingredient.unit;
+        });
 
-        //TODO Check if there's any empty instruction.
+        if (editStateHasInvalidIngredient) return false;
 
-    }, [editRecipeState, recipe])
+        // Check if there's any empty instruction.
+        const hasInvalidInstruction = editRecipeState.instructions?.some((instruction) => {
+            return instruction.length === 0;
+        })
 
-    console.log(isThereChanges);
+        if (hasInvalidInstruction) return false;
+
+        return true;
+
+    }, [editRecipeState, recipe]);
+
+    const changes = useMemo(() => {
+
+        if (!recipe) return {};
+
+        if (!canSave) return {};
+
+        return {
+            id: recipe.id,
+            ...getObjectDifferences(recipe, editRecipeState),
+        }
+
+    }, [recipe, editRecipeState])
 
     ////////////////////////////////////////////////////////
     // ON CHANGE EDIT RECIPE STATE /////////////////////////
@@ -88,11 +112,20 @@ const DetailedRecipeEditPage = () => {
             value,
         } = event.target;
 
+
+        let newNutrients: INutrients | null  = { ...(editRecipeState.nutrients ?? {}) };
+
+        if(value === "") {
+            delete newNutrients[name as keyof INutrients];
+
+            if(Object.keys(newNutrients).length === 0) newNutrients = null;
+
+        } else {
+            newNutrients[name as keyof INutrients] = parseFloat(value);
+        }
+
         onChangeEditRecipeState({
-            nutrients: {
-                ...(editRecipeState.nutrients ?? {}),
-                [name]: value,
-            }
+            nutrients: newNutrients,
         });
 
     };
@@ -426,7 +459,7 @@ const DetailedRecipeEditPage = () => {
             />
 
 
-            {/* //TODO DELETE / SAVE BUTTONS */}
+            {/* // DELETE / SAVE BUTTONS */}
             <div className="w-full flex px-4 justify-between items-center">
 
                 {/* DELETE */}
@@ -439,9 +472,9 @@ const DetailedRecipeEditPage = () => {
                 </label>
 
                 {/* SAVE CHANGES */}
-                <button 
-                    className='btn btn-success text-white'
-                    onClick={handleSaveChanges}
+                <button
+                    className={`btn btn-success text-white ${!canSave && 'btn-disabled'}`}
+                    onClick={canSave ? handleSaveChanges : () => { }}
                 >
                     {
                         isEditingRecipe ? (
@@ -450,7 +483,7 @@ const DetailedRecipeEditPage = () => {
                             <SaveIcon />
                         )
                     }
-                   
+
                     Save Changes
                 </button>
             </div>

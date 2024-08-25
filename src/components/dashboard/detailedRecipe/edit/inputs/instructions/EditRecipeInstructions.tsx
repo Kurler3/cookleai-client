@@ -21,7 +21,6 @@ const EditRecipeInstructions: FC<IProps> = ({
     // FUNCTIONS /////////////////////////
     //////////////////////////////////////
 
-
     // Add instruction*
     const addInstruction = () => {
         const newInstruction = "";

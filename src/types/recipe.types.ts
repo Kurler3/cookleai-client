@@ -7,7 +7,7 @@ enum IRecipeRole {
     VIEWER = "VIEWER",
 }
 
-type INutrients = {
+export type INutrients = {
     calories?: number;
     carbohydrates?: number;
     protein?: number;
@@ -78,7 +78,7 @@ export type IRecipeEditState = {
     notes?: string;
     prepTime?: number;
     cookTime?: number;
-    nutrients?: INutrients;
+    nutrients?: INutrients | null;
     cuisine?: string;
     language?: string;
     difficulty?: string;

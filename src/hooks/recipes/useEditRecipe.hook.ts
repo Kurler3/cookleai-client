@@ -5,8 +5,6 @@ import { IGetUserRecipesData, IRecipe, IUpdateRecipe } from "@/types";
 import axiosNetworkErrorHandler from "@/utils/functions/axiosNetworkErrorHandler";
 import toast from "react-hot-toast";
 
-
-
 const useEditRecipe = () => {
 
     // Get the query client
