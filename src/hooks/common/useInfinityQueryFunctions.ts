@@ -42,12 +42,12 @@ export const useInfinityQueryFunctions = <T extends { id: number }>({
         [fetchNextPage, hasNextPage, isFetching, isLoading]
     );
 
-
     // Map between recipeId to pageIndex + indexInPage (will be faster when deleting)
     const itemIdToIndexesMap: Map<
         number,
         { pageIndex: number; indexInPage: number }
     > = useMemo(() => {
+
         const map = new Map();
 
         data?.pages.forEach((page, pageIndex) => {
@@ -57,7 +57,10 @@ export const useInfinityQueryFunctions = <T extends { id: number }>({
         });
 
         return map;
-    }, [data?.pages]);
+    }, [data?.pages?.map(page => page.length).join('-')]);
+    
+    
+
 
     return {
         itemIdToIndexesMap,

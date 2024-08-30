@@ -7,8 +7,6 @@ import toast from "react-hot-toast";
 import axiosNetworkErrorHandler from "@/utils/functions/axiosNetworkErrorHandler";
 
 
-
-
 const useAddRecipeToCookbook = (cookbookQueryParams?: IGetCookbooksQueryParams) => {
 
     const axios = useAxios();
@@ -59,7 +57,11 @@ const useAddRecipeToCookbook = (cookbookQueryParams?: IGetCookbooksQueryParams) 
 
                         if (!cookbookIndexes) return newData;
 
-                        newData.pages[cookbookIndexes.pageIndex].splice(cookbookIndexes.indexInPage, 1)
+                        try {
+                            newData.pages[cookbookIndexes.pageIndex].splice(cookbookIndexes.indexInPage, 1)
+                        } catch (error) {
+                            console.error('Error: ', error)
+                        }
 
                         return newData;
                     }

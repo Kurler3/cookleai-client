@@ -23,6 +23,8 @@ const AddToCookbookModal: React.FC<IProps> = ({
     const getCookbookQueryParams = {
         selection: 'title',
         excludedRecipeId: recipe?.id,
+        pageSize: 15,
+        search: undefined,
     }
 
     const {
@@ -55,8 +57,6 @@ const AddToCookbookModal: React.FC<IProps> = ({
     /////////////////////////////////
     // RENDER ///////////////////////
     /////////////////////////////////
-
-    console.log("Total cookbook count: ", cookbooks);
 
     return (
         <div className="modal" role="dialog">

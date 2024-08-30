@@ -55,8 +55,6 @@ const useGetCookbooks = ({
         initialPageParam: 0,
     });
 
-    console.log(data)
-
     const {
         lastElementRef,
         itemIdToIndexesMap: cookbookIdToIndexesMap,
