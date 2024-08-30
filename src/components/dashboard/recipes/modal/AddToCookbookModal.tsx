@@ -49,10 +49,10 @@ const AddToCookbookModal: React.FC<IProps> = ({
     const handleAddRecipeToCookbook = useCallback((cookbookId: number) => {
         if (isAddingRecipeToCookbook) return;
         addRecipeToCookbook({
-            recipeId: recipe?.id!,
+            recipeId: recipe!.id,
             cookbookId,
         });
-    }, []);
+    }, [addRecipeToCookbook, isAddingRecipeToCookbook, recipe]);
 
     /////////////////////////////////
     // RENDER ///////////////////////
