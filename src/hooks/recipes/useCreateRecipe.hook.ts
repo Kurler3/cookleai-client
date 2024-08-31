@@ -1,8 +1,9 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import useAxios from "../axios/useAxios.hook";
 import { useNavigate } from "react-router-dom";
 import { ROUTE_PATHS } from "@/utils/constants";
 import toast from "react-hot-toast";
+import { IQuota } from "@/types/quota.types";
 
 const useCreateRecipe = ({
     withAI=false
@@ -10,6 +11,7 @@ const useCreateRecipe = ({
 
     const navigate = useNavigate();
     const axios = useAxios();
+    const queryClient = useQueryClient();
 
     const {
         data: newRecipe,
@@ -30,6 +32,23 @@ const useCreateRecipe = ({
 
         },
         onSuccess: (data) => {
+
+            if(withAI) {
+
+                queryClient.setQueryData(
+                    ['user.quota', 'AI'],
+                    (oldData: IQuota) => {
+                        if(!oldData) return null;
+
+                        const newQuota = {...oldData};
+
+                        newQuota.used += 1;
+
+                        return newQuota;
+                    }
+                )
+
+            }
 
             // Show success toast
             toast.success('Recipe created successfully');
