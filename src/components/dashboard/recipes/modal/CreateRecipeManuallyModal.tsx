@@ -23,7 +23,7 @@ const CreateRecipeManuallyModal = () => {
         <div className="modal" role="dialog">
             <div className="modal-box flex items-start flex-col gap-4">
                 <h3 className="text-lg font-medium text-white">
-                    Create a new recipe manually
+                    Create a new recipe manually 
                 </h3>
 
                 <p>First, let's give your new recipe a title!</p>

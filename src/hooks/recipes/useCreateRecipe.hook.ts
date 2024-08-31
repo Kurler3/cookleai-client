@@ -4,7 +4,9 @@ import { useNavigate } from "react-router-dom";
 import { ROUTE_PATHS } from "@/utils/constants";
 import toast from "react-hot-toast";
 
-const useCreateRecipe = () => {
+const useCreateRecipe = ({
+    withAI=false
+}={}) => {
 
     const navigate = useNavigate();
     const axios = useAxios();
@@ -16,7 +18,9 @@ const useCreateRecipe = () => {
         mutate: createRecipe,
     } = useMutation({
         mutationFn: async (title: string) => {
-            const response = await axios.post('/recipes/create', { title });
+            const apiRoute = withAI ? 'create-with-ai' : 'create';
+            const body = withAI ? { prompt: title } : { title }
+            const response = await axios.post(`/recipes/${apiRoute}`, body);
             return response.data;
         },
         onError: () => {
