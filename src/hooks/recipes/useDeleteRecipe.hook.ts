@@ -20,7 +20,7 @@ const useDeleteRecipe = (recipeId?: number, onSuccessCallback?: () => void) => {
         isPending: isDeletingRecipe,
         error: deleteRecipeError,
     } = useMutation({
-        mutationKey: ["deleteRecipe", ],
+        mutationKey: ["deleteRecipe"],
         mutationFn: async () => {
             const response = await axios.delete(`/recipes/${recipeId}`);
             return response.data;
