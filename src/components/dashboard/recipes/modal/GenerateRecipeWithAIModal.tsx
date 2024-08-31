@@ -84,6 +84,7 @@ const GenerateRecipeWithAIModal = () => {
           placeholder="Enter ingredients"
           value={recipeTitle}
           onChange={(e) => setRecipeTitle(e.target.value)}
+          disabled={quota && quota.used >= quota.limit}
         />
 
         <div>
