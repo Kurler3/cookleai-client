@@ -14,33 +14,40 @@ type IProps = {
 };
 
 const RecipesList: React.FC<IProps> = ({ isGrid }) => {
-    const { recipes, isLoadingRecipes, isFetchingNextPage, lastElementRef } =
-        useGetUserRecipes();
+    const {
+        recipes,
+        isLoadingRecipes,
+        isFetchingNextPage,
+        lastElementRef
+    } = useGetUserRecipes();
 
-    const [selectedRecipe, setSelectedRecipe] = useState<IRecipe | undefined>();
+    const [
+        selectedRecipe,
+        setSelectedRecipe
+    ] = useState<IRecipe | undefined>();
 
     return (
         <div className="flex justify-start items-start w-full flex-1 gap-4 max-h-[80%]">
             {
-            !isLoadingRecipes && recipes?.length === 0 ? (
-                <AddYourFirstRecipe />
-            ) :
-            !isGrid ? (
-                <RecipesTable
-                    recipes={recipes}
-                    isLoadingRecipes={isLoadingRecipes}
-                    isFetchingNextPage={isFetchingNextPage}
-                    lastElementRef={lastElementRef}
-                    setSelectedRecipe={setSelectedRecipe}
-                />
-            ) : (
-                <RecipeGrid
-                    recipes={recipes}
-                    isLoadingRecipes={isLoadingRecipes}
-                    isFetchingNextPage={isFetchingNextPage}
-                    lastElementRef={lastElementRef}
-                />
-            )}
+                !isLoadingRecipes && recipes?.length === 0 ? (
+                    <AddYourFirstRecipe />
+                ) :
+                    !isGrid ? (
+                        <RecipesTable
+                            recipes={recipes}
+                            isLoadingRecipes={isLoadingRecipes}
+                            isFetchingNextPage={isFetchingNextPage}
+                            lastElementRef={lastElementRef}
+                            setSelectedRecipe={setSelectedRecipe}
+                        />
+                    ) : (
+                        <RecipeGrid
+                            recipes={recipes}
+                            isLoadingRecipes={isLoadingRecipes}
+                            isFetchingNextPage={isFetchingNextPage}
+                            lastElementRef={lastElementRef}
+                        />
+                    )}
 
             {/* MODALS */}
             {selectedRecipe && (

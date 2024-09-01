@@ -1,11 +1,14 @@
-import { useInfiniteQuery } from "@tanstack/react-query";
+import { InfiniteData, useInfiniteQuery, useQueryClient } from "@tanstack/react-query";
 import useAxios from "../axios/useAxios.hook";
 import { IRecipe } from "@/types";
 import { useInfinityQueryFunctions } from "../common/useInfinityQueryFunctions";
+import { getMinutesInMs } from "@/utils/functions";
 
 const useGetUserRecipes = (pageSize = 15) => {
 
     const axios = useAxios();
+    const queryClient = useQueryClient();
+
 
     const {
         fetchNextPage,
@@ -30,6 +33,7 @@ const useGetUserRecipes = (pageSize = 15) => {
             return lastPage.length ? pages.length : undefined; // If the last page was not empty, then continue fetching, otherwise stop.
         },
         initialPageParam: 0,
+        staleTime: getMinutesInMs(3),
     });
 
     const {
@@ -43,6 +47,64 @@ const useGetUserRecipes = (pageSize = 15) => {
         data: recipes,
     });
 
+    ////////////////////////////////////
+    // FUNCTIONS ///////////////////////
+    ////////////////////////////////////
+
+    const removeRecipeFromCache = (recipeId: number) => {
+        // Remove the recipe from the cache
+        queryClient.setQueryData(
+            ["my-recipes"],
+            (oldData: InfiniteData<IRecipe[]>) => {
+
+                if (!oldData) {
+                    console.error(`no cache found for: 'my-recipes'`);
+                    return null;
+                }
+
+                // Clone oldData to ensure new references
+                const newData = {
+                    ...oldData,
+                    pages: oldData.pages.map((page) => [...page]), // Copy each page array
+                };
+                const recipeIndexes = recipeIdToIndexMap.get(recipeId);
+
+                if (!recipeIndexes) return newData;
+
+                newData.pages[recipeIndexes.pageIndex].splice(recipeIndexes.indexInPage, 1);
+
+                return newData;
+            });
+    };
+
+    const addRecipeToCache = (newRecipe: IRecipe) => {
+
+        // Remove the recipe from the cache
+        queryClient.setQueryData(
+            ["my-recipes"],
+            (oldData: InfiniteData<IRecipe[]>) => {
+
+                if (!oldData) {
+                    console.error(`no cache found for: 'my-recipes'`);
+                    return null;
+                }
+
+                // Clone oldData to ensure new references
+                const newData = {
+                    ...oldData,
+                    pages: oldData.pages.map((page) => [...page]),
+                };
+
+                newData.pages[0].unshift(newRecipe);
+
+                return newData;
+            }
+        );
+    }
+
+    ////////////////////////////////////
+    // RETURN //////////////////////////
+    ////////////////////////////////////
 
     return {
         recipes: recipes?.pages.flat(),
@@ -52,6 +114,13 @@ const useGetUserRecipes = (pageSize = 15) => {
         lastElementRef,
         refetchUserRecipes: refetch,
         recipeIdToIndexMap,
+
+        ////////////////////////////////////////////
+        // FUNCTIONS FOR UPDATING THE CACHE ////////
+        ////////////////////////////////////////////
+
+        removeRecipeFromCache,
+        addRecipeToCache,
     };
 };
 
