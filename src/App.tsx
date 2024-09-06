@@ -14,6 +14,7 @@ import { ROUTE_PATHS } from "./utils/constants";
 import CookbooksPage from "./components/dashboard/cookbooks/CookbooksPage";
 import DetailedRecipePage from "./components/dashboard/detailedRecipe/DetailedRecipePage";
 import DetailedRecipeEditPage from "./components/dashboard/detailedRecipe/DetailedRecipeEditPage";
+import Logout from "./components/Logout";
 
 const App = () => {
     return (
@@ -35,6 +36,10 @@ const App = () => {
 
                         {/* PROTECTED ROUTES */}
                         <Route path="/" element={<ProtectedRoutes />}>
+
+                            {/* LOGOUT */}
+                            <Route path={ROUTE_PATHS.LOGOUT} element={<Logout />} />
+
                             {/* DASHBOARD */}
                             <Route path="/dashboard" element={<Dashboard />}>
                             
