@@ -12,6 +12,8 @@ export const useGetUser = (
         token
     } = useAuth();
 
+    console.log('token', token);
+
     const {
         data,
         isLoading,
