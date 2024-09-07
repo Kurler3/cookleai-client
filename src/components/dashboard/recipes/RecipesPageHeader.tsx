@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom';
 import { ROUTE_PATHS } from '@/utils/constants';
 import { RECIPE_ACTION_MODAL_IDS } from '@/utils/constants/recipes.constants';
 import CreateRecipeModal from './modal/CreateRecipeModal';
+import RecipePageHeaderFilters from './RecipePageHeaderFilters';
 
 
 type IProps = {
@@ -50,35 +51,10 @@ const RecipesPageHeader: React.FC<IProps> = ({
             </div>
 
             {/* SEARCH BAR + FILTERS + GRID VIEW / ROW VIEW */}
-            <div className='flex justify-start items-center gap-2'>
-
-                {/* SEARCH BAR */}
-                <Searchbar />
-
-                {/* FILTER BUTTON */}
-                <button
-                    className='btn flex justify-center items-center common_btn'
-                >
-
-                    <FilterAltIcon />
-
-                    <div className='hidden lg:block'>Filter</div>
-
-                    <KeyboardArrowDownIcon />
-
-                </button>
-
-                {/* GRID / ROW VIEW */}
-                <button className='btn btn-neutral' onClick={() => { setIsGrid(!isGrid) }}>
-                    {
-                        isGrid ? (
-                            <ViewListIcon />
-                        ) : (
-                            <GridViewIcon />
-                        )
-                    }
-                </button>
-            </div>
+            <RecipePageHeaderFilters 
+                isGrid={isGrid}
+                setIsGrid={setIsGrid}
+            />
 
             {/* CREATE RECIPE MODAL */}
             <input type="checkbox" id={RECIPE_ACTION_MODAL_IDS.CREATE} className='modal-toggle' />
