@@ -2,7 +2,7 @@ import { useState } from "react";
 import useGetUserRecipes from "../../../hooks/recipes/useGetUserRecipes.hook";
 import RecipeGrid from "./grid/RecipeGrid";
 import RecipesTable from "./row/RecipesTable";
-import { IRecipe } from "@/types";
+import { IRecipe, IRecipeFilters } from "@/types";
 import DeleteRecipeModal from "./modal/DeleteRecipeModal";
 import { RECIPE_ACTION_MODAL_IDS } from "@/utils/constants/recipes.constants";
 import AddToCookbookModal from "./modal/AddToCookbookModal";
@@ -11,9 +11,14 @@ import AddYourFirstRecipe from "./AddYourFirstRecipe";
 
 type IProps = {
     isGrid: boolean;
+    filters: IRecipeFilters;
 };
 
-const RecipesList: React.FC<IProps> = ({ isGrid }) => {
+const RecipesList: React.FC<IProps> = ({ 
+    isGrid,
+    filters, 
+}) => {
+    
     const {
         recipes,
         isLoadingRecipes,
