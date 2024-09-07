@@ -1,15 +1,25 @@
 
 
 
+import Searchbar from '@/components/utils/Searchbar';
 import { CUISINE_TYPES } from '@/utils/constants';
 import SoupKitchenIcon from '@mui/icons-material/SoupKitchen';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 
 //TODO Icon + Name - Value selected.
 
 const RecipeRadioFilter = () => {
 
     const [selectedOption, setSelectedOption] = useState<string | null>(null);
+    const [filterSearch, setFilterSearch] = useState<string>('');
+
+    const filteredOptions = useMemo(() => {
+
+        return CUISINE_TYPES.filter((option) => {
+            return option.toLowerCase().includes(filterSearch.toLowerCase());
+        })
+
+    }, [filterSearch]);
 
     return (
         <div className="flex justify-center items-center">
@@ -30,7 +40,7 @@ const RecipeRadioFilter = () => {
                             <div className='text-xs'>
 
                                 | 
-                                <span className='text-app-green'>
+                                <span className='text-app-green ml-2'>
                                     {selectedOption}
                                 </span>
 
@@ -44,12 +54,18 @@ const RecipeRadioFilter = () => {
                 <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-20 w-52 p-2 shadow max-h-[300px] flex-nowrap overflow-y-auto overflow-x-hidden gap-4">
 
                     {/* SEARCH BAR */}
-
+                    <Searchbar 
+                        placeholder='Search for an option'
+                        fullWidth
+                        textSize='xs'
+                        value={filterSearch}
+                        setValue={(newValue?: string) => setFilterSearch(newValue ?? '')}
+                    />
 
 
                     {/* ITEMS */}
                     {
-                        CUISINE_TYPES.map((option) => {
+                        filteredOptions.map((option) => {
                             return (
                                 <div
                                     key={`recipe_radio_filter_${option}`}
