@@ -54,7 +54,7 @@ const useAxios = () => {
             axios.interceptors.request.eject(requestInterceptors);
             axios.interceptors.response.eject(responseInterceptors);
         };
-    }, []);
+    }, [token]);
 
     return axios;
 };

@@ -12,8 +12,6 @@ export const useGetUser = (
         token
     } = useAuth();
 
-    console.log('token', token);
-
     const {
         data,
         isLoading,
@@ -32,17 +30,14 @@ export const useGetUser = (
                 headers: {
                     Authorization: 'Bearer ' + token,
                 },
-            });
-
-            // Set jwt in local storage for future requests.
-            // localStorage.setItem(COOKLEAI_ACCESS_TOKEN, token!);
-
+            }); 
+            
             return user.data as IUser;
         },
-        refetchInterval:  getMinutesInMs(5 * 60), // 5 Minutes
+        refetchInterval: getMinutesInMs(5), // 5 Minutes
         refetchIntervalInBackground: true,
         retry: false,
-    })
+    }); 
 
     return {
         isLoadingUser: isLoading || isFetching,

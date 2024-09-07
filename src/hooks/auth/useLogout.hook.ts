@@ -3,7 +3,6 @@ import useAxios from "../axios/useAxios.hook";
 import { useAuth } from "./useAuth.hook";
 import { useNavigate } from "react-router-dom";
 
-
 const useLogout = () => {
 
     const {
@@ -21,12 +20,16 @@ const useLogout = () => {
         isPending,
     } = useMutation({
         mutationKey: ['logout'],
-        mutationFn: () => axios.post('/auth/logout'),
+        mutationFn: () => axios.post('/auth/logout', {}, { withCredentials: true }),
         onSuccess: () => {
-
-            queryClient.invalidateQueries({
-                queryKey: ['current_user', token],
-            });
+            queryClient.setQueryData(
+                ['current_user', token],
+                () => null,
+            );
+            queryClient.setQueryData(
+                ['current_user', null],
+                () => null,
+            );
             setToken(null);
             navigate('/');
         },

@@ -12,8 +12,11 @@ const Logout = () => {
     } = useLogout();
 
     useEffect(() => {
-        logout();
-    }, [logout])
+        if(!isLoggingOut) {
+            logout();
+        }
+        
+    }, [isLoggingOut])
 
     if(isLoggingOut) {
         return (
