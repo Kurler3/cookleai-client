@@ -1,44 +1,43 @@
-
-
-
 import Searchbar from '@/components/utils/Searchbar';
-import { CUISINE_TYPES } from '@/utils/constants';
-import SoupKitchenIcon from '@mui/icons-material/SoupKitchen';
-import { useMemo, useState } from 'react';
-
-//TODO Icon + Name - Value selected.
+import { CSSProperties, FC, useMemo, useState } from 'react';
 
 type IProps = {
-
-    
-
+    Icon: FC<{ style: CSSProperties }>;
+    title: string;
+    options: string[];
+    onChangeSelected: (newValue: string | null) => void;
+    selectedOption: string | null
 }
 
-const RecipeRadioFilter = () => {
 
-    const [selectedOption, setSelectedOption] = useState<string | null>(null);
+const RecipeRadioFilter: FC<IProps> = ({
+    Icon,
+    title,
+    options,
+    onChangeSelected,
+    selectedOption
+}) => {
+
     const [filterSearch, setFilterSearch] = useState<string>('');
 
     const filteredOptions = useMemo(() => {
-
-        return CUISINE_TYPES.filter((option) => {
+        return options.filter((option) => {
             return option.toLowerCase().includes(filterSearch.toLowerCase());
         })
-
-    }, [filterSearch]);
+    }, [filterSearch, options]);
 
     return (
-        <div className="flex justify-center items-center">
+        <div className="flex justify-center items-center transition">
 
             {/* ICON + NAME */}
             <div className="dropdown dropdown-bottom">
 
                 <div tabIndex={0} role="button" className="btn m-1 p-2 bg-base-300 border-2 border-gray-500">
 
-                    <SoupKitchenIcon style={{ fontSize: '20px' }} />
+                    <Icon style={{ fontSize: '20px' }} />
 
                     <div className='text-xs'>
-                        Cuisine
+                        {title}
                     </div>
 
                     {
@@ -82,8 +81,7 @@ const RecipeRadioFilter = () => {
                                     key={`recipe_radio_filter_${option}`}
                                     className='flex justify-start items-center flex-row gap-2 cursor-pointer hover:bg-gray-700 p-2 rounded-md'
                                     onClick={() => {
-
-                                        setSelectedOption(() => option === selectedOption ? null : option);
+                                        onChangeSelected(option === selectedOption ? null : option);
                                     }}
                                 >
 

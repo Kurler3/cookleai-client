@@ -85,3 +85,9 @@ export type IRecipeEditState = {
     ingredients?: IIngredient[];
     instructions?: string[];
 }
+
+export type IRecipeFilters = {
+    title: string | null;
+    cuisine: string | null;
+    difficulty: string | null;
+}
