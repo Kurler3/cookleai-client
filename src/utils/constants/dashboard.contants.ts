@@ -66,7 +66,7 @@ export const DASHBOARD_SIDEBAR_PROFILE_ITEMS = [
     {
         id: 'logout',
         label: 'Logout',
-        uri: '/dashboard/logout',
+        uri: '/logout',
         icon: LogoutIcon,
     },
 ];

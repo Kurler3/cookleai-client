@@ -1,31 +1,30 @@
-import AddIcon from '@mui/icons-material/Add';
-import EditIcon from '@mui/icons-material/Edit';
-import ShareIcon from '@mui/icons-material/Share';
-import DeleteIcon from '@mui/icons-material/Delete';
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import { IRecipe } from '../../../types';
-import AddToCookbookModal from './AddToCookbookModal';
-
+import AddIcon from "@mui/icons-material/Add";
+import EditIcon from "@mui/icons-material/Edit";
+import ShareIcon from "@mui/icons-material/Share";
+import DeleteIcon from "@mui/icons-material/Delete";
+import { IRecipe } from "../../../types";
+import { RECIPE_ACTION_MODAL_IDS } from "@/utils/constants/recipes.constants";
+import { ROUTE_PATHS } from "@/utils/constants";
+import { Link } from "react-router-dom";
 
 type IProps = {
     recipe: IRecipe;
-}
+};
 
-const RecipeActionsDropdownMenu: React.FC<IProps> = ({
-    recipe
-}) => {
+const RecipeActionsDropdownMenu: React.FC<IProps> = ({ recipe }) => {
 
     //////////////////////////////////
     // GET COOKBOOKS /////////////////
     //////////////////////////////////
 
 
-
     //////////////////////////////////
     // FUNCTIONS /////////////////////
     //////////////////////////////////
 
-    
+    //////////////////////////////////
+    // CONSTANTS /////////////////////
+    //////////////////////////////////
 
     //////////////////////////////////
     // RENDER ////////////////////////
@@ -33,51 +32,52 @@ const RecipeActionsDropdownMenu: React.FC<IProps> = ({
 
     return (
         <>
-
-            <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 shadow gap-2 p-4 font-medium text-white">
-
+            <ul
+                tabIndex={0}
+                className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 shadow gap-2 p-4 font-medium text-white"
+            >
                 {/* TITLE */}
                 <li className="font-bold">Actions</li>
 
                 {/* ADD TO COOKBOOK */}
-                <label htmlFor="add_to_cookbook" className='menuActionClass'>
-                    <AddIcon style={{ height: '20px' }} />
+                <label
+                    htmlFor={RECIPE_ACTION_MODAL_IDS.ADD_TO_ADD_COOKBOOK}
+                    className="menuActionClass"
+                >
+                    <AddIcon style={{ height: "20px" }} />
                     Add to cookbook
                 </label>
 
-                
                 {/* EDIT */}
-                <div className='menuActionClass'>
-                    <EditIcon style={{ height: '20px' }} />
+                <Link to={`${ROUTE_PATHS.RECIPES}/${recipe.id}/edit`} className="menuActionClass">
+                    <EditIcon style={{ height: "20px" }} />
                     Edit
-                </div>
+                </Link>
 
                 {/* SHARE */}
-                <div className='menuActionClass'>
-                    <ShareIcon style={{ height: '20px' }} />
+                <label 
+                    className="menuActionClass"
+                    htmlFor={RECIPE_ACTION_MODAL_IDS.SHARE_RECIPE}
+                >
+                    <ShareIcon style={{ height: "20px" }} />
                     Share
-                </div>
+                </label>
 
                 <div className="divider h-2 my-1"></div>
 
                 {/* DELETE */}
-                <div className='menuActionClass text-red-600 hover:bg-red-500 hover:text-white'>
-                    <DeleteIcon style={{ height: '20px' }} />
+                <label
+                    className="menuActionClass text-red-600 hover:bg-red-500 hover:text-white"
+                    htmlFor={RECIPE_ACTION_MODAL_IDS.DELETE}
+                >
+                    <DeleteIcon style={{ height: "20px" }} />
                     Delete
-                </div>
+                </label>
             </ul>
-
-
-            {/* ADD TO COOKBOOK MODAL */}
-            <input type="checkbox" id="add_to_cookbook" className="modal-toggle" />
-            <AddToCookbookModal recipe={recipe}/>
-
-            {/* DELETE RECIPE MODAL */}
-
-
+            
+            
         </>
-
-    )
+    );
 };
 
 export default RecipeActionsDropdownMenu;

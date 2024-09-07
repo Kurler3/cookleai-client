@@ -1,66 +1,93 @@
-import './App.css'
+import "./App.css";
+import "./index.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Home from './components/home/Home';
-import OAuthSuccess from './components/home/auth/OAuthSuccess';
-import HomeLayout from './components/home/HomeLayout';
-import LoginPage from './components/home/auth/LoginPage';
-import Dashboard from './components/dashboard/Dashboard';
-import ProtectedRoutes from './components/routeWrappers/ProtectedRoutes';
-import UnProtectedRoutes from './components/routeWrappers/UnProtectedRoutes';
-import NotFound from './components/utils/NotFound';
-import RecipesPage from './components/dashboard/recipes/RecipesPage';
-import { ROUTE_PATHS } from './utils/constants';
+import Home from "./components/home/Home";
+import OAuthSuccess from "./components/home/auth/OAuthSuccess";
+import HomeLayout from "./components/home/HomeLayout";
+import LoginPage from "./components/home/auth/LoginPage";
+import Dashboard from "./components/dashboard/Dashboard";
+import ProtectedRoutes from "./components/routeWrappers/ProtectedRoutes";
+import UnProtectedRoutes from "./components/routeWrappers/UnProtectedRoutes";
+import NotFound from "./components/utils/NotFound";
+import RecipesPage from "./components/dashboard/recipes/RecipesPage";
+import { ROUTE_PATHS } from "./utils/constants";
+import CookbooksPage from "./components/dashboard/cookbooks/CookbooksPage";
+import DetailedRecipePage from "./components/dashboard/detailedRecipe/DetailedRecipePage";
+import DetailedRecipeEditPage from "./components/dashboard/detailedRecipe/DetailedRecipeEditPage";
+import Logout from "./components/Logout";
 
 const App = () => {
+    return (
+        <div className="w-screen min-h-screen flex overflow-x-hidden">
+            <div className="flex-1 max-w-full">
+                <BrowserRouter>
+                    <Routes>
+                        {/* HOME LAYOUT */}
+                        <Route path="/" element={<HomeLayout />}>
+                            {/* HOME */}
+                            <Route index element={<Home />} />
+                        </Route>
 
-	return (
-		<div className='w-screen min-h-screen flex overflow-x-hidden'>
-			<div className='flex-1 max-w-full'>
-				<BrowserRouter>
-					<Routes>
+                        {/* SUCCESSFULLY LOGGED IN */}
+                        <Route
+                            path="/oauth-redirect"
+                            element={<OAuthSuccess />}
+                        />
 
-						{/* HOME LAYOUT */}
-						<Route path="/" element={<HomeLayout />}>
-							{/* HOME */}
-							<Route index element={<Home />} />
-						</Route>
+                        {/* PROTECTED ROUTES */}
+                        <Route path="/" element={<ProtectedRoutes />}>
 
-						{/* SUCCESSFULLY LOGGED IN */}
-						<Route path="/oauth-redirect" element={<OAuthSuccess />} />
+                            {/* LOGOUT */}
+                            <Route path={ROUTE_PATHS.LOGOUT} element={<Logout />} />
 
-						{/* PROTECTED ROUTES */}
-						<Route path='/' element={<ProtectedRoutes />}>
+                            {/* DASHBOARD */}
+                            <Route path="/dashboard" element={<Dashboard />}>
+                            
+                                {/* RECIPES */}
+                                <Route
+                                    path={ROUTE_PATHS.DASHBOARD}
+                                    element={<RecipesPage />}
+                                ></Route>
 
-							{/* DASHBOARD */}
-							<Route path='/dashboard' element={<Dashboard />}>
+                                {/* DETAILED RECIPE PAGE */}
+                                <Route
+                                    path={`${ROUTE_PATHS.RECIPE}`}
+                                    element={<DetailedRecipePage />}
+                                />
 
-								{/* RECIPES */}
-								<Route path={ROUTE_PATHS.DASHBOARD} element={<RecipesPage />}/>
+                                {/* DETAILED RECIPE EDIT PAGE */}
+                                <Route
+                                    path={`${ROUTE_PATHS.RECIPE}/edit`}
+                                    element={<DetailedRecipeEditPage />}
+                                />
 
-								{/* EXPLORE */}
-								<Route path='/dashboard/explore' element={<div>Hello</div>}/>
+                                {/* COOKBOOKS */}
+                                <Route
+                                    path={ROUTE_PATHS.COOKBOOKS}
+                                    element={<CookbooksPage />}
+                                />
 
-							</Route>
+                                {/* EXPLORE */}
+                                <Route
+                                    path={ROUTE_PATHS.EXPLORE}
+                                    element={<div>Hello</div>}
+                                />
+                            </Route>
+                        </Route>
 
-						</Route>
+                        {/* UNPROTECTED ROUTES */}
+                        <Route path="/" element={<UnProtectedRoutes />}>
+                            {/* LOGIN */}
+                            <Route path="/login" element={<LoginPage />} />
+                        </Route>
 
-						{/* UNPROTECTED ROUTES */}
-						<Route path='/' element={<UnProtectedRoutes />}>
+                        {/* NOT FOUND */}
+                        <Route path="*" element={<NotFound />} />
+                    </Routes>
+                </BrowserRouter>
+            </div>
+        </div>
+    );
+};
 
-							{/* LOGIN */}
-							<Route path="/login" element={<LoginPage />} />
-
-						</Route>
-
-						{/* NOT FOUND */}
-						<Route path="*" element={<NotFound />} />
-					</Routes>
-
-
-				</BrowserRouter>
-			</div>
-		</div>
-	)
-}
-
-export default App
+export default App;

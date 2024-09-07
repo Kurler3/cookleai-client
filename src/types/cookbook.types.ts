@@ -16,3 +16,11 @@ export type ICookbook = {
     updatedByUser?: IUser;
     createdByUser?: IUser;
 };
+
+
+export type IGetCookbooksQueryParams = {
+    search?: string;
+    selection?: string;
+    pageSize?: number;
+    excludedRecipeId?: number,
+}

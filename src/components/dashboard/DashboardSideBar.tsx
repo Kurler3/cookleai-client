@@ -17,7 +17,7 @@ const DashboardSideBar = () => {
 		<>
 			<input id={DASHBOARD_DRAWER_ID} type="checkbox" className="drawer-toggle" />
 
-			<div className="drawer-side">
+			<div className="drawer-side z-20">
 
 				{/* CLOSE */}
 				<label htmlFor={DASHBOARD_DRAWER_ID} aria-label="close sidebar" className="drawer-overlay"></label>

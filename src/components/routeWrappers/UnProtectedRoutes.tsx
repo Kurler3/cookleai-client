@@ -8,15 +8,13 @@ const UnProtectedRoutes = () => {
     const navigate = useNavigate();
 
     // Check if user is logged in
-    const { user, isLoadingUser, error } = useGetUser();
+    const { user, isLoadingUser } = useGetUser();
 
     useEffect(() => {
-
         if(user) {
             navigate('/')
         }
-
-    }, [user, error]);
+    }, [user]);
 
     if (isLoadingUser) {
         return <LoadingScreen />;
@@ -26,9 +24,10 @@ const UnProtectedRoutes = () => {
     if (user) {
         return null;
     }
+
     return (
         <Outlet />
-    )
+    );
 };
 
 export default UnProtectedRoutes;

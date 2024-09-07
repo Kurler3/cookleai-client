@@ -1,57 +1,92 @@
+import { useState } from "react";
 import useGetUserRecipes from "../../../hooks/recipes/useGetUserRecipes.hook";
-import { useGetUser } from "../../../hooks/user";
-import RecipeCard from "./grid/RecipeCard";
-import RecipeCardSkeleton from "./grid/RecipeCardSkeleton";
+import RecipeGrid from "./grid/RecipeGrid";
 import RecipesTable from "./row/RecipesTable";
-
+import { IRecipe } from "@/types";
+import DeleteRecipeModal from "./modal/DeleteRecipeModal";
+import { RECIPE_ACTION_MODAL_IDS } from "@/utils/constants/recipes.constants";
+import AddToCookbookModal from "./modal/AddToCookbookModal";
+import ShareRecipeModal from "./modal/ShareRecipeModal";
+import AddYourFirstRecipe from "./AddYourFirstRecipe";
 
 type IProps = {
     isGrid: boolean;
-}
+};
 
 const RecipesList: React.FC<IProps> = ({ isGrid }) => {
-
     const {
         recipes,
         isLoadingRecipes,
+        isFetchingNextPage,
+        lastElementRef
     } = useGetUserRecipes();
 
-
-    const {
-        user
-    } = useGetUser();
-
-    console.log(user);
+    const [
+        selectedRecipe,
+        setSelectedRecipe
+    ] = useState<IRecipe | undefined>();
 
     return (
-        <div className="flex justify-start items-start w-full flex-wrap gap-4 h-full">
-
+        <div className="flex justify-start items-start w-full flex-1 gap-4 max-h-[80%]">
             {
-                !isGrid ? 
-                   <RecipesTable 
-                        recipes={recipes} 
-                        isLoadingRecipes={isLoadingRecipes}
-                    />
-                 : (
-                    recipes.map((recipe, idx) => {
+                !isLoadingRecipes && recipes?.length === 0 ? (
+                    <AddYourFirstRecipe />
+                ) :
+                    !isGrid ? (
+                        <RecipesTable
+                            recipes={recipes}
+                            isLoadingRecipes={isLoadingRecipes}
+                            isFetchingNextPage={isFetchingNextPage}
+                            lastElementRef={lastElementRef}
+                            setSelectedRecipe={setSelectedRecipe}
+                        />
+                    ) : (
+                        <RecipeGrid
+                            recipes={recipes}
+                            isLoadingRecipes={isLoadingRecipes}
+                            isFetchingNextPage={isFetchingNextPage}
+                            lastElementRef={lastElementRef}
+                        />
+                    )}
 
-                        const key = `recipe_card_${idx}_${recipe.id}`
-    
-                        return (
-                                isLoadingRecipes ? (
-                                    <RecipeCardSkeleton  key={key}/>
-                                ) :
-                                (<RecipeCard
-                                    key={key}
-                                    recipe={recipe}
-                                />)
-                                
-                        )
-                    })
-                )
-            }
+            {/* MODALS */}
+            {selectedRecipe && (
+                <>
+                    {/* ADD TO COOKBOOK MODAL */}
+                    <input
+                        type="checkbox"
+                        id={RECIPE_ACTION_MODAL_IDS.ADD_TO_ADD_COOKBOOK}
+                        className="modal-toggle"
+                    />
+
+                    <AddToCookbookModal recipe={selectedRecipe} />
+
+                    {/* DELETE RECIPE MODAL */}
+                    <input
+                        type="checkbox"
+                        id={RECIPE_ACTION_MODAL_IDS.DELETE}
+                        className="modal-toggle"
+                    />
+                    <DeleteRecipeModal
+                        key={`recipe_delete_modal_${selectedRecipe?.id}`}
+                        recipe={selectedRecipe}
+                    />
+
+                    {/* SHARE RECIPE MODAL */}
+                    <input
+                        type="checkbox"
+                        id={RECIPE_ACTION_MODAL_IDS.SHARE_RECIPE}
+                        className="modal-toggle"
+                    />
+
+                    <ShareRecipeModal
+                        recipe={selectedRecipe}
+                        setSelectedRecipe={setSelectedRecipe}
+                    />
+                </>
+            )}
         </div>
-    )
-}
+    );
+};
 
 export default RecipesList;

@@ -1,6 +1,5 @@
-import { useQuery } from "react-query"
+import { useQuery } from "@tanstack/react-query"
 import { getMinutesInMs } from "../../utils/functions"
-import { COOKLEAI_ACCESS_TOKEN } from "../../utils/constants"
 import { IUser } from "../../types"
 import useAxios from "../axios/useAxios.hook"
 import { useAuth } from "../auth/useAuth.hook"
@@ -12,7 +11,6 @@ export const useGetUser = (
     const {
         token
     } = useAuth();
-
 
     const {
         data,
@@ -32,20 +30,14 @@ export const useGetUser = (
                 headers: {
                     Authorization: 'Bearer ' + token,
                 },
-            });
-
-            // Set jwt in local storage for future requests.
-            localStorage.setItem(COOKLEAI_ACCESS_TOKEN, token!);
-
+            }); 
+            
             return user.data as IUser;
         },
-        onError: () => {
-            // localStorage.removeItem(COOKLEAI_ACCESS_TOKEN)
-        },
-        refetchInterval:  getMinutesInMs(5 * 60), // 5 Minutes
+        refetchInterval: getMinutesInMs(5), // 5 Minutes
         refetchIntervalInBackground: true,
         retry: false,
-    })
+    }); 
 
     return {
         isLoadingUser: isLoading || isFetching,
