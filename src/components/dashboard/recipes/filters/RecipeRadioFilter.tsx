@@ -8,6 +8,12 @@ import { useMemo, useState } from 'react';
 
 //TODO Icon + Name - Value selected.
 
+type IProps = {
+
+    
+
+}
+
 const RecipeRadioFilter = () => {
 
     const [selectedOption, setSelectedOption] = useState<string | null>(null);
@@ -39,7 +45,7 @@ const RecipeRadioFilter = () => {
                         selectedOption && (
                             <div className='text-xs'>
 
-                                | 
+                                |
                                 <span className='text-app-green ml-2'>
                                     {selectedOption}
                                 </span>
@@ -51,10 +57,15 @@ const RecipeRadioFilter = () => {
                 </div>
 
                 {/* DROPDOWN */}
-                <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-20 w-52 p-2 shadow max-h-[300px] flex-nowrap overflow-y-auto overflow-x-hidden gap-4">
+                <ul
+                    onBlur={() => {
+                        setFilterSearch('')
+                    }}
+                    tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-20 w-52 p-2 shadow max-h-[300px] flex-nowrap overflow-y-auto overflow-x-hidden gap-4"
+                >
 
                     {/* SEARCH BAR */}
-                    <Searchbar 
+                    <Searchbar
                         placeholder='Search for an option'
                         fullWidth
                         textSize='xs'
@@ -71,7 +82,8 @@ const RecipeRadioFilter = () => {
                                     key={`recipe_radio_filter_${option}`}
                                     className='flex justify-start items-center flex-row gap-2 cursor-pointer hover:bg-gray-700 p-2 rounded-md'
                                     onClick={() => {
-                                        setSelectedOption(option);
+
+                                        setSelectedOption(() => option === selectedOption ? null : option);
                                     }}
                                 >
 
