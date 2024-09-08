@@ -142,17 +142,17 @@ const DetailedRecipeEditPage = () => {
         // Edit recipe.
         editRecipe(changes as IUpdateRecipe);
 
-    }, [changes]);
+    }, [canSave, changes, editRecipe, isEditingRecipe]);
 
     const handleChangeRecipeVisibility = useCallback(() => {
 
         if(isEditingRecipe) return;
 
         editRecipe({
-            id: recipe?.id!,
+            id: recipe?.id as number,
             isPublic: !recipe?.isPublic,
         });
-    }, []);
+    }, [editRecipe, isEditingRecipe, recipe?.id, recipe?.isPublic]);
 
     ////////////////////////////////////////////////////////
     // AS SOON AS RECIPE CHANGES => UPDATE EDIT STATE //////

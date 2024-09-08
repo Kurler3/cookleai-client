@@ -14,7 +14,12 @@ const useGetUserRecipes = ({
     filters,
 }: IUseGetUserRecipesInput = {}) => {
 
-    const queryKey = [ "my-recipes", filters ]
+    const queryKey = ["my-recipes", filters ?? {
+        cuisine: null,
+        difficulty: null,
+        title: null,
+    }
+    ]
 
     const axios = useAxios();
     const queryClient = useQueryClient();
@@ -83,7 +88,7 @@ const useGetUserRecipes = ({
             return newData;
         });
 
-        queryClient.invalidateQueries({ queryKey, exact: true } );
+        queryClient.invalidateQueries({ queryKey, exact: true });
     };
 
     const addRecipeToCache = (newRecipe: IRecipe) => {
