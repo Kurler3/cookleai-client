@@ -66,7 +66,7 @@ const useGetUserRecipes = ({
     const removeRecipeFromCache = (recipeId: number) => {
         // Remove the recipe from the cache
         queryClient.setQueryData(
-            ["my-recipes"],
+            ["my-recipes", filters],
             (oldData: InfiniteData<IRecipe[]>) => {
 
                 if (!oldData) {
