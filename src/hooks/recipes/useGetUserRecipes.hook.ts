@@ -53,6 +53,7 @@ const useGetUserRecipes = ({
     const {
         lastElementRef,
         itemIdToIndexesMap: recipeIdToIndexMap,
+        flatData,
     } = useInfinityQueryFunctions<IRecipe>({
         isLoading,
         hasNextPage,
@@ -69,20 +70,24 @@ const useGetUserRecipes = ({
         const recipeIndexes = recipeIdToIndexMap.get(recipeId);
         if (!recipeIndexes) return;
 
-        queryClient.setQueryData(["my-recipes", filters], (oldData: InfiniteData<IRecipe[]>) => {
+        try {
+            queryClient.setQueryData(["my-recipes", filters], (oldData: InfiniteData<IRecipe[]>) => {
 
-            if (!oldData) return null;
+                if (!oldData) return null;
 
-            const newData = {
-                ...oldData,
-                pages: oldData.pages.map((page) => [...page]),
-            };
+                const newData = { ...oldData };
 
-            newData.pages[recipeIndexes.pageIndex].splice(recipeIndexes.indexInPage, 1);
+                newData.pages = oldData.pages.map((page) => [...page]);
 
-            return newData;
-        });
+                newData.pages[recipeIndexes.pageIndex].splice(recipeIndexes.indexInPage, 1);
 
+                return newData;
+            });
+        } catch (error) {
+            console.log('Error: ', error);
+        }
+
+        queryClient.invalidateQueries({ queryKey: ["my-recipes", filters ?? null], exact: true } );
     };
 
     const addRecipeToCache = (newRecipe: IRecipe) => {
@@ -141,10 +146,8 @@ const useGetUserRecipes = ({
     // RETURN //////////////////////////
     ////////////////////////////////////
 
-    console.log('Flat: ', recipes?.pages.flat())
-    
     return {
-        recipes: recipes?.pages.flat(),
+        recipes: flatData,
         isLoadingRecipes: status === "pending",
         errorWhileGettingRecipes,
         isFetchingNextPage,

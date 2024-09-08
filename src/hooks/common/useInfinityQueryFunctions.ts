@@ -58,9 +58,13 @@ export const useInfinityQueryFunctions = <T extends { id: number }>({
 
         return map;
     }, [data?.pages?.map(page => page.length).join('-')]);
-    
+
+    const flatData = useMemo(() => {
+        return data?.pages.flat();
+    }, [data?.pages?.map(page => page.length).join('-')]);
 
     return {
+        flatData,
         itemIdToIndexesMap,
         lastElementRef
     }
