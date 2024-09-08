@@ -8,11 +8,11 @@ import axiosNetworkErrorHandler from "@/utils/functions/axiosNetworkErrorHandler
 
 
 const useDeleteRecipe = (recipeId?: number, onSuccessCallback?: () => void) => {
-    
+
     const axios = useAxios();
 
     const { removeRecipeFromCache } = useGetUserRecipes();
-    
+
     const {
         mutate: deleteRecipe,
         isPending: isDeletingRecipe,
@@ -28,11 +28,12 @@ const useDeleteRecipe = (recipeId?: number, onSuccessCallback?: () => void) => {
 
             // Delete recipe from cache.
             removeRecipeFromCache(recipeId!);
-          
+
             // Close modal
             handleCloseModal(RECIPE_ACTION_MODAL_IDS.DELETE);
 
             onSuccessCallback?.();
+
         },
         onError: axiosNetworkErrorHandler("An error occurred while deleting the recipe"),
         retry: false,

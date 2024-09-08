@@ -23,10 +23,12 @@ const RecipesList: React.FC<IProps> = ({
         recipes,
         isLoadingRecipes,
         isFetchingNextPage,
-        lastElementRef
+        lastElementRef,
     } = useGetUserRecipes({
         filters,
     });
+
+    console.log('Recipes in component: ', recipes)
 
     const [
         selectedRecipe,

@@ -59,8 +59,6 @@ export const useInfinityQueryFunctions = <T extends { id: number }>({
         return map;
     }, [data?.pages?.map(page => page.length).join('-')]);
     
-    
-
 
     return {
         itemIdToIndexesMap,

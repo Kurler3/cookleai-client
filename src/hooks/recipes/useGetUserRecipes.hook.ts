@@ -12,7 +12,7 @@ type IUseGetUserRecipesInput = {
 const useGetUserRecipes = ({
     pageSize = 15,
     filters,
-}:IUseGetUserRecipesInput={}) => {
+}: IUseGetUserRecipesInput = {}) => {
 
     const axios = useAxios();
     const queryClient = useQueryClient();
@@ -30,13 +30,12 @@ const useGetUserRecipes = ({
     } = useInfiniteQuery({
         queryKey: ["my-recipes", filters],
         queryFn: async ({ pageParam = 0 }): Promise<IRecipe[]> => {
-
             return axios
                 .get("/recipes/my-recipes", {
-                    params: { 
-                        page: pageParam, 
+                    params: {
+                        page: pageParam,
                         limit: pageSize,
-                        ...(filters ?? {}) 
+                        ...(filters ?? {})
                     },
                 })
                 .then((res) => res.data);
@@ -45,8 +44,11 @@ const useGetUserRecipes = ({
             return lastPage.length ? pages.length : undefined; // If the last page was not empty, then continue fetching, otherwise stop.
         },
         initialPageParam: 0,
-        staleTime: getMinutesInMs(3),
+        // If any filters, don't cache the data, because it can change often and its hard to manage with mutations.
+        staleTime: filters ? 0 : getMinutesInMs(3),
     });
+
+    console.log('recipes: ', recipes?.pages,)
 
     const {
         lastElementRef,
@@ -64,6 +66,27 @@ const useGetUserRecipes = ({
     ////////////////////////////////////
 
     const removeRecipeFromCache = (recipeId: number) => {
+        const recipeIndexes = recipeIdToIndexMap.get(recipeId);
+        if (!recipeIndexes) return;
+
+        queryClient.setQueryData(["my-recipes", filters], (oldData: InfiniteData<IRecipe[]>) => {
+
+            if (!oldData) return null;
+
+            const newData = {
+                ...oldData,
+                pages: oldData.pages.map((page) => [...page]),
+            };
+
+            newData.pages[recipeIndexes.pageIndex].splice(recipeIndexes.indexInPage, 1);
+
+            return newData;
+        });
+
+    };
+
+    const addRecipeToCache = (newRecipe: IRecipe) => {
+
         // Remove the recipe from the cache
         queryClient.setQueryData(
             ["my-recipes", filters],
@@ -77,35 +100,9 @@ const useGetUserRecipes = ({
                 // Clone oldData to ensure new references
                 const newData = {
                     ...oldData,
-                    pages: oldData.pages.map((page) => [...page]), // Copy each page array
-                };
-                const recipeIndexes = recipeIdToIndexMap.get(recipeId);
-
-                if (!recipeIndexes) return newData;
-
-                newData.pages[recipeIndexes.pageIndex].splice(recipeIndexes.indexInPage, 1);
-
-                return newData;
-            });
-    };
-
-    const addRecipeToCache = (newRecipe: IRecipe) => {
-
-        // Remove the recipe from the cache
-        queryClient.setQueryData(
-            ["my-recipes"],
-            (oldData: InfiniteData<IRecipe[]>) => {
-
-                if (!oldData) {
-                    console.error(`no cache found for: 'my-recipes'`);
-                    return null;
-                }
-
-                // Clone oldData to ensure new references
-                const newData = {
-                    ...oldData,
                     pages: oldData.pages.map((page) => [...page]),
                 };
+
 
                 newData.pages[0].unshift(newRecipe);
 
@@ -114,10 +111,38 @@ const useGetUserRecipes = ({
         );
     }
 
+    const editRecipeInCache = (updatedRecipe: IRecipe) => {
+        queryClient.setQueryData(
+            ['my-recipes', filters],
+            (oldData: InfiniteData<IRecipe[]>) => {
+
+                if (!oldData) {
+                    console.error(`no cache found for: 'my-recipes'`);
+                    return null;
+                }
+
+                const newData = {
+                    ...oldData,
+                    pages: oldData.pages.map((page) => [...page]),
+                };
+
+                const recipeIndexes = recipeIdToIndexMap.get(updatedRecipe.id);
+
+                if (!recipeIndexes) return newData;
+
+                newData.pages[recipeIndexes.pageIndex][recipeIndexes.indexInPage] = updatedRecipe;
+
+                return newData;
+            }
+        )
+    }
+
     ////////////////////////////////////
     // RETURN //////////////////////////
     ////////////////////////////////////
 
+    console.log('Flat: ', recipes?.pages.flat())
+    
     return {
         recipes: recipes?.pages.flat(),
         isLoadingRecipes: status === "pending",
@@ -133,6 +158,7 @@ const useGetUserRecipes = ({
 
         removeRecipeFromCache,
         addRecipeToCache,
+        editRecipeInCache,
     };
 };
 
