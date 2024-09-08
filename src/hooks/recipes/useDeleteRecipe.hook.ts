@@ -5,13 +5,24 @@ import { handleCloseModal } from "@/utils/functions/closeModal";
 import { RECIPE_ACTION_MODAL_IDS } from "@/utils/constants/recipes.constants";
 import useGetUserRecipes from "./useGetUserRecipes.hook";
 import axiosNetworkErrorHandler from "@/utils/functions/axiosNetworkErrorHandler";
+import { IRecipeFilters } from "@/types";
 
 
-const useDeleteRecipe = (recipeId?: number, onSuccessCallback?: () => void) => {
+type IProps = {
+    recipeId?: number;
+    onSuccessCallback?: () => void;
+    filters?: IRecipeFilters;
+};
+
+const useDeleteRecipe = ({
+    recipeId, 
+    onSuccessCallback,
+    filters,
+}: IProps={}) => {
 
     const axios = useAxios();
 
-    const { removeRecipeFromCache } = useGetUserRecipes();
+    const { removeRecipeFromCache } = useGetUserRecipes({ filters });
 
     const {
         mutate: deleteRecipe,

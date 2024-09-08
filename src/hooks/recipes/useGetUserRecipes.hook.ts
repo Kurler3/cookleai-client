@@ -14,6 +14,8 @@ const useGetUserRecipes = ({
     filters,
 }: IUseGetUserRecipesInput = {}) => {
 
+    const queryKey = [ "my-recipes", filters ]
+
     const axios = useAxios();
     const queryClient = useQueryClient();
 
@@ -28,7 +30,7 @@ const useGetUserRecipes = ({
         status,
         refetch,
     } = useInfiniteQuery({
-        queryKey: ["my-recipes", filters],
+        queryKey,
         queryFn: async ({ pageParam = 0 }): Promise<IRecipe[]> => {
             return axios
                 .get("/recipes/my-recipes", {
@@ -47,8 +49,6 @@ const useGetUserRecipes = ({
         // If any filters, don't cache the data, because it can change often and its hard to manage with mutations.
         staleTime: filters ? 0 : getMinutesInMs(3),
     });
-
-    console.log('recipes: ', recipes?.pages,)
 
     const {
         lastElementRef,
@@ -70,31 +70,27 @@ const useGetUserRecipes = ({
         const recipeIndexes = recipeIdToIndexMap.get(recipeId);
         if (!recipeIndexes) return;
 
-        try {
-            queryClient.setQueryData(["my-recipes", filters], (oldData: InfiniteData<IRecipe[]>) => {
+        queryClient.setQueryData(queryKey, (oldData: InfiniteData<IRecipe[]>) => {
 
-                if (!oldData) return null;
+            if (!oldData) return null;
 
-                const newData = { ...oldData };
+            const newData = { ...oldData };
 
-                newData.pages = oldData.pages.map((page) => [...page]);
+            newData.pages = oldData.pages.map((page) => [...page]);
 
-                newData.pages[recipeIndexes.pageIndex].splice(recipeIndexes.indexInPage, 1);
+            newData.pages[recipeIndexes.pageIndex].splice(recipeIndexes.indexInPage, 1);
 
-                return newData;
-            });
-        } catch (error) {
-            console.log('Error: ', error);
-        }
+            return newData;
+        });
 
-        queryClient.invalidateQueries({ queryKey: ["my-recipes", filters ?? null], exact: true } );
+        queryClient.invalidateQueries({ queryKey, exact: true } );
     };
 
     const addRecipeToCache = (newRecipe: IRecipe) => {
 
         // Remove the recipe from the cache
         queryClient.setQueryData(
-            ["my-recipes", filters],
+            queryKey,
             (oldData: InfiniteData<IRecipe[]>) => {
 
                 if (!oldData) {
@@ -118,7 +114,7 @@ const useGetUserRecipes = ({
 
     const editRecipeInCache = (updatedRecipe: IRecipe) => {
         queryClient.setQueryData(
-            ['my-recipes', filters],
+            queryKey,
             (oldData: InfiniteData<IRecipe[]>) => {
 
                 if (!oldData) {

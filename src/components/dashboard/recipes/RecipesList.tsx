@@ -28,8 +28,6 @@ const RecipesList: React.FC<IProps> = ({
         filters,
     });
 
-    console.log('Recipes in component: ', recipes)
-
     const [
         selectedRecipe,
         setSelectedRecipe
@@ -79,6 +77,7 @@ const RecipesList: React.FC<IProps> = ({
                     <DeleteRecipeModal
                         key={`recipe_delete_modal_${selectedRecipe?.id}`}
                         recipe={selectedRecipe}
+                        filters={filters}
                     />
 
                     {/* SHARE RECIPE MODAL */}
