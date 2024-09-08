@@ -1,14 +1,21 @@
 import { InfiniteData, useInfiniteQuery, useQueryClient } from "@tanstack/react-query";
 import useAxios from "../axios/useAxios.hook";
-import { IRecipe } from "@/types";
+import { IRecipe, IRecipeFilters } from "@/types";
 import { useInfinityQueryFunctions } from "../common/useInfinityQueryFunctions";
 import { getMinutesInMs } from "@/utils/functions";
 
-const useGetUserRecipes = (pageSize = 15) => {
+type IUseGetUserRecipesInput = {
+    pageSize?: number;
+    filters?: IRecipeFilters;
+}
+
+const useGetUserRecipes = ({
+    pageSize = 15,
+    filters,
+}:IUseGetUserRecipesInput={}) => {
 
     const axios = useAxios();
     const queryClient = useQueryClient();
-
 
     const {
         fetchNextPage,
@@ -21,11 +28,16 @@ const useGetUserRecipes = (pageSize = 15) => {
         status,
         refetch,
     } = useInfiniteQuery({
-        queryKey: ["my-recipes"],
+        queryKey: ["my-recipes", filters],
         queryFn: async ({ pageParam = 0 }): Promise<IRecipe[]> => {
+
             return axios
                 .get("/recipes/my-recipes", {
-                    params: { page: pageParam, limit: pageSize },
+                    params: { 
+                        page: pageParam, 
+                        limit: pageSize,
+                        ...(filters ?? {}) 
+                    },
                 })
                 .then((res) => res.data);
         },

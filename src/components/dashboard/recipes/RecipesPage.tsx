@@ -33,7 +33,6 @@ const RecipesPage = () => {
         }));
     }, []);
 
-
     return (
         <div className="w-full flex flex-col justify-start items-start gap-4 h-full">
 
@@ -44,7 +43,10 @@ const RecipesPage = () => {
                 recipeFilters={filters}
             />
 
-            <RecipesList isGrid={isGrid}/>
+            <RecipesList 
+                isGrid={isGrid} 
+                filters={filters} 
+            />
 
             {/* GENERATE WITH AI MODAL */}
             <input type="checkbox" id={RECIPE_ACTION_MODAL_IDS.GENERATE_WITH_AI} className="modal-toggle" />
