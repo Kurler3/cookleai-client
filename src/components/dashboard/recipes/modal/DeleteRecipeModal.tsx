@@ -5,7 +5,7 @@ import ReportProblemIcon from "@mui/icons-material/ReportProblem";
 import useDeleteRecipe from "@/hooks/recipes/useDeleteRecipe.hook";
 
 type IProps = {
-    recipe: IRecipe;
+    recipe?: IRecipe;
     onSuccessCallback?: () => void;
     filters?: IRecipeFilters;
 };

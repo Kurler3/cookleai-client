@@ -4,6 +4,7 @@ import RecipeActionsDropdownMenu from "../RecipeActionsDropdownMenu";
 import recipePlaceholderImg from '@/assets/images/recipe_placeholder.png';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
 import LockIcon from '@mui/icons-material/Lock';
+import { Link } from "react-router-dom";
 
 type IProps = {
     recipe: IRecipe;
@@ -18,7 +19,7 @@ const RecipeRow: React.FC<IProps> = ({
     lastElementRef,
     setSelectedRecipe
 }) => {
-    
+
     return (
         <div
             ref={lastElementRef}
@@ -27,15 +28,18 @@ const RecipeRow: React.FC<IProps> = ({
         >
 
             {/* IMAGE */}
-            <img
-                src={recipe.image ?? recipePlaceholderImg}
-                alt={recipe.title}
-                className="w-24 h-24 object-cover rounded"
-            />
+            <Link to={`/dashboard/recipes/${recipe.id}`}>
+                <img
+                    src={recipe.image ?? recipePlaceholderImg}
+                    alt={recipe.title}
+                    className="w-24 h-24 object-cover rounded cursor-pointer hover:bg-gray-700 transition"
+                />
+            </Link>
+
 
             {/* TITLE */}
             {/* min-w-52 */}
-            <div className="text-center flex-1 h-full flex justify-center items-center font-medium text-app-white"> 
+            <div className="text-center flex-1 h-full flex justify-center items-center font-medium text-app-white">
                 {
                     recipe.title
                 }
@@ -53,12 +57,12 @@ const RecipeRow: React.FC<IProps> = ({
                     {recipe.createdByUser!.firstName}
                 </div>
             </div>
-            
+
             {/* VISIBILITY */}
             <div className="flex-1 text-center tooltip" data-tip={
                 recipe.isPublic ? 'This recipe can be viewed by anyone in the world!' : 'This recipe can only be viewed by people you added'
             }>
-             
+
                 {
                     recipe.isPublic ? (
                         <LockOpenIcon />
@@ -67,18 +71,18 @@ const RecipeRow: React.FC<IProps> = ({
                     )
                 }
 
-                
+
             </div>
 
             {/* ACTIONS */}
             <div className={`dropdown dropdown-${idx === 0 ? 'bottom' : 'top'} dropdown-end w-[54px]`}>
-                <div 
-                    onClick={() => setSelectedRecipe(recipe)} role="button" tabIndex={0} 
+                <div
+                    onClick={() => setSelectedRecipe(recipe)} role="button" tabIndex={0}
                     className="cursor-pointer hover:bg-gray-600 hover:text-white transition rounded p-2 flex justify-center items-center"
-                    > 
-                        <MoreVertIcon />
-                    </div>
-                <RecipeActionsDropdownMenu recipe={recipe}/>
+                >
+                    <MoreVertIcon />
+                </div>
+                <RecipeActionsDropdownMenu recipe={recipe} />
             </div>
 
         </div>

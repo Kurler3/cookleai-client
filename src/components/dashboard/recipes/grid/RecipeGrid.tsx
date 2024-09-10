@@ -5,7 +5,7 @@ import RecipeCardSkeleton from "./RecipeCardSkeleton";
 type IProps = {
     recipes?: IRecipe[];
     isLoadingRecipes: boolean;
-    isFetchingNextPage: boolean;    
+    isFetchingNextPage: boolean;
     lastElementRef: (node: HTMLDivElement) => void;
 }
 
@@ -26,8 +26,14 @@ const RecipeGrid: React.FC<IProps> = ({
                 ) : (
                     recipes?.map((recipe, idx) => {
                         const key = `recipe_card_${idx}_${recipe.id}`;
-    
-                        return <RecipeCard key={key} recipe={recipe} lastElementRef={ idx === recipes.length - 1 ? lastElementRef : undefined }/>;
+
+                        return (
+                            <RecipeCard 
+                                key={key} 
+                                recipe={recipe} 
+                                lastElementRef={idx === recipes.length - 1 ? lastElementRef : undefined} 
+                                />
+                        );
                     })
                 )
             }

@@ -2,11 +2,8 @@ import { IRecipe } from "@/types";
 import { RECIPE_ACTION_MODAL_IDS } from "@/utils/constants/recipes.constants"
 import React, { useCallback, useEffect, useState } from "react";
 import QRCode from "react-qr-code";
-import LockOpenIcon from '@mui/icons-material/LockOpen';
-import LockIcon from '@mui/icons-material/Lock';
 import InsertLinkIcon from '@mui/icons-material/InsertLink';
 import CheckIcon from '@mui/icons-material/Check';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { FRONT_END_BASE_URL } from "@/utils/constants";
 import useEditRecipe from "@/hooks/recipes/useEditRecipe.hook";
 import EditRecipeVisibilityInput from "../EditRecipeVisibilityInput";
@@ -14,7 +11,7 @@ import EditRecipeVisibilityInput from "../EditRecipeVisibilityInput";
 
 type IProps = {
     recipe: IRecipe;
-    setSelectedRecipe: React.Dispatch<React.SetStateAction<IRecipe | undefined>>;
+    setSelectedRecipe?: React.Dispatch<React.SetStateAction<IRecipe | undefined>>;
 }
 
 const ShareRecipeModal: React.FC<IProps> = ({ recipe, setSelectedRecipe }) => {
@@ -39,7 +36,7 @@ const ShareRecipeModal: React.FC<IProps> = ({ recipe, setSelectedRecipe }) => {
             isPublic: !recipe.isPublic,
         });
 
-        setSelectedRecipe((prevSelectedRecipe) => {
+        setSelectedRecipe?.((prevSelectedRecipe) => {
             if(!prevSelectedRecipe) return undefined;
             return {
                 ...(prevSelectedRecipe),
@@ -47,7 +44,7 @@ const ShareRecipeModal: React.FC<IProps> = ({ recipe, setSelectedRecipe }) => {
             }
         })
 
-    }, [])
+    }, [editRecipe, recipe.id, recipe.isPublic, setSelectedRecipe])
  
     // Copy link
     const copyLink = useCallback(() => {
@@ -60,7 +57,7 @@ const ShareRecipeModal: React.FC<IProps> = ({ recipe, setSelectedRecipe }) => {
 
         // Update state
         setCopiedLink(true);
-    }, [])
+    }, [copiedLink, recipeUrl])
 
     useEffect(() => {
 
