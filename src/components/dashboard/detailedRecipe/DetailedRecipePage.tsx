@@ -1,10 +1,10 @@
 import useGetRecipe from "@/hooks/recipes/useGetRecipe.hook";
-import { RECIPE_ACTION_MODAL_IDS, ROUTE_PATHS } from "@/utils/constants";
-import { DeleteIcon } from "@chakra-ui/icons";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import DeleteRecipeModal from "../recipes/modal/DeleteRecipeModal";
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteRecipeButton from "../recipes/utilities/DeleteRecipeButton";
+import ShareRecipeButton from "../recipes/utilities/ShareRecipeButton";
+import recipePlaceholderImg from '@/assets/images/recipe_placeholder.png';
+import useCanEditRecipe from "@/hooks/recipes/useCanEditRecipe.hook";
 
 const DetailedRecipePage = () => {
 
@@ -17,39 +17,144 @@ const DetailedRecipePage = () => {
     recipe,
   } = useGetRecipe(recipeId);
 
+  const canEditRecipe = useCanEditRecipe(recipe);
+
+  /////////////////////////////////////
+  // RETURN ///////////////////////////
+  /////////////////////////////////////
+
+  //TODO: Handle
+  if (isLoadingRecipe) {
+    return <div>Loading...</div>
+  }
+
+  //TODO: Handle
+  if (errorWhileGettingRecipe) {
+    return <div>Error while getting recipe</div>
+  }
+
   return (
-    <div className="flex justify-start items-center flex-col gap-4 h-full w-full overflow-auto px-2 border">
+    <div className="flex justify-start items-center flex-col gap-4 h-full w-full overflow-auto px-2">
 
       {/* HEADER */}
-      <div className="flex justify-center items-center gap-4 w-full">
+      {
+        canEditRecipe && (
+          <div className="flex justify-center items-center gap-4 w-full">
 
-        {/* EDIT */}
-        <Link to={`/dashboard/recipes/${recipeId}/edit`}>
-          <button className="btn text-white bg-gray-600 hover:bg-gray-700">
-            <EditIcon />
-            Edit
-          </button>
-        </Link>
+            {/* EDIT */}
+            <Link to={`/dashboard/recipes/${recipeId}/edit`}>
+              <button className="btn text-white border border-gray-400 hover:border-gray-400">
+                <EditIcon />
+                Edit
+              </button>
+            </Link>
 
-        {/* //TODO: SHARE */}
-        <button>
+            {/* SHARE */}
+            <ShareRecipeButton
+              recipe={recipe}
+              buttonClassName="btn border border-gray-400 hover:border-gray-400 text-white"
+            />
 
-        </button>
+            {/* DELETE */}
+            <DeleteRecipeButton
+              recipe={recipe!}
+            />
 
-        {/* DELETE */}
-        <DeleteRecipeButton 
-          recipe={recipe!}
-        />
-        
-      </div>
+          </div>
+        )
+      }
+
 
       {/* //TODO: MAIN CONTENT */}
-      {/* LEFT SIDE: IMAGE + INGREDIENTS */}
+      <div className="flex justify-center items-start gap-4 w-[70%] p-4">
 
-      {/* RIGTH SIDE: TITLE + DESCRIPTION + AUTHOR + PREP TIME  */}
-      {/* COOK TIME */}
-      {/* INSTRUCTIONS (can be clicked to say that they are done) */}
+        {/* LEFT SIDE: IMAGE + INGREDIENTS */}
+        <div className="flex flex-1 flex-col justify-start items-center gap-4">
 
+          {/* IMAGE */}
+          <div className="w-full border flex justify-center items-center rounded border-gray-600">
+            <img
+              src={recipe?.image ?? recipePlaceholderImg}
+              alt={recipe?.title}
+              className="w-80 h-80 object-cover rounded"
+            />
+          </div>
+
+
+          {/* INGREDIENTS */}
+          <div className="flex justify-start items-start flex-col gap-4 w-full p-4">
+
+            {/* TITLE */}
+            <h3 className="text-white text-xl font-medium">
+              Ingredients
+            </h3>
+
+            {/* SERVINGS */}
+            <div className="text-base">
+              <span className="text-white">Servings:</span> {recipe?.servings ? `${recipe?.servings} servings` : 'No servings specified'}
+            </div>
+
+            {/* LIST OF INGREDIENTS */}
+            {
+              recipe?.ingredients && recipe?.ingredients.length ? (
+                recipe?.ingredients?.map((ingredient, index) => (
+                  <div key={index} className="flex justify-start items-center gap-2 text-white font-medium">
+                    <input type="checkbox" className="checkbox checkbox-success" />
+                    <span className="text-sm">{ingredient.name}</span>
+                  </div>
+                ))
+              ) : (
+                <div>
+                  No ingredients found!
+                </div>
+              )
+
+            }
+
+          </div>
+
+        </div>
+
+        {/* RIGTH SIDE: TITLE + DESCRIPTION + AUTHOR + PREP TIME  */}
+        <div className="flex-1 h-80 border border-green-600 flex flex-col justify-start items-start gap-4">
+
+          {/* TITLE */}
+          <h2 className="text-2xl text-white font-medium">
+            {recipe?.title}
+          </h2>
+
+          {/* DESCRIPTION */}
+          <p className="min-h-52 bg-red-600">
+            {recipe?.description}
+          </p>
+
+          <div className="flex gap-4">
+
+            {/* AUTHOR */}
+            <div className="flex justify-center items-center gap-2">
+              <div className="avatar">
+                <div className="w-8 rounded-full">
+                  <img src={recipe?.createdByUser?.avatar} />
+                </div>
+              </div>
+              <div>
+                Author: <span className="font-medium">{recipe?.createdByUser?.firstName}</span>
+              </div>
+            </div>
+
+            {/* PREP TIME */}
+            
+
+            {/* COOK TIME */}
+
+
+          </div>
+
+
+
+        </div>
+
+      </div>
 
     </div>
   )

@@ -54,7 +54,7 @@ const useGetRecipe = (recipeId?: string) => {
             navigate(ROUTE_PATHS.RECIPES);
 
         }
-    }, []);
+    }, [errorWhileGettingRecipe, navigate]);
 
     // If role is viewer, and trying to edit => redirect back
     useEffect(() => {

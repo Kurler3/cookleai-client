@@ -7,14 +7,17 @@ import CheckIcon from '@mui/icons-material/Check';
 import { FRONT_END_BASE_URL } from "@/utils/constants";
 import useEditRecipe from "@/hooks/recipes/useEditRecipe.hook";
 import EditRecipeVisibilityInput from "../EditRecipeVisibilityInput";
+import useCanEditRecipe from "@/hooks/recipes/useCanEditRecipe.hook";
 
 
 type IProps = {
-    recipe: IRecipe;
+    recipe?: IRecipe;
     setSelectedRecipe?: React.Dispatch<React.SetStateAction<IRecipe | undefined>>;
 }
 
 const ShareRecipeModal: React.FC<IProps> = ({ recipe, setSelectedRecipe }) => {
+
+    const canEditRecipe = useCanEditRecipe(recipe);
 
 
     const {
@@ -22,30 +25,32 @@ const ShareRecipeModal: React.FC<IProps> = ({ recipe, setSelectedRecipe }) => {
         isEditingRecipe,
     } = useEditRecipe();
 
-    const recipeUrl = `${FRONT_END_BASE_URL}/dashboard/recipes/${recipe.id}`
+    const recipeUrl = `${FRONT_END_BASE_URL}/dashboard/recipes/${recipe?.id}`
 
     const [
         copiedLink,
         setCopiedLink,
     ] = useState(false);
-   
+
     const handleChangeRecipeVisibility = useCallback(() => {
 
-        editRecipe({
-            id: recipe.id,
-            isPublic: !recipe.isPublic,
-        });
+        if (recipe) {
+            editRecipe({
+                id: recipe.id,
+                isPublic: !recipe?.isPublic,
+            });
 
-        setSelectedRecipe?.((prevSelectedRecipe) => {
-            if(!prevSelectedRecipe) return undefined;
-            return {
-                ...(prevSelectedRecipe),
-                isPublic: !prevSelectedRecipe?.isPublic,
-            }
-        })
+            setSelectedRecipe?.((prevSelectedRecipe) => {
+                if (!prevSelectedRecipe) return undefined;
+                return {
+                    ...(prevSelectedRecipe),
+                    isPublic: !prevSelectedRecipe?.isPublic,
+                }
+            })
+        }
 
-    }, [editRecipe, recipe.id, recipe.isPublic, setSelectedRecipe])
- 
+    }, [editRecipe, recipe, setSelectedRecipe])
+
     // Copy link
     const copyLink = useCallback(() => {
 
@@ -106,7 +111,7 @@ const ShareRecipeModal: React.FC<IProps> = ({ recipe, setSelectedRecipe }) => {
 
                 {/* ALERT */}
                 {
-                    !recipe.isPublic && (
+                    !recipe?.isPublic && (
                         <div role="alert" className="alert alert-warning">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -133,11 +138,16 @@ const ShareRecipeModal: React.FC<IProps> = ({ recipe, setSelectedRecipe }) => {
                 }
 
                 {/* // SWITCH TO PRIVATE/PUBLIC */}
-                <EditRecipeVisibilityInput 
-                    isEditingRecipe={isEditingRecipe}
-                    recipe={recipe}
-                    handleChangeRecipeVisibility={handleChangeRecipeVisibility}
-                />
+                {
+                    canEditRecipe && (
+                        <EditRecipeVisibilityInput
+                            isEditingRecipe={isEditingRecipe}
+                            recipe={recipe}
+                            handleChangeRecipeVisibility={handleChangeRecipeVisibility}
+                        />
+                    )
+                }
+
 
                 <p className="text-base font-medium">
                     Link
