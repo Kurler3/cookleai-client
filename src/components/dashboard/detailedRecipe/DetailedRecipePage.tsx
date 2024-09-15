@@ -3,6 +3,8 @@ import { useParams } from "react-router-dom";
 import useCanEditRecipe from "@/hooks/recipes/useCanEditRecipe.hook";
 import RecipeDisplayPageHeader from "./display/RecipeDisplayPageHeader";
 import RecipeDisplayMainContent from "./display/mainContent/RecipeDisplayMainContent";
+import LoadingScreen from "@/components/utils/LoadingScreen";
+import ErrorScreen from "@/components/utils/ErrorScreen";
 
 const DetailedRecipePage = () => {
 
@@ -20,14 +22,20 @@ const DetailedRecipePage = () => {
   // RETURN ///////////////////////////
   /////////////////////////////////////
 
-  //TODO: Handle
+  // Handle
   if (isLoadingRecipe) {
-    return <div>Loading...</div>
+    return (
+      <LoadingScreen 
+        message="Fetching your recipe..."
+      />
+    )
   }
 
-  //TODO: Handle
+  // Handle
   if (errorWhileGettingRecipe) {
-    return <div>Error while getting recipe</div>
+    return (
+      <ErrorScreen />
+    )
   }
 
   return (
