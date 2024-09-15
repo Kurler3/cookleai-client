@@ -12,7 +12,7 @@ const RecipeDisplayMainContent: FC<IProps> = ({
 }) => {
 
     return (
-        <div className="flex justify-center items-start gap-4 w-[70%] p-4">
+        <div className="flex justify-center items-start gap-4 w-[70%] p-4 flex-wrap">
 
             {/* LEFT SIDE: IMAGE + INGREDIENTS */}
             <RecipeDisplayMainContentLeftPart 

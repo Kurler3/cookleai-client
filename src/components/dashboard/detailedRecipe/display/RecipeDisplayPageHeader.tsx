@@ -15,20 +15,20 @@ const RecipeDisplayPageHeader: FC<IProps> = ({
     canEditRecipe,
 }) => {
 
-
-
-    if (!canEditRecipe) return null;
-
     return (
-        <div className="flex justify-center items-center gap-4 w-full">
+        <div className="flex justify-center items-center gap-4 w-full flex-wrap">
 
             {/* EDIT */}
-            <Link to={`/dashboard/recipes/${recipe?.id}/edit`}>
-                <button className="btn text-white border border-gray-400 hover:border-gray-400">
-                    <EditIcon />
-                    Edit
-                </button>
-            </Link>
+            {
+                canEditRecipe && (
+                    <Link to={`/dashboard/recipes/${recipe?.id}/edit`}>
+                        <button className="btn text-white border border-gray-400 hover:border-gray-400">
+                            <EditIcon />
+                            Edit
+                        </button>
+                    </Link>
+                )
+            }
 
             {/* SHARE */}
             <ShareRecipeButton
@@ -37,9 +37,14 @@ const RecipeDisplayPageHeader: FC<IProps> = ({
             />
 
             {/* DELETE */}
-            <DeleteRecipeButton
-                recipe={recipe}
-            />
+            {
+                canEditRecipe && (
+                    <DeleteRecipeButton
+                        recipe={recipe}
+                    />
+                )
+            }
+
 
         </div>
     )
