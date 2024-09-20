@@ -15,6 +15,9 @@ export type ICookbook = {
     createdBy: number;
     updatedByUser?: IUser;
     createdByUser?: IUser;
+    _count?: {
+        recipes: number;
+    }
 };
 
 
