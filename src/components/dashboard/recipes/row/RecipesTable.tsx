@@ -50,7 +50,9 @@ const RecipesTable: React.FC<IProps> = ({
             </div>
 
             {/* BODY */}
-            <div className="w-full table min-w-[644px] ">
+            <div 
+                className="w-full table min-w-[644px]"
+            >
                 {isLoadingRecipes
                     ? Array.from({ length: 3 }).map((_, idx) => (
                           <RecipeRowSkeleton key={`recipe_table_card_${idx}`} />

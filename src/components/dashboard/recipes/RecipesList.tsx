@@ -24,6 +24,7 @@ const RecipesList: React.FC<IProps> = ({
         isLoadingRecipes,
         isFetchingNextPage,
         lastElementRef,
+        scrollParentRef,
     } = useGetUserRecipes({
         filters,
     });
