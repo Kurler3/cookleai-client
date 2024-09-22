@@ -1,7 +1,7 @@
 import { ICookbook } from "./cookbook.types";
 import { IUser } from "./user.types";
 
-enum IRecipeRole {
+export enum IRecipeRole {
     OWNER = "OWNER",
     EDITOR = "EDITOR",
     VIEWER = "VIEWER",
