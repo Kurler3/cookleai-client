@@ -70,6 +70,7 @@ const useVirtualization = <T>({
         virtualRows,
         totalListWidth,
         virtualColumns,
+        columns,
     }
 };
 

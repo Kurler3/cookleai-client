@@ -3,17 +3,20 @@ import { FC, LegacyRef, useMemo } from "react";
 import recipePlaceholderImg from '@/assets/images/recipe_placeholder.png';
 import { Link } from "react-router-dom";
 import getRoleColor from "@/utils/functions/getRoleColor";
-
-
+import { VirtualItem } from "@tanstack/react-virtual";
 
 type IProps = {
     cookbook: ICookbook;
-    lastElementRef?: (node: HTMLDivElement) => void
+    lastElementRef?: (node: HTMLDivElement) => void;
+    virtualRow?: VirtualItem;
+    virtualColumn: VirtualItem;
 }
 
 const CookbookCard: FC<IProps> = ({
     cookbook,
     lastElementRef,
+    virtualColumn,
+    virtualRow,
 }) => {
 
     // Get first recipe of a cookbook.
@@ -29,6 +32,14 @@ const CookbookCard: FC<IProps> = ({
             className="w-48 h-48 max-w-48 bg-base-300 rounded-md flex justify-center items-start flex-col p-4 hover:bg-base-100"
             ref={lastElementRef as LegacyRef<HTMLAnchorElement> | undefined}
             to={`/cookbooks/${cookbook.id}`}
+            style={virtualColumn && virtualRow && {
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                width: `${virtualColumn?.size}px`,
+                height: `${virtualRow?.size}px`,
+                transform: `translateX(${virtualColumn?.start}px) translateY(${virtualRow?.start}px)`,
+            }}
         >
 
             {/* FIRST RECIPE IMAGE */}

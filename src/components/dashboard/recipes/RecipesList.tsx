@@ -37,6 +37,7 @@ const RecipesList: React.FC<IProps> = ({
         virtualRows,
         virtualColumns,
         totalListWidth,
+        columns,
     } = useVirtualization<IRecipe>({
         itemHeight: !isGrid ? RECIPE_ROW_DIMENSIONS.HEIGHT : RECIPE_CARD_DIMENSIONS.HEIGHT,
         itemWidth: RECIPE_CARD_DIMENSIONS.WIDTH,
@@ -81,6 +82,7 @@ const RecipesList: React.FC<IProps> = ({
                             virtualColumns={virtualColumns}
                             scrollParentRef={scrollParentRef}
                             totalListWidth={totalListWidth}
+                            columns={columns}
                         />
                     )}
 

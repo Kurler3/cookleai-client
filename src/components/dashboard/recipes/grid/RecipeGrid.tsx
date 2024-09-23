@@ -14,6 +14,7 @@ type IProps = {
     totalListHeight: number;
     totalListWidth: number;
     scrollParentRef: RefObject<HTMLDivElement>;
+    columns: number;
 }
 
 const RecipeGrid: React.FC<IProps> = ({
@@ -25,7 +26,8 @@ const RecipeGrid: React.FC<IProps> = ({
     totalListWidth,
     virtualRows,
     virtualColumns,
-    scrollParentRef
+    scrollParentRef,
+    columns,
 }) => {
 
     return (
@@ -55,7 +57,7 @@ const RecipeGrid: React.FC<IProps> = ({
                                         {
                                             virtualColumns.map((virtualColumn) => {
 
-                                                const idx = virtualRow.index * 5 + virtualColumn.index;
+                                                const idx = virtualRow.index * columns + virtualColumn.index;
 
                                                 if(idx >= recipes!.length) return null;
 
