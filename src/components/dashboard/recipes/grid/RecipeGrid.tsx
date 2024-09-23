@@ -43,7 +43,7 @@ const RecipeGrid: React.FC<IProps> = ({
                             width: `${totalListWidth}px`,
                             position: 'relative',
                         }}
-                        className="flex flex-wrap flex-row justify-start items-start"
+                        className="flex flex-wrap flex-row justify-start items-start transition"
                     >
 
                         {
@@ -56,8 +56,6 @@ const RecipeGrid: React.FC<IProps> = ({
                                             virtualColumns.map((virtualColumn) => {
 
                                                 const idx = virtualRow.index * 5 + virtualColumn.index;
-
-                                                console.log(idx);
 
                                                 if(idx >= recipes!.length) return null;
 
@@ -87,27 +85,7 @@ const RecipeGrid: React.FC<IProps> = ({
                 )
 
             }
-            {/*             
-            {
-                isLoadingRecipes ? (
-                    Array.from({ length: 3 }).map((_, idx) => (
-                        <RecipeCardSkeleton key={`recipe_list_card_${idx}`} />
-                    ))
-                ) : (
-                    recipes?.map((recipe, idx) => {
-                        const key = `recipe_card_${idx}_${recipe.id}`;
-
-                        return (
-                            <RecipeCard
-                                key={key}
-                                recipe={recipe}
-                                lastElementRef={idx === recipes.length - 1 ? lastElementRef : undefined}
-                            />
-                        );
-                    })
-                )
-            } */}
-
+        
             {
                 isFetchingNextPage && (
                     Array.from({ length: 3 }).map((_, idx) => (

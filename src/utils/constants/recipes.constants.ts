@@ -60,3 +60,13 @@ export const RECIPE_DIFFICULTY = [
     "Hard",
     "Michelin Star Chef"
 ];
+
+export const RECIPE_CARD_DIMENSIONS = {
+    HEIGHT: 240,
+    WIDTH: 192,
+};
+
+
+export const RECIPE_ROW_DIMENSIONS = {
+    HEIGHT: 112,
+}

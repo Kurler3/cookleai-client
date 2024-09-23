@@ -4,11 +4,12 @@ import RecipeGrid from "./grid/RecipeGrid";
 import RecipesTable from "./row/RecipesTable";
 import { IRecipe, IRecipeFilters } from "@/types";
 import DeleteRecipeModal from "./modal/DeleteRecipeModal";
-import { RECIPE_ACTION_MODAL_IDS } from "@/utils/constants/recipes.constants";
+import { RECIPE_ACTION_MODAL_IDS, RECIPE_CARD_DIMENSIONS, RECIPE_ROW_DIMENSIONS } from "@/utils/constants/recipes.constants";
 import AddToCookbookModal from "./modal/AddToCookbookModal";
 import ShareRecipeModal from "./modal/ShareRecipeModal";
 import AddYourFirstRecipe from "./AddYourFirstRecipe";
 import useVirtualization from "@/hooks/common/useVirtualization.hook";
+
 
 type IProps = {
     isGrid: boolean;
@@ -37,8 +38,8 @@ const RecipesList: React.FC<IProps> = ({
         virtualColumns,
         totalListWidth,
     } = useVirtualization<IRecipe>({
-        itemHeight: !isGrid ? 112 : 240,
-        itemWidth: 192,
+        itemHeight: !isGrid ? RECIPE_ROW_DIMENSIONS.HEIGHT : RECIPE_CARD_DIMENSIONS.HEIGHT,
+        itemWidth: RECIPE_CARD_DIMENSIONS.WIDTH,
         items: recipes,
         isGrid,
     });
@@ -47,12 +48,6 @@ const RecipesList: React.FC<IProps> = ({
         selectedRecipe,
         setSelectedRecipe
     ] = useState<IRecipe | undefined>();
-
-    ///////////////////////////////////////////////////////////////
-    // RESIZE COLUMN COUNT WHEN CONTAINER SIZE CHANGES ////////////
-    ///////////////////////////////////////////////////////////////
-
-    
 
     ////////////////////////////////
     // RETURN //////////////////////
