@@ -8,6 +8,7 @@ import { RECIPE_ACTION_MODAL_IDS } from "@/utils/constants/recipes.constants";
 import AddToCookbookModal from "./modal/AddToCookbookModal";
 import ShareRecipeModal from "./modal/ShareRecipeModal";
 import AddYourFirstRecipe from "./AddYourFirstRecipe";
+import useVirtualization from "@/hooks/common/useVirtualization.hook";
 
 type IProps = {
     isGrid: boolean;
@@ -24,17 +25,38 @@ const RecipesList: React.FC<IProps> = ({
         isLoadingRecipes,
         isFetchingNextPage,
         lastElementRef,
-        totalListHeight,
-        virtualItems,
-        scrollParentRef,
     } = useGetUserRecipes({
         filters,
+    });
+
+    // Virtualization
+    const {
+        scrollParentRef,
+        totalListHeight,
+        virtualRows,
+        virtualColumns,
+        totalListWidth,
+    } = useVirtualization<IRecipe>({
+        itemHeight: !isGrid ? 112 : 240,
+        itemWidth: 192,
+        items: recipes,
+        isGrid,
     });
 
     const [
         selectedRecipe,
         setSelectedRecipe
     ] = useState<IRecipe | undefined>();
+
+    ///////////////////////////////////////////////////////////////
+    // RESIZE COLUMN COUNT WHEN CONTAINER SIZE CHANGES ////////////
+    ///////////////////////////////////////////////////////////////
+
+    
+
+    ////////////////////////////////
+    // RETURN //////////////////////
+    ////////////////////////////////
 
     return (
         <div className="flex justify-start items-start w-full flex-1 gap-4 max-h-[80%]">
@@ -50,7 +72,7 @@ const RecipesList: React.FC<IProps> = ({
                             lastElementRef={lastElementRef}
                             setSelectedRecipe={setSelectedRecipe}
                             totalListHeight={totalListHeight}
-                            virtualItems={virtualItems}
+                            virtualItems={virtualRows}
                             scrollParentRef={scrollParentRef}
                         />
                     ) : (
@@ -59,6 +81,11 @@ const RecipesList: React.FC<IProps> = ({
                             isLoadingRecipes={isLoadingRecipes}
                             isFetchingNextPage={isFetchingNextPage}
                             lastElementRef={lastElementRef}
+                            totalListHeight={totalListHeight}
+                            virtualRows={virtualRows}
+                            virtualColumns={virtualColumns}
+                            scrollParentRef={scrollParentRef}
+                            totalListWidth={totalListWidth}
                         />
                     )}
 

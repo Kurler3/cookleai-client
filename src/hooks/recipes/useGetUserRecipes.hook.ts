@@ -3,8 +3,6 @@ import useAxios from "../axios/useAxios.hook";
 import { IRecipe, IRecipeFilters } from "@/types";
 import { useInfinityQueryFunctions } from "../common/useInfinityQueryFunctions";
 import { getMinutesInMs } from "@/utils/functions";
-import { useVirtualizer } from "@tanstack/react-virtual";
-import { useRef } from "react";
 
 type IUseGetUserRecipesInput = {
     pageSize?: number;
@@ -146,25 +144,6 @@ const useGetUserRecipes = ({
     }
 
     ////////////////////////////////////
-    // VIRTUALIZED /////////////////////
-    ////////////////////////////////////
-
-    const scrollParentRef = useRef<HTMLDivElement>(null)
-
-    const rowVirtualizer = useVirtualizer({
-        // count: flatData ? hasNextPage ? flatData.length + 1 : flatData.length : 0,
-        count: flatData ? flatData.length : 0,
-        getScrollElement: () => scrollParentRef.current,
-        estimateSize: () => 112,
-        overscan: 5,
-    })
-
-    const totalListHeight = rowVirtualizer.getTotalSize();
-    const virtualItems = rowVirtualizer.getVirtualItems();
-
-
-
-    ////////////////////////////////////
     // RETURN //////////////////////////
     ////////////////////////////////////
 
@@ -185,13 +164,6 @@ const useGetUserRecipes = ({
         addRecipeToCache,
         editRecipeInCache,
 
-        ///////////////////////////////////////////
-        // VIRTUALIZATION /////////////////////////
-        ///////////////////////////////////////////
-
-        totalListHeight,
-        virtualItems,
-        scrollParentRef,
     };
 };
 
