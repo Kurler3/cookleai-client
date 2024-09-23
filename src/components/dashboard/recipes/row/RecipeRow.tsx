@@ -5,19 +5,22 @@ import recipePlaceholderImg from '@/assets/images/recipe_placeholder.png';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
 import LockIcon from '@mui/icons-material/Lock';
 import { Link } from "react-router-dom";
+import { VirtualItem } from "@tanstack/react-virtual";
 
 type IProps = {
     recipe: IRecipe;
     idx: number,
     lastElementRef?: (node: HTMLDivElement) => void;
-    setSelectedRecipe: React.Dispatch<React.SetStateAction<IRecipe | undefined>>
+    setSelectedRecipe: React.Dispatch<React.SetStateAction<IRecipe | undefined>>;
+    virtualRow: VirtualItem;
 }
 
 const RecipeRow: React.FC<IProps> = ({
     recipe,
     idx,
     lastElementRef,
-    setSelectedRecipe
+    setSelectedRecipe,
+    virtualRow,
 }) => {
 
     return (
@@ -25,6 +28,14 @@ const RecipeRow: React.FC<IProps> = ({
             ref={lastElementRef}
             // className="max-w-screen flex justify-between items-center h-28 gap-4 p-4 min-w-96 w-full overflow-x-auto overflow-y-hidden border border-gray-600 rounded-md shadow-md mt-4"
             className="flex justify-between items-center h-28 gap-4 p-4 w-full border border-gray-600 rounded-md shadow-md mt-4"
+            style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                width: '100%',
+                height: `${virtualRow.size}px`,
+                transform: `translateY(${virtualRow.start + (idx * 10)}px)`,
+            }}
         >
 
             {/* IMAGE */}

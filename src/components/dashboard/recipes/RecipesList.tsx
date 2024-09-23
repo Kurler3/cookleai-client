@@ -14,16 +14,18 @@ type IProps = {
     filters: IRecipeFilters;
 };
 
-const RecipesList: React.FC<IProps> = ({ 
+const RecipesList: React.FC<IProps> = ({
     isGrid,
-    filters, 
+    filters,
 }) => {
-    
+
     const {
         recipes,
         isLoadingRecipes,
         isFetchingNextPage,
         lastElementRef,
+        totalListHeight,
+        virtualItems,
         scrollParentRef,
     } = useGetUserRecipes({
         filters,
@@ -47,6 +49,9 @@ const RecipesList: React.FC<IProps> = ({
                             isFetchingNextPage={isFetchingNextPage}
                             lastElementRef={lastElementRef}
                             setSelectedRecipe={setSelectedRecipe}
+                            totalListHeight={totalListHeight}
+                            virtualItems={virtualItems}
+                            scrollParentRef={scrollParentRef}
                         />
                     ) : (
                         <RecipeGrid

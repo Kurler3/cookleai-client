@@ -152,9 +152,10 @@ const useGetUserRecipes = ({
     const scrollParentRef = useRef<HTMLDivElement>(null)
 
     const rowVirtualizer = useVirtualizer({
-        count: flatData ?  hasNextPage ? flatData.length + 1 : flatData.length : 0,
+        // count: flatData ? hasNextPage ? flatData.length + 1 : flatData.length : 0,
+        count: flatData ? flatData.length : 0,
         getScrollElement: () => scrollParentRef.current,
-        estimateSize: () => 100,
+        estimateSize: () => 112,
         overscan: 5,
     })
 
