@@ -15,6 +15,10 @@ export type ICookbook = {
     createdBy: number;
     updatedByUser?: IUser;
     createdByUser?: IUser;
+    _count?: {
+        recipes: number;
+    };
+    role?: ICookbookRole;
 };
 
 
@@ -23,4 +27,10 @@ export type IGetCookbooksQueryParams = {
     selection?: string;
     pageSize?: number;
     excludedRecipeId?: number,
+}
+
+export enum ICookbookRole {
+    OWNER = "OWNER",
+    EDITOR = "EDITOR",
+    VIEWER = "VIEWER",
 }

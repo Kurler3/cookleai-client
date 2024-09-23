@@ -1,24 +1,31 @@
 import { useState } from "react";
-import { IRecipe } from "../../../../types";
+import { IRecipe, IRecipeFilters } from "../../../../types";
 import { RECIPE_ACTION_MODAL_IDS } from "../../../../utils/constants/recipes.constants";
 import ReportProblemIcon from "@mui/icons-material/ReportProblem";
 import useDeleteRecipe from "@/hooks/recipes/useDeleteRecipe.hook";
 
 type IProps = {
-    recipe: IRecipe;
+    recipe?: IRecipe;
     onSuccessCallback?: () => void;
+    filters?: IRecipeFilters;
 };
 
-const DeleteRecipeModal: React.FC<IProps> = ({ recipe, onSuccessCallback }) => {
+const DeleteRecipeModal: React.FC<IProps> = ({ 
+    recipe, 
+    onSuccessCallback, 
+    filters
+}) => {
+
     //////////////////////////////////////
     // HOOK //////////////////////////////
     //////////////////////////////////////
 
     const { deleteRecipe, isDeletingRecipe } =
-        useDeleteRecipe(
-            recipe?.id,
-            onSuccessCallback
-        );
+        useDeleteRecipe({
+            recipeId: recipe?.id,
+            onSuccessCallback,
+            filters
+        });
 
     //////////////////////////////////////
     // STATE /////////////////////////////

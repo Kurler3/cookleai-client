@@ -1,25 +1,25 @@
 import ExploreIcon from '@mui/icons-material/Explore';
 import AddIcon from '@mui/icons-material/Add';
-import Searchbar from '../../utils/Searchbar';
-import FilterAltIcon from '@mui/icons-material/FilterAlt';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import ViewListIcon from '@mui/icons-material/ViewList';
-import GridViewIcon from '@mui/icons-material/GridView';
 import { Link } from 'react-router-dom';
 import { ROUTE_PATHS } from '@/utils/constants';
 import { RECIPE_ACTION_MODAL_IDS } from '@/utils/constants/recipes.constants';
 import CreateRecipeModal from './modal/CreateRecipeModal';
 import RecipePageHeaderFilters from './RecipePageHeaderFilters';
+import { IRecipeFilters } from '@/types';
 
 
 type IProps = {
     isGrid: boolean;
     setIsGrid: React.Dispatch<React.SetStateAction<boolean>>;
+    updateFilter: (filterKey: string, newValue: string | null) => void;
+    recipeFilters: IRecipeFilters;
 }
 
 const RecipesPageHeader: React.FC<IProps> = ({
     isGrid,
     setIsGrid,
+    updateFilter,
+    recipeFilters
 }) => {
 
     return (
@@ -54,6 +54,8 @@ const RecipesPageHeader: React.FC<IProps> = ({
             <RecipePageHeaderFilters 
                 isGrid={isGrid}
                 setIsGrid={setIsGrid}
+                updateFilter={updateFilter}
+                recipeFilters={recipeFilters}
             />
 
             {/* CREATE RECIPE MODAL */}

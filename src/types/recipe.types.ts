@@ -1,7 +1,7 @@
 import { ICookbook } from "./cookbook.types";
 import { IUser } from "./user.types";
 
-enum IRecipeRole {
+export enum IRecipeRole {
     OWNER = "OWNER",
     EDITOR = "EDITOR",
     VIEWER = "VIEWER",
@@ -84,4 +84,10 @@ export type IRecipeEditState = {
     difficulty?: string;
     ingredients?: IIngredient[];
     instructions?: string[];
+}
+
+export type IRecipeFilters = {
+    title: string | null;
+    cuisine: string | null;
+    difficulty: string | null;
 }

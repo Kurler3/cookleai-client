@@ -1,14 +1,28 @@
 import { InfiniteData, useInfiniteQuery, useQueryClient } from "@tanstack/react-query";
 import useAxios from "../axios/useAxios.hook";
-import { IRecipe } from "@/types";
+import { IRecipe, IRecipeFilters } from "@/types";
 import { useInfinityQueryFunctions } from "../common/useInfinityQueryFunctions";
 import { getMinutesInMs } from "@/utils/functions";
 
-const useGetUserRecipes = (pageSize = 15) => {
+type IUseGetUserRecipesInput = {
+    pageSize?: number;
+    filters?: IRecipeFilters;
+}
+
+const useGetUserRecipes = ({
+    pageSize = 15,
+    filters,
+}: IUseGetUserRecipesInput = {}) => {
+
+    const queryKey = ["my-recipes", filters ?? {
+        cuisine: null,
+        difficulty: null,
+        title: null,
+    }
+    ]
 
     const axios = useAxios();
     const queryClient = useQueryClient();
-
 
     const {
         fetchNextPage,
@@ -21,11 +35,15 @@ const useGetUserRecipes = (pageSize = 15) => {
         status,
         refetch,
     } = useInfiniteQuery({
-        queryKey: ["my-recipes"],
+        queryKey,
         queryFn: async ({ pageParam = 0 }): Promise<IRecipe[]> => {
             return axios
                 .get("/recipes/my-recipes", {
-                    params: { page: pageParam, limit: pageSize },
+                    params: {
+                        page: pageParam,
+                        limit: pageSize,
+                        ...(filters ?? {})
+                    },
                 })
                 .then((res) => res.data);
         },
@@ -33,12 +51,14 @@ const useGetUserRecipes = (pageSize = 15) => {
             return lastPage.length ? pages.length : undefined; // If the last page was not empty, then continue fetching, otherwise stop.
         },
         initialPageParam: 0,
-        staleTime: getMinutesInMs(3),
+        // If any filters, don't cache the data, because it can change often and its hard to manage with mutations.
+        staleTime: filters ? 0 : getMinutesInMs(3),
     });
 
     const {
         lastElementRef,
         itemIdToIndexesMap: recipeIdToIndexMap,
+        flatData,
     } = useInfinityQueryFunctions<IRecipe>({
         isLoading,
         hasNextPage,
@@ -52,36 +72,30 @@ const useGetUserRecipes = (pageSize = 15) => {
     ////////////////////////////////////
 
     const removeRecipeFromCache = (recipeId: number) => {
-        // Remove the recipe from the cache
-        queryClient.setQueryData(
-            ["my-recipes"],
-            (oldData: InfiniteData<IRecipe[]>) => {
+        const recipeIndexes = recipeIdToIndexMap.get(recipeId);
+        if (!recipeIndexes) return;
 
-                if (!oldData) {
-                    console.error(`no cache found for: 'my-recipes'`);
-                    return null;
-                }
+        queryClient.setQueryData(queryKey, (oldData: InfiniteData<IRecipe[]>) => {
 
-                // Clone oldData to ensure new references
-                const newData = {
-                    ...oldData,
-                    pages: oldData.pages.map((page) => [...page]), // Copy each page array
-                };
-                const recipeIndexes = recipeIdToIndexMap.get(recipeId);
+            if (!oldData) return null;
 
-                if (!recipeIndexes) return newData;
+            const newData = { ...oldData };
 
-                newData.pages[recipeIndexes.pageIndex].splice(recipeIndexes.indexInPage, 1);
+            newData.pages = oldData.pages.map((page) => [...page]);
 
-                return newData;
-            });
+            newData.pages[recipeIndexes.pageIndex].splice(recipeIndexes.indexInPage, 1);
+
+            return newData;
+        });
+
+        queryClient.invalidateQueries({ queryKey, exact: true });
     };
 
     const addRecipeToCache = (newRecipe: IRecipe) => {
 
         // Remove the recipe from the cache
         queryClient.setQueryData(
-            ["my-recipes"],
+            queryKey,
             (oldData: InfiniteData<IRecipe[]>) => {
 
                 if (!oldData) {
@@ -95,6 +109,7 @@ const useGetUserRecipes = (pageSize = 15) => {
                     pages: oldData.pages.map((page) => [...page]),
                 };
 
+
                 newData.pages[0].unshift(newRecipe);
 
                 return newData;
@@ -102,12 +117,38 @@ const useGetUserRecipes = (pageSize = 15) => {
         );
     }
 
+    const editRecipeInCache = (updatedRecipe: IRecipe) => {
+        queryClient.setQueryData(
+            queryKey,
+            (oldData: InfiniteData<IRecipe[]>) => {
+
+                if (!oldData) {
+                    console.error(`no cache found for: 'my-recipes'`);
+                    return null;
+                }
+
+                const newData = {
+                    ...oldData,
+                    pages: oldData.pages.map((page) => [...page]),
+                };
+
+                const recipeIndexes = recipeIdToIndexMap.get(updatedRecipe.id);
+
+                if (!recipeIndexes) return newData;
+
+                newData.pages[recipeIndexes.pageIndex][recipeIndexes.indexInPage] = updatedRecipe;
+
+                return newData;
+            }
+        )
+    }
+
     ////////////////////////////////////
     // RETURN //////////////////////////
     ////////////////////////////////////
 
     return {
-        recipes: recipes?.pages.flat(),
+        recipes: flatData,
         isLoadingRecipes: status === "pending",
         errorWhileGettingRecipes,
         isFetchingNextPage,
@@ -121,6 +162,8 @@ const useGetUserRecipes = (pageSize = 15) => {
 
         removeRecipeFromCache,
         addRecipeToCache,
+        editRecipeInCache,
+
     };
 };
 

@@ -6,7 +6,7 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
 type IProps = {
     isEditingRecipe: boolean;
-    recipe: IRecipe;
+    recipe?: IRecipe;
     handleChangeRecipeVisibility: () => void;
     dropdownDirection?: 'bottom' | 'top' | 'right';
 }
@@ -32,7 +32,7 @@ const EditRecipeVisibilityInput: FC<IProps> = ({
                     {isEditingRecipe && (<span className="loading loading-spinner"></span>)}
 
                     {
-                        recipe.isPublic ? (
+                        recipe?.isPublic ? (
                             <>
                                 <LockOpenIcon />
 
@@ -60,7 +60,7 @@ const EditRecipeVisibilityInput: FC<IProps> = ({
                             <a>
 
                                 {
-                                    recipe.isPublic ? (
+                                    recipe?.isPublic ? (
                                         <>
 
                                             <LockIcon /> Private

@@ -1,26 +1,37 @@
+import { VirtualItem } from "@tanstack/react-virtual";
 import { IRecipe } from "../../../../types/recipe.types";
 import RecipeRow from "./RecipeRow";
 import RecipeRowSkeleton from "./RecipeRowSkeleton";
+import { RefObject, FC } from "react";
 
 type IProps = {
     recipes?: IRecipe[];
     isLoadingRecipes: boolean;
     isFetchingNextPage: boolean;
     lastElementRef: (node: HTMLDivElement) => void;
-    setSelectedRecipe: React.Dispatch<React.SetStateAction<IRecipe | undefined>>
+    setSelectedRecipe: React.Dispatch<React.SetStateAction<IRecipe | undefined>>;
+    totalListHeight: number;
+    virtualItems: VirtualItem[];
+    scrollParentRef: RefObject<HTMLDivElement>
 };
 
-const RecipesTable: React.FC<IProps> = ({
+const RecipesTable: FC<IProps> = ({
     recipes,
     isLoadingRecipes,
     isFetchingNextPage,
     lastElementRef,
     setSelectedRecipe,
+    totalListHeight,
+    virtualItems,
+    scrollParentRef,    
 }) => {
-    
+
     return (
         // min-w-96
-        <div className="w-full overflow-x-auto overflow-y-auto no-scrollbar relative h-full">
+        <div
+            className="w-full overflow-x-auto overflow-y-auto no-scrollbar relative h-full"
+            ref={scrollParentRef}
+        >
             {/* HEADERS */}
             <div className="bg-gray-800 z-10 sticky top-0 w-full flex justify-between min-w-[644px] items-center gap-4 px-4 overflow-x-auto overflow-y-hidden border h-12 rounded border-gray-600 text-app-white">
                 {/* IMAGE */}
@@ -50,24 +61,36 @@ const RecipesTable: React.FC<IProps> = ({
             </div>
 
             {/* BODY */}
-            <div className="w-full table min-w-[644px] ">
+            <div
+                className="w-full table min-w-[644px] "
+                style={{
+                    height: `${totalListHeight}px`,
+                    position: 'relative',
+                }}
+            >
                 {isLoadingRecipes
                     ? Array.from({ length: 3 }).map((_, idx) => (
-                          <RecipeRowSkeleton key={`recipe_table_card_${idx}`} />
-                      ))
-                    : recipes?.map((recipe, idx) => {
-                          const key = `recipe_card_${idx}_${recipe.id}`;
+                        <RecipeRowSkeleton key={`recipe_table_card_${idx}`} />
+                    ))
+                    : virtualItems.map((virtualRow, idx) => {
 
-                          return (
-                              <RecipeRow 
-                                key={key} 
-                                recipe={recipe} 
-                                idx={idx} 
+                        if (!recipes) return <RecipeRowSkeleton key={`recipe_table_card_${idx}`} />;
+
+                        const recipe = recipes && recipes[virtualRow.index];
+
+                        const key = `recipe_card_${idx}_${recipe.id}`;
+
+                        return (
+                            <RecipeRow
+                                key={key}
+                                recipe={recipe}
+                                idx={idx}
                                 lastElementRef={idx === recipes.length - 1 ? lastElementRef : undefined}
                                 setSelectedRecipe={setSelectedRecipe}
+                                virtualRow={virtualRow}
                             />
-                          );
-                      })}
+                        );
+                    })}
 
                 {isFetchingNextPage &&
                     Array.from({ length: 3 }).map((_, idx) => (

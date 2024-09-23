@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import useAxios from "../axios/useAxios.hook";
 import useGetUserRecipes from "./useGetUserRecipes.hook";
-import { IGetUserRecipesData, IRecipe, IUpdateRecipe } from "@/types";
+import { IRecipe, IUpdateRecipe } from "@/types";
 import axiosNetworkErrorHandler from "@/utils/functions/axiosNetworkErrorHandler";
 import toast from "react-hot-toast";
 
@@ -12,7 +12,7 @@ const useEditRecipe = () => {
     
     const axios = useAxios();
 
-    const { recipeIdToIndexMap } = useGetUserRecipes();
+    const { editRecipeInCache } = useGetUserRecipes();
 
     const {
         mutate: editRecipe,
@@ -26,26 +26,15 @@ const useEditRecipe = () => {
             const res = await axios.patch(`/recipes/${recipeUpdateObject.id}`, recipeUpdateObject); 
             return res.data;
         },
-        onSuccess: (editedReciped: IRecipe) => {
+        onSuccess: (editedRecipe: IRecipe) => {
 
             // Update cache in list
-            queryClient.setQueryData(["my-recipes"], (oldData: unknown) => {
-
-                const recipeIndexes = recipeIdToIndexMap.get(
-                    editedReciped.id,
-                );
-
-                if(!recipeIndexes) return editedReciped;
-
-                (oldData as IGetUserRecipesData).pages[recipeIndexes.pageIndex][recipeIndexes.indexInPage] = editedReciped;
-
-                return oldData;
-            });
-
+            editRecipeInCache(editedRecipe)
+            
             // Update cache of single recipe
             queryClient.setQueryData(
-                ["recipe", editedReciped.id.toString()], 
-                () => editedReciped,
+                ["recipe", editedRecipe.id.toString()], 
+                () => editedRecipe,
             );
 
             toast.success('Recipe edited successfully!')

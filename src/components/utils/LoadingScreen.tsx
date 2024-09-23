@@ -1,7 +1,15 @@
 import { motion } from 'framer-motion';
 import logo from '../../assets/images/logo.png'; // Adjust the path to your logo
+import { FC } from 'react';
 
-const LoadingScreen = () => {
+type IProps = {
+  message?: string;
+}
+
+const LoadingScreen:FC<IProps> = ({
+  message,
+}) => {
+
   return (
     <div className="flex items-center justify-center h-screen bg-base-300 gap-4">
       <div className="flex flex-col items-center">
@@ -29,7 +37,7 @@ const LoadingScreen = () => {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.3 }}
           >
-            Loading...
+            {message ?? "Loading..."}
           </motion.div>
         </div>
       </div>
