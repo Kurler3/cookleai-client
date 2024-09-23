@@ -50,8 +50,8 @@ export const useInfinityQueryFunctions = <T extends { id: number }>({
 
         const map = new Map();
 
-        data?.pages.forEach((page, pageIndex) => {
-            page.forEach((item, indexInPage) => {
+        data?.pages?.forEach((page, pageIndex) => {
+            page?.forEach((item, indexInPage) => {
                 map.set(item.id, { pageIndex, indexInPage });
             });
         });

@@ -2,7 +2,7 @@ import { IRecipe } from "@/types";
 import RecipeCard from "./RecipeCard";
 import RecipeCardSkeleton from "./RecipeCardSkeleton";
 import { VirtualItem } from "@tanstack/react-virtual";
-import { RefObject } from "react";
+import React, { RefObject } from "react";
 
 type IProps = {
     recipes?: IRecipe[];
@@ -52,7 +52,7 @@ const RecipeGrid: React.FC<IProps> = ({
                             virtualRows.map((virtualRow) => {
 
                                 return (
-                                    <>
+                                    <React.Fragment key={`recipes_virtualized_row_${virtualRow.index}`}>
 
                                         {
                                             virtualColumns.map((virtualColumn) => {
@@ -77,7 +77,7 @@ const RecipeGrid: React.FC<IProps> = ({
                                             })
                                         }
 
-                                    </>
+                                    </React.Fragment>
                                 )
 
                             })

@@ -3,6 +3,7 @@ import AddIcon from '@mui/icons-material/Add';
 import CookbookCard from './components/CookbookCard';
 import useVirtualization from '@/hooks/common/useVirtualization.hook';
 import { ICookbook } from '@/types';
+import React from 'react';
 
 
 const CookbooksPage = () => {
@@ -83,7 +84,7 @@ const CookbooksPage = () => {
                                 virtualRows.map((virtualRow) => {
 
                                     return (
-                                        <>
+                                        <React.Fragment key={`cookbook_virtualized_row_${virtualRow.index}`}>
                                             {
                                                 virtualColumns.map((virtualColumn) => {
 
@@ -106,7 +107,7 @@ const CookbooksPage = () => {
 
                                                 })
                                             }
-                                        </>
+                                        </React.Fragment>
                                     )
 
                                 })
