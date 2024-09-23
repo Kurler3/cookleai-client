@@ -33,7 +33,7 @@ const RecipeRow: React.FC<IProps> = ({
                 top: 0,
                 left: 0,
                 width: '100%',
-                height: `${virtualRow.size}px`,
+                // height: `${virtualRow.size}px`,
                 transform: `translateY(${virtualRow.start + (idx * 10)}px)`,
             }}
         >
@@ -86,7 +86,7 @@ const RecipeRow: React.FC<IProps> = ({
             </div>
 
             {/* ACTIONS */}
-            <div className={`dropdown dropdown-${idx === 0 ? 'bottom' : 'top'} dropdown-end w-[54px]`}>
+            <div className={`dropdown dropdown-${idx === 0 || idx === 1 ? 'bottom' : 'top'} dropdown-end w-[54px]`}>
                 <div
                     onClick={() => setSelectedRecipe(recipe)} role="button" tabIndex={0}
                     className="cursor-pointer hover:bg-gray-600 hover:text-white transition rounded p-2 flex justify-center items-center"

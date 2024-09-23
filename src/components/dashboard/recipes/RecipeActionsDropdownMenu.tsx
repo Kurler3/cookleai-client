@@ -34,7 +34,7 @@ const RecipeActionsDropdownMenu: React.FC<IProps> = ({ recipe }) => {
         <>
             <ul
                 tabIndex={0}
-                className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 shadow gap-2 p-4 font-medium text-white"
+                className="dropdown-content menu bg-base-100 rounded-box z-[2] w-52 shadow gap-2 p-4 font-medium text-white"
             >
                 {/* TITLE */}
                 <li className="font-bold">Actions</li>
