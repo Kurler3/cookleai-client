@@ -32,7 +32,7 @@ const CookbookCard: FC<IProps> = ({
         <Link
             className="w-48 h-48 max-w-48 bg-base-300 rounded-md flex justify-center items-start flex-col p-4 hover:bg-base-100"
             ref={lastElementRef as LegacyRef<HTMLAnchorElement> | undefined}
-            to={`/cookbooks/${cookbook.id}`}
+            to={`/dashboard/cookbooks/${cookbook.id}`}
             style={virtualColumn && virtualRow && getVirtualizedGridItemStyles({
                 virtualColumn,
                 virtualRow

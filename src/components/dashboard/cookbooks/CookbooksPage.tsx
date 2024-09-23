@@ -12,13 +12,9 @@ const CookbooksPage = () => {
     const {
         cookbooks,
         isLoadingCookbooks,
-        errorWhileGettingCookbooks,
         lastElementRef,
         isFetchingNextPage,
     } = useGetCookbooks();
-
-    //TODO If there was an error => redirect to error catcher.
-
 
     // Virtualization
     const {
@@ -36,7 +32,7 @@ const CookbooksPage = () => {
     });
 
 
-
+    // Return
 
     return (
         <div className="flex justify-start items-center flex-col gap-4 w-full h-full overflow-hidden px-2">

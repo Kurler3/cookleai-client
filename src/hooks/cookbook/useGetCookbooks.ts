@@ -2,6 +2,8 @@ import { ICookbook } from "@/types";
 import useAxios from "../axios/useAxios.hook";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { useInfinityQueryFunctions } from "../common/useInfinityQueryFunctions";
+import { useEffect } from "react";
+import toast from "react-hot-toast";
 
 type IProps = {
     search?: string;
@@ -66,6 +68,11 @@ const useGetCookbooks = ({
         data,
     });
 
+    useEffect(() => {
+        if(errorWhileGettingCookbooks) {
+            toast.error(errorWhileGettingCookbooks.message);
+        }
+    }, [errorWhileGettingCookbooks]);
 
     return {
         cookbooks: data?.pages.flat(),
