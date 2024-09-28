@@ -1,9 +1,10 @@
 import useGetCookbooks from '@/hooks/cookbook/useGetCookbooks';
-import AddIcon from '@mui/icons-material/Add';
 import CookbookCard from './components/CookbookCard';
 import useVirtualization from '@/hooks/common/useVirtualization.hook';
 import { ICookbook } from '@/types';
-import React from 'react';
+import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
+import { Fragment } from 'react/jsx-runtime';
+import CreateCookbookButton from './components/CreateCookbookButton';
 
 
 const CookbooksPage = () => {
@@ -45,22 +46,29 @@ const CookbooksPage = () => {
                 </h2>
 
                 {/* CREATE COOKBOOK BUTTON */}
-                <button
-                    className="common_btn"
-                >
-                    {/* ADD ICON */}
-                    <AddIcon />
-
-                    Create Cookbook
-                </button>
+                <CreateCookbookButton />
             </div>
 
             {/* LIST OF COOKBOOKS */}
             {
-                isLoadingCookbooks ? (
+                isLoadingCookbooks || !cookbooks ? (
                     <div className="w-full h-full flex justify-center items-center">
                         {/* //TODO: Loading skeletons */}
                         Loading...
+                    </div>
+                ) : cookbooks.length === 0 ? (
+                    <div className='h-full flex justify-center items-center flex-col gap-4 mb-32'>
+
+                        <LibraryBooksIcon
+                            style={{
+                                fontSize: 70,
+                            }}
+                            className='bg-gray-800 rounded-lg p-1'
+                        />
+
+
+                        <CreateCookbookButton />
+
                     </div>
                 ) :
                     <div
@@ -80,7 +88,7 @@ const CookbooksPage = () => {
                                 virtualRows.map((virtualRow) => {
 
                                     return (
-                                        <React.Fragment key={`cookbook_virtualized_row_${virtualRow.index}`}>
+                                        <Fragment key={`cookbook_virtualized_row_${virtualRow.index}`}>
                                             {
                                                 virtualColumns.map((virtualColumn) => {
 
@@ -103,22 +111,13 @@ const CookbooksPage = () => {
 
                                                 })
                                             }
-                                        </React.Fragment>
+                                        </Fragment>
                                     )
 
                                 })
                             }
 
                         </div>
-                        {/* {cookbooks?.map((cookbook) => {
-                            return (
-                                <CookbookCard
-                                    key={`cookbook_${cookbook.id}`}
-                                    cookbook={cookbook}
-                                    lastElementRef={lastElementRef}
-                                />
-                            )
-                        })} */}
                     </div>
 
             }
@@ -131,6 +130,10 @@ const CookbooksPage = () => {
                     </div>
                 )
             }
+
+
+            {/* ADD COOKBOOK MODAL */}
+            
 
         </div>
     )
