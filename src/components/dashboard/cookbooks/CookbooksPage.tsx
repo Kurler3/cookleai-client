@@ -66,6 +66,8 @@ const CookbooksPage = () => {
                             className='bg-gray-800 rounded-lg p-1'
                         />
 
+                        <p>First, let's give your new recipe a title!</p>
+
 
                         <CreateCookbookButton />
 
@@ -133,7 +135,7 @@ const CookbooksPage = () => {
 
 
             {/* ADD COOKBOOK MODAL */}
-            
+
 
         </div>
     )

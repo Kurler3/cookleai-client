@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { COOKBOOK_MODAL_IDS } from "../../../../utils/constants";
+import useCreateCookbook from "../../../../hooks/cookbook/useCreateCookbook";
 
 
 
@@ -9,7 +10,10 @@ const CreateCookbookModal = () => {
     // HOOKS /////////////////////////
     //////////////////////////////////
 
-
+    const {
+        isCreatingCookbook,
+        createCookbook,
+    } = useCreateCookbook();
 
     //////////////////////////////////
     // STATE /////////////////////////
@@ -23,7 +27,7 @@ const CreateCookbookModal = () => {
     //////////////////////////////////
 
     return (
-        <div className="modal" role='dialog'>
+        <div className="modal" role='dialog'>²
 
 
             <div className="modal-box flex flex-col gap-4">
@@ -45,18 +49,16 @@ const CreateCookbookModal = () => {
                 <button
                     className={`btn ml-auto common_btn ${cookbookTitle.length === 0 || false ? "btn-disabled" : ""
                         }`}
-                    // onClick={() => createRecipe(recipeTitle)}
+                    onClick={() => createCookbook(cookbookTitle)}
                 >
-                    {/* {isCreatingRecipe && <span className="loading loading-spinner loading-md"></span>} */}
+                    {isCreatingCookbook && <span className="loading loading-spinner loading-md"></span>}
                     Create cookbook
                 </button>
 
 
             </div>
 
-
             <label className="modal-backdrop" htmlFor={COOKBOOK_MODAL_IDS.CREATE}>Close</label>
-
 
         </div>
     )
