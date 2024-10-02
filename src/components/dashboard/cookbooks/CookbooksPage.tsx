@@ -133,10 +133,6 @@ const CookbooksPage = () => {
                 )
             }
 
-
-            {/* ADD COOKBOOK MODAL */}
-
-
         </div>
     )
 };
