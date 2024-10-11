@@ -23,13 +23,13 @@ const RecipesTable: FC<IProps> = ({
     setSelectedRecipe,
     totalListHeight,
     virtualItems,
-    scrollParentRef,    
+    scrollParentRef,
 }) => {
 
     return (
         // min-w-96
         <div
-            className="w-full overflow-x-auto overflow-y-auto no-scrollbar relative h-full"
+            className="w-full overflow-x-auto overflow-y-auto no-scrollbar relative h-full overflow-visible"
             ref={scrollParentRef}
         >
             {/* HEADERS */}

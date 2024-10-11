@@ -27,7 +27,7 @@ const CreateCookbookModal = () => {
     //////////////////////////////////
 
     return (
-        <div className="modal" role='dialog'>²
+        <div className="modal" role='dialog'>
 
 
             <div className="modal-box flex flex-col gap-4">

@@ -1,11 +1,10 @@
 import { IRecipe } from "../../../../types";
-import MoreVertIcon from '@mui/icons-material/MoreVert';
-import RecipeActionsDropdownMenu from "../RecipeActionsDropdownMenu";
 import recipePlaceholderImg from '@/assets/images/recipe_placeholder.png';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
 import LockIcon from '@mui/icons-material/Lock';
 import { Link } from "react-router-dom";
 import { VirtualItem } from "@tanstack/react-virtual";
+import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 
 type IProps = {
     recipe: IRecipe;
@@ -19,7 +18,7 @@ const RecipeRow: React.FC<IProps> = ({
     recipe,
     idx,
     lastElementRef,
-    setSelectedRecipe,
+    // setSelectedRecipe,
     virtualRow,
 }) => {
 
@@ -33,7 +32,7 @@ const RecipeRow: React.FC<IProps> = ({
                 top: 0,
                 left: 0,
                 width: '100%',
-                // height: `${virtualRow.size}px`,
+                height: `${virtualRow.size}px`,
                 transform: `translateY(${virtualRow.start + (idx * 10)}px)`,
             }}
         >
@@ -86,19 +85,32 @@ const RecipeRow: React.FC<IProps> = ({
             </div>
 
             {/* ACTIONS */}
-            <div className={`dropdown dropdown-${idx === 0 || idx === 1 ? 'bottom' : 'top'} dropdown-end w-[54px]`}>
+            <Link to={`/dashboard/recipes/${recipe.id}`}>
+
+                <button className="btn">
+                    <OpenInNewIcon />
+                </button>
+
+            </Link>
+
+            {/* <div className={`dropdown dropdown-end w-[54px]`}
+            >
                 <div
-                    onClick={() => setSelectedRecipe(recipe)} role="button" tabIndex={0}
+                    onClick={() => setSelectedRecipe(recipe)}
+                    role="button"
+                    tabIndex={0}
                     className="cursor-pointer hover:bg-gray-600 hover:text-white transition rounded p-2 flex justify-center items-center"
                 >
                     <MoreVertIcon />
                 </div>
-                <RecipeActionsDropdownMenu recipe={recipe} />
-            </div>
 
+                <RecipeActionsDropdownMenu recipe={recipe} />
+
+            </div> */}
         </div>
     )
 };
+
 
 
 export default RecipeRow;

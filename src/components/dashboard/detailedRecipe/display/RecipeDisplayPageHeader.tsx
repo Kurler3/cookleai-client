@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import EditIcon from '@mui/icons-material/Edit';
 import ShareRecipeButton from "../../recipes/utilities/ShareRecipeButton";
 import DeleteRecipeButton from "../../recipes/utilities/DeleteRecipeButton";
+import AddToCookbookButton from "../../recipes/utilities/AddToCookbookButton";
 
 type IProps = {
     recipe?: IRecipe;
@@ -27,6 +28,16 @@ const RecipeDisplayPageHeader: FC<IProps> = ({
                             Edit
                         </button>
                     </Link>
+                )
+            }
+
+            {/* ADD TO COOKBOOK */}
+            {
+                canEditRecipe && (
+                    <AddToCookbookButton
+                        recipe={recipe}
+                        buttonClassName="btn border border-gray-400 hover:border-gray-400 text-white"
+                    />
                 )
             }
 
