@@ -7,6 +7,13 @@ import { Fragment } from 'react/jsx-runtime';
 import CreateCookbookButton from './components/CreateCookbookButton';
 
 
+const CookbookSkeleton = () => {
+    return (
+        <div className='skeleton w-48 h-48'>
+        </div>
+    )
+}
+
 const CookbooksPage = () => {
 
     // Get cookbooks.
@@ -52,9 +59,18 @@ const CookbooksPage = () => {
             {/* LIST OF COOKBOOKS */}
             {
                 isLoadingCookbooks || !cookbooks ? (
-                    <div className="w-full h-full flex justify-center items-center">
-                        {/* //TODO: Loading skeletons */}
-                        Loading...
+                    <div className="w-full flex flex-wrap flex-row justify-start items-start gap-4">
+
+                        {
+                            Array.from({ length: 10 }).map((_, idx) => {
+                                return (
+                                    <CookbookSkeleton
+                                        key={`cookbook_skeleton_${idx}`}
+                                    />
+                                )
+                            })
+                        }
+
                     </div>
                 ) : cookbooks.length === 0 ? (
                     <div className='h-full flex justify-center items-center flex-col gap-4 mb-32'>
@@ -68,7 +84,6 @@ const CookbooksPage = () => {
 
                         <p>First, let's give your new recipe a title!</p>
 
-
                         <CreateCookbookButton />
 
                     </div>
@@ -77,6 +92,7 @@ const CookbooksPage = () => {
                         className='w-full gap-4 overflow-auto no-scrollbar'
                         ref={scrollParentRef}
                     >
+
                         <div
                             style={{
                                 height: `${totalListHeight}px`,
@@ -119,18 +135,29 @@ const CookbooksPage = () => {
                                 })
                             }
 
+                            {/*  */}
+                            {/* IF IS FETCHING NEXT PAGE */}
+                            {/* {
+                                !isFetchingNextPage && (
+                                    <div className=' w-full h-full flex flex-wrap flex-row gap-3'>
+                                        {
+                                            Array.from({ length: 10 }).map((_, idx) => {
+
+                                                return (
+                                                    <CookbookSkeleton
+                                                        key={`cookbook_skeleton_${virtualRows.length + idx}`}
+                                                    />
+                                                )
+
+                                            })
+                                        }
+                                    </div>
+                                )
+                            } */}
+
                         </div>
                     </div>
 
-            }
-
-            {/* IF IS FETCHING NEXT PAGE */}
-            {
-                isFetchingNextPage && (
-                    <div className="w-full h-full flex justify-center items-center">
-                        Loading MORE...
-                    </div>
-                )
             }
 
         </div>

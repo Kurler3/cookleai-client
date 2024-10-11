@@ -53,8 +53,6 @@ const useVirtualization = <T>({
                 const containerWidth = scrollParentRef.current.offsetWidth;
                 const newColumns = Math.floor(containerWidth / itemWidth);
 
-                console.log(newColumns)
-
                 setColumns(newColumns || 1); // Ensure at least one column
             }
         };
@@ -66,6 +64,7 @@ const useVirtualization = <T>({
         return () => {
             window.removeEventListener("resize", updateColumns);
         };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isGrid, itemWidth, scrollParentRef.current]);
 
     return {
