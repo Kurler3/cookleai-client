@@ -27,9 +27,9 @@ const useGetCookbook = (
             const { data } = await axios.get(`/cookbooks/${cookbookId}`);
             return data; 
         },
-        staleTime: 1000 * 60 * 3,
+        // staleTime: 1000 * 60 * 3,
         retry: false,
-        refetchIntervalInBackground: true,
+        // refetchIntervalInBackground: true,
     });
 
     useHandleFetchError({

@@ -23,7 +23,7 @@ const CookbookCard: FC<IProps> = ({
     // Get first recipe of a cookbook.
     const img = useMemo(() => {
         if (cookbook.recipes && cookbook.recipes.length > 0) {
-            return cookbook.recipes[0].image ?? recipePlaceholderImg
+            return cookbook.recipes[0].recipe.image ?? recipePlaceholderImg
         }
         return recipePlaceholderImg;
     }, [cookbook.recipes]);

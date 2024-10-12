@@ -7,8 +7,8 @@ export type ICookbook = {
     title: string;
     isPrivate: boolean;
     image: string;
-    users?: IUser[];
-    recipes?: IRecipe[];
+    users?: { role: string; user: IUser }[];
+    recipes?: { recipe: IRecipe }[];
     createdAt: Date;
     updatedAt: Date;
     updatedBy: number;
