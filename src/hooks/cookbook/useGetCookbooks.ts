@@ -82,6 +82,7 @@ const useGetCookbooks = ({
         lastElementRef,
         refetchUserCookbooks: refetch,
         cookbookIdToIndexesMap,
+        hasNextPage,
     }
 };
 

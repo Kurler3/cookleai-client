@@ -1,13 +1,15 @@
 import { useVirtualizer } from "@tanstack/react-virtual";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 
 type IUseVirtualizationInput<T> = {
     itemHeight: number;
     itemWidth?: number;
     items?: T[];
+    isLoading?: boolean;
     overscan?: number;
     isGrid?: boolean;
+    hasNextPage?: boolean;
 }
 
 
@@ -15,6 +17,8 @@ const useVirtualization = <T>({
     itemHeight,
     itemWidth,
     items,
+    isLoading,
+    hasNextPage,
     overscan = 5,
     isGrid = false,
 }: IUseVirtualizationInput<T>) => {
@@ -23,10 +27,31 @@ const useVirtualization = <T>({
 
     const scrollParentRef = useRef<HTMLDivElement>(null)
 
+    const rowsCount = useMemo(() => {
+
+        // If there is no items and is loading first time => show 2 rows.
+        if(!items && isLoading) {
+            return 2;
+        }
+
+        if(!items) return 0;
+
+        // If has items
+        if(items) {
+            if(isGrid) {
+                return Math.ceil(items.length / columns) + (hasNextPage ? 2 : 0);
+            } else {
+                return items.length;
+            }
+        }
+        
+        return 0;
+
+    }, [columns, hasNextPage, isGrid, isLoading, items]);
+
     // Row virtualizer. Can be used for simple table or for grid.
     const rowVirtualizer = useVirtualizer({
-        // count: flatData ? hasNextPage ? flatData.length + 1 : flatData.length : 0,
-        count: items ? isGrid ? Math.ceil(items.length / columns) : items.length : 0,
+        count: rowsCount,
         getScrollElement: () => scrollParentRef.current,
         estimateSize: () => itemHeight,
         overscan,

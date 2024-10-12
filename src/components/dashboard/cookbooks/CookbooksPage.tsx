@@ -5,11 +5,26 @@ import { ICookbook } from '@/types';
 import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
 import { Fragment } from 'react/jsx-runtime';
 import CreateCookbookButton from './components/CreateCookbookButton';
+import { FC } from 'react';
 
+type ICookbookSkeletonProps = {
+    left: number;
+    top: number;
+}
 
-const CookbookSkeleton = () => {
+const CookbookSkeleton: FC<ICookbookSkeletonProps> = ({
+    left,
+    top,
+}) => {
     return (
-        <div className='skeleton w-48 h-48'>
+        <div className='skeleton w-48 h-48'
+            style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                transform: `translateX(${left}px) translateY(${top}px)`
+            }}
+        >
         </div>
     )
 }
@@ -22,6 +37,7 @@ const CookbooksPage = () => {
         isLoadingCookbooks,
         lastElementRef,
         isFetchingNextPage,
+        hasNextPage,
     } = useGetCookbooks();
 
     // Virtualization
@@ -37,11 +53,13 @@ const CookbooksPage = () => {
         itemHeight: 192,
         itemWidth: 192,
         isGrid: true,
+        hasNextPage,
+        isLoading: isLoadingCookbooks,
     });
 
 
-    // Return
 
+    // Return
     return (
         <div className="flex justify-start items-center flex-col gap-4 w-full h-full overflow-hidden px-2">
 
@@ -58,21 +76,7 @@ const CookbooksPage = () => {
 
             {/* LIST OF COOKBOOKS */}
             {
-                isLoadingCookbooks || !cookbooks ? (
-                    <div className="w-full flex flex-wrap flex-row justify-start items-start gap-4">
-
-                        {
-                            Array.from({ length: 10 }).map((_, idx) => {
-                                return (
-                                    <CookbookSkeleton
-                                        key={`cookbook_skeleton_${idx}`}
-                                    />
-                                )
-                            })
-                        }
-
-                    </div>
-                ) : cookbooks.length === 0 ? (
+                cookbooks && cookbooks.length === 0 ? (
                     <div className='h-full flex justify-center items-center flex-col gap-4 mb-32'>
 
                         <LibraryBooksIcon
@@ -107,12 +111,28 @@ const CookbooksPage = () => {
 
                                     return (
                                         <Fragment key={`cookbook_virtualized_row_${virtualRow.index}`}>
+
                                             {
                                                 virtualColumns.map((virtualColumn) => {
 
                                                     const idx = virtualRow.index * columns + virtualColumn.index;
 
-                                                    if (idx >= cookbooks!.length) return null;
+                                                    if (!cookbooks || idx >= cookbooks.length) {
+
+                                                        if (isFetchingNextPage) {
+
+                                                            return (
+                                                                <CookbookSkeleton
+                                                                    key={`cookbook_skeleton_${virtualRows.length + idx}`}
+                                                                    left={virtualColumn?.start + (10 * virtualColumn.index)}
+                                                                    top={virtualRow?.start + (10 * virtualRow.index)}
+                                                                />
+                                                            )
+                                                        } else {
+                                                            return null;
+                                                        }
+
+                                                    }
 
                                                     const cookbook = cookbooks![idx];
                                                     const key = `cookbook_${cookbook!.id}`;
@@ -129,31 +149,12 @@ const CookbooksPage = () => {
 
                                                 })
                                             }
+
                                         </Fragment>
                                     )
 
                                 })
                             }
-
-                            {/*  */}
-                            {/* IF IS FETCHING NEXT PAGE */}
-                            {/* {
-                                !isFetchingNextPage && (
-                                    <div className=' w-full h-full flex flex-wrap flex-row gap-3'>
-                                        {
-                                            Array.from({ length: 10 }).map((_, idx) => {
-
-                                                return (
-                                                    <CookbookSkeleton
-                                                        key={`cookbook_skeleton_${virtualRows.length + idx}`}
-                                                    />
-                                                )
-
-                                            })
-                                        }
-                                    </div>
-                                )
-                            } */}
 
                         </div>
                     </div>
