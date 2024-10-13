@@ -1,6 +1,8 @@
 import { ICookbook } from "@/types"
 import { COOKBOOK_MODAL_IDS } from "@/utils/constants"
 import { FC, useState } from "react";
+import useUpdateCookbook from "@/hooks/cookbook/useUpdateCookbook";
+import { handleCloseModal } from "@/utils/functions/closeModal";
 
 
 type IProps = {
@@ -11,20 +13,35 @@ const EditCookbookTitleModal: FC<IProps> = ({
     cookbook,
 }) => {
 
+    const {
+        updateCookbook,
+        isUpdatingCookbook
+    } = useUpdateCookbook({
+        cookbookId: cookbook.id,
+        onSuccessFn: () => {
+            handleCloseModal(COOKBOOK_MODAL_IDS.EDIT);
+        },
+    })
+
     const [cookbookTitle, setCookbookTitle] = useState(cookbook.title);
+
+    const canSave = cookbookTitle !== cookbook.title &&
+        cookbookTitle !== "" && !isUpdatingCookbook;
 
     const handleSubmit = () => {
 
         // If there's no change at all, return early.
-        if(cookbookTitle === cookbook.title) return;
+        if (
+            !canSave
+        ) return;
 
-        //TODO Call the function to update the title.
-        
+        // Call the function to update the title.
+        updateCookbook({ newTitle: cookbookTitle });
+
     }
 
-
     return (
-        <>  
+        <>
             <input
                 type="checkbox"
                 id={COOKBOOK_MODAL_IDS.EDIT}
@@ -41,25 +58,27 @@ const EditCookbookTitleModal: FC<IProps> = ({
                     <p>You can change the title of this cookbook at any time.</p>
 
                     {/* INPUT */}
-                    <label className="form-control w-full max-w-xs">
+                    <label className="form-control w-full">
                         <div className="label">
                             <span className="label-text">Cookbook title</span>
                         </div>
-                        <input 
-                            type="text" 
-                            placeholder="Type here" 
-                            className="input input-bordered w-full max-w-xs"
+                        <input
+                            type="text"
+                            placeholder="Type here"
+                            className="input input-bordered w-full"
                             value={cookbookTitle}
-                            onChange={({target: { value }}) => setCookbookTitle(value)}
+                            onChange={({ target: { value } }) => setCookbookTitle(value)}
                         />
                     </label>
 
                     {/* SAVE BUTTON */}
                     <div className="w-full flex justify-end items-center">
-                        <button 
-                            className={`btn ${ cookbook.title !== cookbookTitle ? 'btn-success' : 'btn-disabled'}`}
-                            disabled={cookbook.title === cookbookTitle}
+                        <button
+                            className={`btn ${canSave ? 'btn-success' : 'btn-disabled'}`}
+                            disabled={!canSave}
+                            onClick={handleSubmit}
                         >
+                            { isUpdatingCookbook && <span className="loading loading-spinner"></span> }
                             Save
                         </button>
                     </div>

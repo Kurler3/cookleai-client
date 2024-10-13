@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import useAxios from "../axios/useAxios.hook";
 import { ICookbook } from "../../types";
 import useHandleFetchError from "../common/useHandleFetchError";
@@ -11,6 +11,7 @@ const useGetCookbook = (
 
     const navigate = useNavigate();
     const axios = useAxios();
+    const queryClient = useQueryClient();
 
     const {
         isLoading,
@@ -27,9 +28,9 @@ const useGetCookbook = (
             const { data } = await axios.get(`/cookbooks/${cookbookId}`);
             return data; 
         },
-        // staleTime: 1000 * 60 * 3,
+        staleTime: 1000 * 60 * 3,
         retry: false,
-        // refetchIntervalInBackground: true,
+        refetchIntervalInBackground: true,
     });
 
     useHandleFetchError({
@@ -41,11 +42,32 @@ const useGetCookbook = (
         }
     });
 
+    const handleEditCookbook = (
+        newCookbook: Partial<ICookbook>
+    ) => {
+
+        queryClient.setQueryData(
+            ["cookbook", cookbookId],
+            (oldCookbook: ICookbook) => {
+
+                if(!oldCookbook) return null;
+
+                return {
+                    ...oldCookbook,
+                    ...newCookbook,
+                }
+
+            }
+        )
+
+    }
+
     return {
         isLoadingCookbook: isLoading || isFetching,
         error,
         refetch,
         cookbook: data,
+        handleEditCookbook,
     }
 
 }   
