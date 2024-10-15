@@ -10,7 +10,6 @@ type IProps = {
     cookbook: ICookbook
 }
 
-
 const CookbookPageHeader: FC<IProps> = ({
     cookbook,
 }) => {

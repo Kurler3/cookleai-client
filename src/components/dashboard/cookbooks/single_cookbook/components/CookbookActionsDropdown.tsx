@@ -46,25 +46,19 @@ const CookbookActionsDropdown: FC<IProps> = ({
 
                 {/* DELETE / LEAVE */}
                 <label
-                    htmlFor=""
+                    htmlFor={cookbook.role === COOKBOOK_ROLES.OWNER ? COOKBOOK_MODAL_IDS.DELETE : COOKBOOK_MODAL_IDS.LEAVE}
                     className='menuActionClass p-2 text-red-600 hover:bg-red-500 hover:text-white font-bold'
                 >
 
                     <DeleteIcon style={{ height: "20px" }} />
 
                     {
-                        cookbook.role === 'OWNER' ? 'Delete' : 'Leave'
+                        cookbook.role === COOKBOOK_ROLES.OWNER ? 'Delete' : 'Leave'
                     }
 
                 </label>
 
             </ul>
-
-            {/* //TODO MODAL FOR EDITING THE COOKBOOK TITLE */}
-
-            {/* //TODO MODAL FOR DELETING THE COOKBOOK */}
-
-            {/* //TODO MODAL FOR LEAVING THE COOKBOOK */}
 
         </div>
     )

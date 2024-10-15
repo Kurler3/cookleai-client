@@ -55,6 +55,7 @@ const useGetCookbooks = ({
             return lastPage.length > 0 ? pages.length : undefined;
         },
         initialPageParam: 0,
+        // staleTime: 1000 * 60 * 5, // 5mins
     });
 
     const {

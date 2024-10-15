@@ -6,6 +6,7 @@ import { useGetUser } from '../../../../hooks/user';
 import CookbookPageHeader from './components/CookbookPageHeader';
 import CookbookMembers from './components/CookbookMembers';
 import EditCookbookTitleModal from "./components/modals/EditCookbookTitleModal";
+import DeleteCookbookModal from "./components/modals/DeleteCookbookModal";
 
 const SingleCookbookPage = () => {
 
@@ -53,11 +54,25 @@ const SingleCookbookPage = () => {
             {/* RECIPES LIST */}
 
 
-            {/* MODALS */}
+
+
+            {/* ------------------------------------------------- */}
+            {/* --------------- MODALS -------------------------- */}
+            {/* ------------------------------------------------- */}
+
+            {/* Edit cookbook title modal */}
             <EditCookbookTitleModal 
                 cookbook={cookbook}
             />
 
+            {/* Delete cookbook */}
+            <DeleteCookbookModal 
+                cookbook={cookbook}
+            />
+
+            {/* //TODO: Leave cookbook */}
+
+            {/* //TODO: Add people to cookbook modal */}
 
         </div>
     )
