@@ -1,9 +1,8 @@
 import { FC, useState } from "react"
-import { COOKBOOK_MODAL_IDS } from "@/utils/constants"
+import { COOKBOOK_MODAL_IDS, ROUTE_PATHS } from "@/utils/constants"
 import { ICookbook } from "@/types";
 import useDeleteCookbook from "../../../../../../hooks/cookbook/useDeleteCookbook";
-
-import { handleCloseModal } from "../../../../../../utils/functions/closeModal";
+import { useNavigate } from "react-router-dom";
 
 
 type IProps = {
@@ -15,13 +14,16 @@ const DeleteCookbookModal: FC<IProps> = ({
   cookbook,
 }) => {
 
+  const navigate = useNavigate();
+
   const {
     deleteCookbook,
     isDeletingCookbook,
   } = useDeleteCookbook({
     cookbookId: cookbook.id.toString(),
     onSuccessFn: () => {
-      handleCloseModal(COOKBOOK_MODAL_IDS.DELETE);
+      // handleCloseModal(COOKBOOK_MODAL_IDS.DELETE);
+      navigate(ROUTE_PATHS.COOKBOOKS);
     }
   })
 
@@ -85,7 +87,7 @@ const DeleteCookbookModal: FC<IProps> = ({
           </div>
         </div>
 
-        <label className="modal-backdrop" htmlFor={COOKBOOK_MODAL_IDS.EDIT}>Close</label>
+        <label className="modal-backdrop" htmlFor={COOKBOOK_MODAL_IDS.DELETE}>Close</label>
 
       </div>
 
