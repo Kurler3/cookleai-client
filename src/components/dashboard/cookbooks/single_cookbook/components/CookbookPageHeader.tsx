@@ -30,18 +30,19 @@ const CookbookPageHeader: FC<IProps> = ({
                 />
 
                 {/* INVITE */}
-                <div className='dropdown'>
+                {
+                    cookbook.role === COOKBOOK_ROLES.OWNER && (
+                        <div
+                            tabIndex={0}
+                            role="button"
+                            className='btn gap-2 btn-neutral'
+                        >
+                            <PersonAddAltIcon />
+                            Invite
+                        </div>
+                    )
+                }
 
-                    <div
-                        tabIndex={0}
-                        role="button"
-                        className='btn gap-2 btn-neutral'
-                    >
-                        <PersonAddAltIcon />
-                        Invite
-                    </div>
-
-                </div>
 
                 {/* ADD RECIPES */}
                 {

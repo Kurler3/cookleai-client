@@ -1,7 +1,7 @@
 import { FC, useState } from "react"
 import { COOKBOOK_MODAL_IDS, ROUTE_PATHS } from "@/utils/constants"
 import { ICookbook } from "@/types";
-import useDeleteCookbook from "../../../../../../hooks/cookbook/useDeleteCookbook";
+import useDeleteCookbook from "@/hooks/cookbook/useDeleteCookbook";
 import { useNavigate } from "react-router-dom";
 
 

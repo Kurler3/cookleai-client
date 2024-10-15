@@ -1,7 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import useAxios from "../axios/useAxios.hook";
 import toast from "react-hot-toast";
-import axiosNetworkErrorHandler from "../../utils/functions/axiosNetworkErrorHandler";
+import axiosNetworkErrorHandler from "@/utils/functions/axiosNetworkErrorHandler";
 
 
 type IUseDeleteCookbookHookArgs = {
@@ -25,9 +25,6 @@ const useDeleteCookbook = ({
             await axios.delete(`/cookbooks/${cookbookId}`)
         },
         onSuccess: () => {
-
-            // // Update cache.
-            // handleEditCookbook(updatedCookbook);
 
             // Call optional onSuccess func.
             onSuccessFn?.();

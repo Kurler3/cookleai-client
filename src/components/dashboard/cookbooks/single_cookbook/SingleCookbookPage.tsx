@@ -7,6 +7,7 @@ import CookbookPageHeader from './components/CookbookPageHeader';
 import CookbookMembers from './components/CookbookMembers';
 import EditCookbookTitleModal from "./components/modals/EditCookbookTitleModal";
 import DeleteCookbookModal from "./components/modals/DeleteCookbookModal";
+import LeaveCookbookModal from "./components/modals/LeaveCookbookModal";
 
 const SingleCookbookPage = () => {
 
@@ -51,8 +52,7 @@ const SingleCookbookPage = () => {
                 currentUser={currentUser}
             />
 
-            {/* RECIPES LIST */}
-
+            {/* //TODO: RECIPES LIST */}
 
 
 
@@ -70,7 +70,10 @@ const SingleCookbookPage = () => {
                 cookbook={cookbook}
             />
 
-            {/* //TODO: Leave cookbook */}
+            {/* Leave cookbook */}
+            <LeaveCookbookModal 
+                cookbook={cookbook}
+            />
 
             {/* //TODO: Add people to cookbook modal */}
 

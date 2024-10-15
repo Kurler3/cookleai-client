@@ -1,10 +1,10 @@
 import DeleteIcon from "@mui/icons-material/Delete";
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import EditIcon from '@mui/icons-material/Edit';
-
-import { ICookbook } from '../../../../../types';
+import LogoutIcon from '@mui/icons-material/Logout';
+import { ICookbook } from '@/types';
 import { FC } from 'react';
-import { COOKBOOK_MODAL_IDS, COOKBOOK_ROLES } from '../../../../../utils/constants';
+import { COOKBOOK_MODAL_IDS, COOKBOOK_ROLES } from '@/utils/constants';
 
 
 type IProps = {
@@ -50,7 +50,14 @@ const CookbookActionsDropdown: FC<IProps> = ({
                     className='menuActionClass p-2 text-red-600 hover:bg-red-500 hover:text-white font-bold'
                 >
 
-                    <DeleteIcon style={{ height: "20px" }} />
+                    {
+                        cookbook.role === COOKBOOK_ROLES.OWNER ? (
+                            <DeleteIcon style={{ height: "20px" }} />
+                        ) : (
+                            <LogoutIcon style={{ height: '20px' }} />
+                        )
+                    }
+                    
 
                     {
                         cookbook.role === COOKBOOK_ROLES.OWNER ? 'Delete' : 'Leave'
