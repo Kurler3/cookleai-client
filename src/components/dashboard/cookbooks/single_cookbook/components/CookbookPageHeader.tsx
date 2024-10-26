@@ -13,6 +13,7 @@ type IProps = {
 const CookbookPageHeader: FC<IProps> = ({
     cookbook,
 }) => {
+    
     return (
         <div className="w-full flex flex-row justify-between items-center">
 

@@ -16,6 +16,7 @@ const CookbookMembers: FC<IProps> = ({
     cookbook,
     currentUser,
 }) => {
+
     return (
         <div className='flex flex-row gap-2 justify-start items-center w-full'>
 
@@ -33,7 +34,6 @@ const CookbookMembers: FC<IProps> = ({
                                     <div className="w-10 rounded-full bg-red-500">
                                         <img src={user.avatar} alt={user.email} />
                                     </div>
-
 
                                     {
                                         role === COOKBOOK_ROLES.OWNER ? (
