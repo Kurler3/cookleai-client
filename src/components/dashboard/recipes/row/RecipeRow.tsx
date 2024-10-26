@@ -40,7 +40,7 @@ const RecipeRow: React.FC<IProps> = ({
             {/* IMAGE */}
             <Link to={`/dashboard/recipes/${recipe.id}`}>
                 <img
-                    src={recipe.image ?? recipePlaceholderImg}
+                    src={recipe.imageUrl ?? recipePlaceholderImg}
                     alt={recipe.title}
                     className="w-24 h-24 object-cover rounded cursor-pointer hover:bg-gray-700 transition"
                 />

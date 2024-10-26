@@ -16,7 +16,7 @@ const RecipeDisplayMainContentLeftPart: FC<IProps> = ({
             {/* IMAGE */}
             <div className="w-full border flex justify-center items-center rounded border-gray-600">
                 <img
-                    src={recipe?.image ?? recipePlaceholderImg}
+                    src={recipe?.imageUrl ?? recipePlaceholderImg}
                     alt={recipe?.title}
                     className="w-80 h-80 object-cover rounded"
                 />

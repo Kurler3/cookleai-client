@@ -36,7 +36,7 @@ const RecipeCard: React.FC<IProps> = ({
         >
 
             <figure>
-                <img src={recipe.image ?? recipePlaceholderImg} alt={recipe.title} className="h-40 w-48 rounded shadow-lg object-cover" />
+                <img src={recipe.imageUrl ?? recipePlaceholderImg} alt={recipe.title} className="h-40 w-48 rounded shadow-lg object-cover" />
             </figure>
 
             <div className="text-base font-bold text-white text-center">
