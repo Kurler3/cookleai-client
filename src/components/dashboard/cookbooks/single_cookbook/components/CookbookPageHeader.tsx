@@ -1,9 +1,9 @@
 import { FC } from "react"
-import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
 import AddIcon from '@mui/icons-material/Add';
 import { ICookbook } from "@/types"
 import CookbookActionsDropdown from "./CookbookActionsDropdown"
 import { COOKBOOK_ROLES } from "@/utils/constants";
+import AddCookbookMembersButton from "./AddCookbookMembersButton";
 
 
 type IProps = {
@@ -33,14 +33,9 @@ const CookbookPageHeader: FC<IProps> = ({
                 {/* INVITE */}
                 {
                     cookbook.role === COOKBOOK_ROLES.OWNER && (
-                        <div
-                            tabIndex={0}
-                            role="button"
-                            className='btn gap-2 btn-neutral'
-                        >
-                            <PersonAddAltIcon />
-                            Invite
-                        </div>
+                        <AddCookbookMembersButton 
+                            cookbook={cookbook}
+                        />
                     )
                 }
 
