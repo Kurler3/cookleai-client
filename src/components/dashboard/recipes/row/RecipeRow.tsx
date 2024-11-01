@@ -5,6 +5,7 @@ import LockIcon from '@mui/icons-material/Lock';
 import { Link } from "react-router-dom";
 import { VirtualItem } from "@tanstack/react-virtual";
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
+import ImageWithLoader from "../../../utils/ImageWithLoader";
 
 type IProps = {
     recipe: IRecipe;
@@ -38,13 +39,20 @@ const RecipeRow: React.FC<IProps> = ({
         >
 
             {/* IMAGE */}
-            <Link to={`/dashboard/recipes/${recipe.id}`}>
-                <img
-                    src={recipe.imageUrl ?? recipePlaceholderImg}
-                    alt={recipe.title}
-                    className="w-24 h-24 object-cover rounded cursor-pointer hover:bg-gray-700 transition"
-                />
-            </Link>
+            <ImageWithLoader
+                imageUrl={recipe.imageUrl ?? recipePlaceholderImg}
+                altTxt={recipe.title}
+                imgClassName="w-24 h-24 object-cover rounded cursor-pointer hover:bg-gray-700 transition"
+                loader={
+
+                    <div className="w-24 h-24 flex justify-center items-center">
+                        <div className="w-10 h-10 loading loading-spinner">
+                        </div>
+                    </div>
+                }
+                redirectTo={`/dashboard/recipes/${recipe.id}`}
+            />
+
 
 
             {/* TITLE */}
@@ -107,7 +115,7 @@ const RecipeRow: React.FC<IProps> = ({
                 <RecipeActionsDropdownMenu recipe={recipe} />
 
             </div> */}
-        </div>
+        </div >
     )
 };
 
