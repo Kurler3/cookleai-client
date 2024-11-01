@@ -75,6 +75,7 @@ const SingleCookbookPage = () => {
             />
 
             {/* //TODO: Add people to cookbook modal */}
+            
 
         </div>
     )

@@ -14,7 +14,6 @@ const AddCookbookMembersButton: FC<IProps> = ({
 
     return (
         <>
-
             <label
                 className='btn gap-2 btn-neutral'
                 htmlFor={COOKBOOK_MODAL_IDS.ADD_MEMBERS}
@@ -22,7 +21,6 @@ const AddCookbookMembersButton: FC<IProps> = ({
                 <PersonAddAltIcon />
                 Add Members
             </label>
-
             <AddCookbookMembersModal 
                 cookbook={cookbook}
             />

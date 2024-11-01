@@ -1,5 +1,5 @@
 import { FC } from "react"
-import AddIcon from '@mui/icons-material/Add';
+// import AddIcon from '@mui/icons-material/Add';
 import { ICookbook } from "@/types"
 import CookbookActionsDropdown from "./CookbookActionsDropdown"
 import { COOKBOOK_ROLES } from "@/utils/constants";
@@ -40,7 +40,7 @@ const CookbookPageHeader: FC<IProps> = ({
                 }
 
 
-                {/* ADD RECIPES */}
+                {/* ADD RECIPES
                 {
                     cookbook.role !== COOKBOOK_ROLES.VIEWER && (
                         <button className='common_btn gap-2'>
@@ -48,7 +48,7 @@ const CookbookPageHeader: FC<IProps> = ({
                             Add Recipes
                         </button>
                     )
-                }
+                } */}
 
             </div>
 
