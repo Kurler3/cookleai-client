@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import getRoleColor from "@/utils/functions/getRoleColor";
 import { VirtualItem } from "@tanstack/react-virtual";
 import getVirtualizedGridItemStyles from "@/utils/functions/getVirtualizedGridItemStyles";
+import ImageWithLoader from "../../../utils/ImageWithLoader";
 
 type IProps = {
     cookbook: ICookbook;
@@ -38,10 +39,17 @@ const CookbookCard: FC<IProps> = ({
                 virtualRow
             })}
         >
-
             {/* FIRST RECIPE IMAGE */}
             <figure className="w-full flex justify-center items-center">
-                <img src={img} alt={cookbook.title} className="h-28 w-28 rounded object-cover" />
+                <ImageWithLoader 
+                    imageUrl={img}
+                    imgClassName="h-28 w-28 rounded object-cover"
+                    altTxt={cookbook.title}
+                    loader={
+                        <div className="loading loading-spinner h-28 w-28">
+                        </div>
+                    }
+                />
             </figure>
 
             {/* COOKBOOK TITLE */}

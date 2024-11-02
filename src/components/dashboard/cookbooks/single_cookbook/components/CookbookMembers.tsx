@@ -5,6 +5,7 @@ import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import EditIcon from '@mui/icons-material/Edit';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import { Link } from "react-router-dom";
+import ImageWithLoader from "../../../../utils/ImageWithLoader";
 
 
 type IProps = {
@@ -32,7 +33,14 @@ const CookbookMembers: FC<IProps> = ({
                                     className="avatar cursor-pointer relative"
                                 >
                                     <div className="w-10 rounded-full bg-red-500">
-                                        <img src={user.avatar} alt={user.email} />
+
+                                        <ImageWithLoader 
+                                            imageUrl={user.avatar}
+                                            imgClassName=""
+                                            altTxt={user.email}
+                                            loader={<div className="loading loading-spinner"></div>}
+                                        />
+                                
                                     </div>
 
                                     {
