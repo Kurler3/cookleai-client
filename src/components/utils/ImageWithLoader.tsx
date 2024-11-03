@@ -4,10 +4,10 @@ import { Link } from "react-router-dom";
 
 
 type IProps = {
-    imageUrl: string;
+    imageUrl?: string;
     loader: JSX.Element;
-    imgClassName: string;
-    altTxt: string;
+    imgClassName?: string;
+    altTxt?: string;
     redirectTo?: string;
 }
 
@@ -34,7 +34,7 @@ const ImageWithLoader: FC<IProps> = ({
     const imgComponent = (<img
         src={imageUrl}
         alt={altTxt}
-        className={`${isLoadingImage && 'hidden'} ${imgClassName}`}
+        className={`${isLoadingImage && 'hidden'} ${imgClassName ?? ""}`}
         onLoad={onImgFinishLoad}
         onError={onImgLoadingErr}
     />)

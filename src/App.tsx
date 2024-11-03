@@ -79,6 +79,13 @@ const App = () => {
                                     path={ROUTE_PATHS.EXPLORE}
                                     element={<div>Hello</div>}
                                 />
+
+                                {/* PROFILES */}
+                                <Route 
+                                    path={ROUTE_PATHS.PROFILE}
+                                    element={<div>Profile!</div>}
+                                />
+
                             </Route>
                         </Route>
 

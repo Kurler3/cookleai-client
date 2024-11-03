@@ -1,23 +1,51 @@
 import { COOKBOOK_MODAL_IDS } from "@/utils/constants"
-import { ICookbook } from "@/types";
-import { FC } from "react";
-
+import { ICookbook, ICookbookMember } from "@/types";
+import { FC, useState } from "react";
 
 
 type IProps = {
     cookbook: ICookbook;
 }
 
-
 const AddCookbookMembersModal: FC<IProps> = ({
     cookbook,
 }) => {
 
+    //////////////////////////////////////
+    // STATE /////////////////////////////
+    //////////////////////////////////////
+
+    // State to track the members.
+    const [members, setMembers] = useState<ICookbookMember[]>([]);
+
+    //////////////////////////////////////
+    // HOOKS /////////////////////////////
+    //////////////////////////////////////
+    
+    //TODO Hook to add users to cookbook.
+
+    //////////////////////////////////////
+    // FUNCTIONS /////////////////////////
+    //////////////////////////////////////
+
+    //TODO Function to be called when saving changes.
+        //TODO If already loading => skip
+        //TODO If theres no changes => return false.
+        //TODO Reset the state to empty.
+    
+
+    //TODO Function to update a member.
+
+    //TODO Function to add a member.
+
     console.log(cookbook)
+
+    //////////////////////////////////////
+    // RETURN ////////////////////////////
+    //////////////////////////////////////
 
     return (
         <>
-
             <input
                 type="checkbox"
                 id={COOKBOOK_MODAL_IDS.ADD_MEMBERS}
@@ -41,7 +69,7 @@ const AddCookbookMembersModal: FC<IProps> = ({
                     
 
                     {/* CANCEL AND SAVE BUTTONS */}
-
+                    
 
                 </div>
 

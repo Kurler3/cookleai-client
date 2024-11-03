@@ -68,7 +68,15 @@ const RecipeRow: React.FC<IProps> = ({
             <div className="flex justify-center items-center gap-4 flex-1 h-full text-app-white">
                 <div className="avatar">
                     <div className="w-8 rounded-full">
-                        <img src={recipe.createdByUser!.avatar} />
+                        <ImageWithLoader 
+                            imageUrl={recipe.createdByUser!.avatar}
+                            altTxt={recipe.createdByUser!.email}
+                            loader={
+                                <div className="loading loading-spinner">
+                                </div>
+                            }
+                            redirectTo={`/dashboard/profiles/${recipe.createdBy}`}
+                        />
                     </div>
                 </div>
                 <div className="font-normal">

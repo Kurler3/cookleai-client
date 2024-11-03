@@ -2,12 +2,23 @@ import { IRecipe } from "./recipe.types";
 import { IUser } from "./user.types";
 
 
+enum COOKBOOK_ROLES {
+    OWNER,
+    EDITOR,
+    VIEWER,
+}
+
+export type ICookbookMember = {
+    role: COOKBOOK_ROLES; 
+    user: IUser
+}
+
 export type ICookbook = {
     id: number;
     title: string;
     isPrivate: boolean;
     image: string;
-    users?: { role: string; user: IUser }[];
+    users?: ICookbookMember[];
     recipes?: { recipe: IRecipe }[];
     createdAt: Date;
     updatedAt: Date;
