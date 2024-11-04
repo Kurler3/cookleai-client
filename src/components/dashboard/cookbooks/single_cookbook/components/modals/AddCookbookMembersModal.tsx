@@ -1,5 +1,5 @@
 import { COOKBOOK_MODAL_IDS } from "@/utils/constants"
-import { COOKBOOK_ROLES, ICookbook, ICookbookMember, IUser } from "@/types";
+import { COOKBOOK_ROLES, ICookbook, ICookbookMember, ICookbookRole, IUser } from "@/types";
 import { FC, useMemo, useState } from "react";
 import SearchUsers from "../../../../../utils/SearchUsers";
 import UserItem from "../../../../../utils/UserItem";
@@ -20,7 +20,7 @@ const AddCookbookMembersModal: FC<IProps> = ({
 
     const {
         user,
-    } = useGetUser(); 
+    } = useGetUser();
 
     // State to track the members.
     const [members, setMembers] = useState<ICookbookMember[]>([]);
@@ -33,12 +33,14 @@ const AddCookbookMembersModal: FC<IProps> = ({
 
         const added = members.map((member) => member.user.id);
 
-        if(user) {
-            added.push(user.id);
-        }
+        // if(user) {
+        //     added.push(user.id);
+        // }
 
         return added;
     }, [members, user])
+
+    const canSave = useMemo(() => members.length, [members.length]);
 
     //////////////////////////////////////
     // HOOKS /////////////////////////////
@@ -73,18 +75,47 @@ const AddCookbookMembersModal: FC<IProps> = ({
 
     // Remove user.
     const onRemoveUser = (user: IUser) => {
-        console.log('REMOVED')
-        //TODO
 
+        setMembers((prevMembers) => {
+
+            const newMembers = [...prevMembers]
+
+            const idx = newMembers.findIndex((member) => member.user.id === user.id);
+
+            if (idx > -1) {
+                newMembers.splice(idx, 1);
+                return newMembers;
+            }
+
+            return newMembers;
+
+        });
+
+    }
+
+    // Edit member.
+    const editMember = (userId: number, newRole: ICookbookRole) => {
+        setMembers((prevMembers) => {
+            const newMembers = [...prevMembers]
+            const idx = newMembers.findIndex((member) => member.user.id === userId);
+            if (idx > -1) {
+                newMembers[idx].role = newRole;
+                return newMembers;
+            }
+            return newMembers;
+        });
     }
 
     //TODO Function to be called when saving changes.
     //TODO If already loading => skip
     //TODO If theres no changes => return false.
     //TODO Reset the state to empty.
+    const handleSaveChanges = () => {
 
-    //TODO Function to update a member.
+        
 
+    }
+     
 
     //////////////////////////////////////
     // RETURN ////////////////////////////
@@ -101,7 +132,7 @@ const AddCookbookMembersModal: FC<IProps> = ({
             <div className="modal" role="dialog">
 
                 {/* ACTUAL MODAL CONTENT */}
-                <div className="modal-box flex flex-col gap-4 h-[500px] overflow-y-auto justify-start items-start gap-4 w-full">
+                <div className="modal-box flex flex-col gap-4 h-[500px] justify-start items-start gap-4 w-full">
 
                     {/* TITLE */}
                     <div className="text-xl font-bold text-left text-white">
@@ -115,10 +146,11 @@ const AddCookbookMembersModal: FC<IProps> = ({
                     />
 
                     {/* LIST OF ADDED USERS */}
-                    <div className="w-full flex flex-col justify-start items-center gap-2">
+                    <div className="w-full flex flex-col justify-start items-center gap-2 h-full overflow-y-auto">
                         {members && members?.length > 0 ? (
                             <>
-                                {members.map(({user, role}) => {
+                                {members.map(({ user, role }) => {
+
                                     return (
                                         <UserItem
                                             key={`chosen_user_${user.id}`}
@@ -130,6 +162,7 @@ const AddCookbookMembersModal: FC<IProps> = ({
                                             }
                                             role={role}
                                             isShowRoleInput
+                                            onEditUserRole={editMember}
                                         />
                                     );
                                 })}
@@ -139,7 +172,21 @@ const AddCookbookMembersModal: FC<IProps> = ({
                         )}
                     </div>
 
-                    {/* //TODO CANCEL AND SAVE BUTTONS */}
+                    {/* // CANCEL AND SAVE BUTTONS */}
+                    <div className="w-full flex justify-center items-center gap-4 m-auto">
+                        {/* CONFIRM DELETE BTN */}
+                        <button
+                            className={`btn btn-success ${!canSave ? "btn-disabled" : ""
+                                }`}
+                            onClick={handleSaveChanges}
+                        >
+                            {/* //TODO */}
+                            {true && (
+                                <span className="loading loading-spinner"></span>
+                            )}
+                            Save Changes
+                        </button>
+                    </div>
 
 
                 </div>

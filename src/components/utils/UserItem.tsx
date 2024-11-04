@@ -9,6 +9,7 @@ type IProps = {
     user: IUser;
     role?: ICookbookRole;
     onClickUser?: (user: IUser) => void;
+    onEditUserRole?: (userId: number, newRole: ICookbookRole) => void;
     isAlreadySelected: boolean;
     alreadySelectedIcon?: ReactNode;
     isShowRoleInput?: boolean;
@@ -22,6 +23,7 @@ const UserItem: FC<IProps> = ({
     isAlreadySelected,
     alreadySelectedIcon,
     role,
+    onEditUserRole,
     isShowRoleInput = false,
 }) => {
 
@@ -85,14 +87,17 @@ const UserItem: FC<IProps> = ({
             />
 
             {/* Email */}
-            <div className="text-sm truncate">{user.email}</div>
+            <div className="text-sm truncate w-full text-left">{user.email}</div>
 
             {/* ROLE INPUT */}
             {
                 isShowRoleInput && role && (
                     <select 
-                        className="select select-info w-full max-w-xs"
-                        onClick={(e) => e.stopPropagation()}    
+                        className="select select-success w-fit"
+                        onClick={(e) => e.stopPropagation()}
+                        onChange={(e) => {
+                            onEditUserRole?.(user.id, e.target.value as ICookbookRole);
+                        }}
                     >
                         <option disabled>Select a role</option>
 
