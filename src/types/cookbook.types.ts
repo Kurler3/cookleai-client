@@ -2,14 +2,16 @@ import { IRecipe } from "./recipe.types";
 import { IUser } from "./user.types";
 
 
-enum COOKBOOK_ROLES {
-    OWNER,
-    EDITOR,
-    VIEWER,
+export enum COOKBOOK_ROLES {
+    OWNER = 'OWNER',
+    EDITOR = 'EDITOR',
+    VIEWER = 'VIEWER'
 }
 
+export type COOKBOOK_ROLE_TYPE = keyof typeof COOKBOOK_ROLES;
+
 export type ICookbookMember = {
-    role: COOKBOOK_ROLES; 
+    role: COOKBOOK_ROLE_TYPE; 
     user: IUser
 }
 
@@ -29,7 +31,7 @@ export type ICookbook = {
     _count?: {
         recipes: number;
     };
-    role?: ICookbookRole;
+    role?: COOKBOOK_ROLE_TYPE;
 };
 
 
@@ -38,10 +40,4 @@ export type IGetCookbooksQueryParams = {
     selection?: string;
     pageSize?: number;
     excludedRecipeId?: number,
-}
-
-export enum ICookbookRole {
-    OWNER = "OWNER",
-    EDITOR = "EDITOR",
-    VIEWER = "VIEWER",
 }

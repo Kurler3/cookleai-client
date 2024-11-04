@@ -1,6 +1,7 @@
 import { COOKBOOK_MODAL_IDS } from "@/utils/constants"
-import { ICookbook, ICookbookMember } from "@/types";
-import { FC, useState } from "react";
+import { COOKBOOK_ROLE_TYPE, COOKBOOK_ROLES, ICookbook, ICookbookMember, IUser } from "@/types";
+import { FC, useMemo, useState } from "react";
+import SearchUsers from "../../../../../utils/SearchUsers";
 
 
 type IProps = {
@@ -19,27 +20,53 @@ const AddCookbookMembersModal: FC<IProps> = ({
     const [members, setMembers] = useState<ICookbookMember[]>([]);
 
     //////////////////////////////////////
+    // MEMO //////////////////////////////
+    //////////////////////////////////////
+
+    const alreadyAddedUserIds = useMemo(() => {
+        return members.map((member) => member.user.id);
+    }, [members])
+
+    //////////////////////////////////////
     // HOOKS /////////////////////////////
     //////////////////////////////////////
-    
-    //TODO Hook to add users to cookbook.
+
+    // Hook to add users to cookbook.
 
     //////////////////////////////////////
     // FUNCTIONS /////////////////////////
     //////////////////////////////////////
 
+    // Function to add users.
+    const onAddUsers = (user: IUser) => {
+
+        setMembers((prevMembers) => {
+
+            const isAlreadyAdded = prevMembers.some(member => member.user.id === user.id);
+
+            if (isAlreadyAdded) return prevMembers;
+
+            return [
+                {
+                    role: COOKBOOK_ROLES.VIEWER as COOKBOOK_ROLE_TYPE,
+                    user,
+                },
+                ...prevMembers
+            ]
+
+        });
+
+    }
+
+
     //TODO Function to be called when saving changes.
-        //TODO If already loading => skip
-        //TODO If theres no changes => return false.
-        //TODO Reset the state to empty.
-    
+    //TODO If already loading => skip
+    //TODO If theres no changes => return false.
+    //TODO Reset the state to empty.
 
     //TODO Function to update a member.
 
-    //TODO Function to add a member.
-
-    console.log(cookbook)
-
+    
     //////////////////////////////////////
     // RETURN ////////////////////////////
     //////////////////////////////////////
@@ -55,7 +82,7 @@ const AddCookbookMembersModal: FC<IProps> = ({
             <div className="modal" role="dialog">
 
                 {/* ACTUAL MODAL CONTENT */}
-                <div className="modal-box flex flex-col gap-4 h-fit">
+                <div className="modal-box flex flex-col gap-4 h-[500px]">
 
                     {/* TITLE */}
                     <div className="text-xl font-bold text-left text-white">
@@ -63,13 +90,17 @@ const AddCookbookMembersModal: FC<IProps> = ({
                     </div>
 
                     {/* SEARCH FOR USERS */}
-                    
+                    <SearchUsers
+                        allAddedUserIds={alreadyAddedUserIds}
+                        onAddUser={onAddUsers}
+                    />
 
                     {/* LIST OF ADDED USERS */}
-                    
+
+
 
                     {/* CANCEL AND SAVE BUTTONS */}
-                    
+
 
                 </div>
 

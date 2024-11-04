@@ -2,7 +2,7 @@ import { FC } from "react"
 // import AddIcon from '@mui/icons-material/Add';
 import { ICookbook } from "@/types"
 import CookbookActionsDropdown from "./CookbookActionsDropdown"
-import { COOKBOOK_ROLES } from "@/utils/constants";
+import { COOKBOOK_ROLES } from "@/types";
 import AddCookbookMembersButton from "./AddCookbookMembersButton";
 
 

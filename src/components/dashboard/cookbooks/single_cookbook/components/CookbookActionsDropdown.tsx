@@ -2,9 +2,9 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import EditIcon from '@mui/icons-material/Edit';
 import LogoutIcon from '@mui/icons-material/Logout';
-import { ICookbook } from '@/types';
+import { COOKBOOK_ROLES, ICookbook } from '@/types';
 import { FC } from 'react';
-import { COOKBOOK_MODAL_IDS, COOKBOOK_ROLES } from '@/utils/constants';
+import { COOKBOOK_MODAL_IDS } from '@/utils/constants';
 
 
 type IProps = {

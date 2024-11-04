@@ -1,6 +1,5 @@
 import { FC } from "react";
-import { ICookbook, IUser } from "../../../../../types"
-import { COOKBOOK_ROLES } from "../../../../../utils/constants";
+import { COOKBOOK_ROLES, ICookbook, IUser } from "@/types"
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import EditIcon from '@mui/icons-material/Edit';
 import VisibilityIcon from '@mui/icons-material/Visibility';
