@@ -8,10 +8,10 @@ export enum COOKBOOK_ROLES {
     VIEWER = 'VIEWER'
 }
 
-export type COOKBOOK_ROLE_TYPE = keyof typeof COOKBOOK_ROLES;
+export type ICookbookRole = keyof typeof COOKBOOK_ROLES;
 
 export type ICookbookMember = {
-    role: COOKBOOK_ROLE_TYPE; 
+    role: ICookbookRole; 
     user: IUser
 }
 
@@ -31,7 +31,7 @@ export type ICookbook = {
     _count?: {
         recipes: number;
     };
-    role?: COOKBOOK_ROLE_TYPE;
+    role?: ICookbookRole;
 };
 
 

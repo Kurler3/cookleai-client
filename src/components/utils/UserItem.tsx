@@ -1,4 +1,4 @@
-import { IUser } from "@/types";
+import { COOKBOOK_ROLES, ICookbookRole, IUser } from "@/types";
 import { FC, ReactNode, useEffect, useState } from "react";
 import AddIcon from '@mui/icons-material/Add';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
@@ -7,9 +7,11 @@ import ImageWithLoader from "./ImageWithLoader";
 
 type IProps = {
     user: IUser;
+    role?: ICookbookRole;
     onClickUser?: (user: IUser) => void;
     isAlreadySelected: boolean;
     alreadySelectedIcon?: ReactNode;
+    isShowRoleInput?: boolean;
 };
 
 const clickedDelay = 1000;
@@ -19,7 +21,10 @@ const UserItem: FC<IProps> = ({
     onClickUser,
     isAlreadySelected,
     alreadySelectedIcon,
+    role,
+    isShowRoleInput = false,
 }) => {
+
     const [wasClicked, setWasClicked] = useState(false);
 
     const onClick = () => {
@@ -43,14 +48,12 @@ const UserItem: FC<IProps> = ({
             key={`searched_user_${user.id}`}
             // className="flex flex-row gap-4 items-center p-2 transition hover:bg-base-100 cursor-pointer rounded w-full tooltip tooltip-info"
             className={`
-                flex flex-row gap-4 items-center p-2 transition-all ${
-                    !!onClickUser && "cursor-pointer"
+                flex flex-row gap-4 items-center p-2 transition-all ${!!onClickUser && "cursor-pointer"
                 } rounded w-full tooltip tooltip-info
                 hover:bg-base-200
             `}
-            data-tip={`${isAlreadySelected ? "Already added" : "Add"} ${
-                user.email
-            }`}
+            data-tip={`${isAlreadySelected ? "Already added" : "Add"} ${user.email
+                }`}
             onClick={(e) => {
                 e.stopPropagation();
                 onClick();
@@ -71,7 +74,7 @@ const UserItem: FC<IProps> = ({
             </motion.div>
 
             {/* Avatar */}
-            <ImageWithLoader 
+            <ImageWithLoader
                 imageUrl={user.avatar}
                 altTxt={user.email}
                 imgClassName="w-10 h-10 rounded-full"
@@ -83,6 +86,32 @@ const UserItem: FC<IProps> = ({
 
             {/* Email */}
             <div className="text-sm truncate">{user.email}</div>
+
+            {/* ROLE INPUT */}
+            {
+                isShowRoleInput && role && (
+                    <select 
+                        className="select select-info w-full max-w-xs"
+                        onClick={(e) => e.stopPropagation()}    
+                    >
+                        <option disabled>Select a role</option>
+
+                        {
+                            Object.values(COOKBOOK_ROLES).map((cookbookRole) => {
+
+                                return (
+                                    <option
+                                        key={`cookbook_role_${cookbookRole}`}
+                                    >
+                                        {cookbookRole}
+                                    </option>
+                                )
+                            })
+                        }
+                    </select>
+                )
+            }
+
         </div>
     );
 };

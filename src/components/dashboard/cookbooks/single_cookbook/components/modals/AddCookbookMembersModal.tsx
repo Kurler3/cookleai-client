@@ -1,8 +1,10 @@
 import { COOKBOOK_MODAL_IDS } from "@/utils/constants"
-import { COOKBOOK_ROLE_TYPE, COOKBOOK_ROLES, ICookbook, ICookbookMember, IUser } from "@/types";
+import { COOKBOOK_ROLES, ICookbook, ICookbookMember, IUser } from "@/types";
 import { FC, useMemo, useState } from "react";
 import SearchUsers from "../../../../../utils/SearchUsers";
-
+import UserItem from "../../../../../utils/UserItem";
+import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
+import { useGetUser } from "../../../../../../hooks/user";
 
 type IProps = {
     cookbook: ICookbook;
@@ -16,6 +18,10 @@ const AddCookbookMembersModal: FC<IProps> = ({
     // STATE /////////////////////////////
     //////////////////////////////////////
 
+    const {
+        user,
+    } = useGetUser(); 
+
     // State to track the members.
     const [members, setMembers] = useState<ICookbookMember[]>([]);
 
@@ -24,8 +30,15 @@ const AddCookbookMembersModal: FC<IProps> = ({
     //////////////////////////////////////
 
     const alreadyAddedUserIds = useMemo(() => {
-        return members.map((member) => member.user.id);
-    }, [members])
+
+        const added = members.map((member) => member.user.id);
+
+        if(user) {
+            added.push(user.id);
+        }
+
+        return added;
+    }, [members, user])
 
     //////////////////////////////////////
     // HOOKS /////////////////////////////
@@ -48,7 +61,7 @@ const AddCookbookMembersModal: FC<IProps> = ({
 
             return [
                 {
-                    role: COOKBOOK_ROLES.VIEWER as COOKBOOK_ROLE_TYPE,
+                    role: COOKBOOK_ROLES.VIEWER,
                     user,
                 },
                 ...prevMembers
@@ -58,6 +71,12 @@ const AddCookbookMembersModal: FC<IProps> = ({
 
     }
 
+    // Remove user.
+    const onRemoveUser = (user: IUser) => {
+        console.log('REMOVED')
+        //TODO
+
+    }
 
     //TODO Function to be called when saving changes.
     //TODO If already loading => skip
@@ -66,7 +85,7 @@ const AddCookbookMembersModal: FC<IProps> = ({
 
     //TODO Function to update a member.
 
-    
+
     //////////////////////////////////////
     // RETURN ////////////////////////////
     //////////////////////////////////////
@@ -82,7 +101,7 @@ const AddCookbookMembersModal: FC<IProps> = ({
             <div className="modal" role="dialog">
 
                 {/* ACTUAL MODAL CONTENT */}
-                <div className="modal-box flex flex-col gap-4 h-[500px]">
+                <div className="modal-box flex flex-col gap-4 h-[500px] overflow-y-auto justify-start items-start gap-4 w-full">
 
                     {/* TITLE */}
                     <div className="text-xl font-bold text-left text-white">
@@ -96,10 +115,31 @@ const AddCookbookMembersModal: FC<IProps> = ({
                     />
 
                     {/* LIST OF ADDED USERS */}
+                    <div className="w-full flex flex-col justify-start items-center gap-2">
+                        {members && members?.length > 0 ? (
+                            <>
+                                {members.map(({user, role}) => {
+                                    return (
+                                        <UserItem
+                                            key={`chosen_user_${user.id}`}
+                                            user={user}
+                                            onClickUser={onRemoveUser}
+                                            isAlreadySelected={true}
+                                            alreadySelectedIcon={
+                                                <RemoveCircleOutlineIcon className="text-red-600 text-[30px]" />
+                                            }
+                                            role={role}
+                                            isShowRoleInput
+                                        />
+                                    );
+                                })}
+                            </>
+                        ) : (
+                            <>No members added yet</>
+                        )}
+                    </div>
 
-
-
-                    {/* CANCEL AND SAVE BUTTONS */}
+                    {/* //TODO CANCEL AND SAVE BUTTONS */}
 
 
                 </div>
