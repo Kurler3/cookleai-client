@@ -74,17 +74,28 @@ const useGetRecipes = ({
         data: recipes,
     });
 
+    console.log({recipes})
+
     ////////////////////////////////////
     // FUNCTIONS ///////////////////////
     ////////////////////////////////////
 
     const removeRecipeFromCache = (recipeId: number) => {
         const recipeIndexes = recipeIdToIndexMap.get(recipeId);
-        if (!recipeIndexes) return;
+
+        console.log('Recipe indexes: ', recipeIndexes)
+
+        if (!recipeIndexes) {
+            console.debug('No indexes found for the recipe: ', recipeId);
+            return;
+        }
 
         queryClient.setQueryData(queryKey, (oldData: InfiniteData<IRecipe[]>) => {
 
-            if (!oldData) return null;
+            if (!oldData) {
+                console.error('No data chached for key: ', queryKey);
+                return;
+            }
 
             const newData = { ...oldData };
 
