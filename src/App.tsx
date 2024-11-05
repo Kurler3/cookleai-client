@@ -47,7 +47,9 @@ const App = () => {
                                 {/* RECIPES */}
                                 <Route
                                     path={ROUTE_PATHS.DASHBOARD}
-                                    element={<RecipesPage />}
+                                    element={
+                                        <RecipesPage />
+                                    }
                                 ></Route>
 
                                 {/* DETAILED RECIPE PAGE */}

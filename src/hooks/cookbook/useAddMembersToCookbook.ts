@@ -44,7 +44,7 @@ const useAddMembersToCookbook = ({
                 }),
             }
 
-            await axios.post(`/cookbooks/add-members/${cookbook.id}`, body);
+            await axios.post(`/cookbooks/${cookbook.id}/add-members`, body);
 
             return {
                 onSuccessFn,

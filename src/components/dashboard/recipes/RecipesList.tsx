@@ -1,5 +1,4 @@
 import { useState } from "react";
-import useGetUserRecipes from "../../../hooks/recipes/useGetUserRecipes.hook";
 import RecipeGrid from "./grid/RecipeGrid";
 import RecipesTable from "./row/RecipesTable";
 import { IRecipe, IRecipeFilters } from "@/types";
@@ -9,16 +8,19 @@ import AddToCookbookModal from "./modal/AddToCookbookModal";
 import ShareRecipeModal from "./modal/ShareRecipeModal";
 import AddYourFirstRecipe from "./AddYourFirstRecipe";
 import useVirtualization from "@/hooks/common/useVirtualization.hook";
+import useGetRecipes from "../../../hooks/recipes/useGetRecipes.hook";
 
 
 type IProps = {
     isGrid: boolean;
     filters: IRecipeFilters;
+    cookbookId?: string;
 };
 
 const RecipesList: React.FC<IProps> = ({
     isGrid,
     filters,
+    cookbookId,
 }) => {
 
     const {
@@ -26,8 +28,9 @@ const RecipesList: React.FC<IProps> = ({
         isLoadingRecipes,
         isFetchingNextPage,
         lastElementRef,
-    } = useGetUserRecipes({
+    } =  useGetRecipes({
         filters,
+        cookbookId,
     });
 
     // Virtualization

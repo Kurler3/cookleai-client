@@ -5,8 +5,16 @@ import { RECIPE_ACTION_MODAL_IDS } from '@/utils/constants/recipes.constants';
 import GenerateRecipeWithAIModal from './modal/GenerateRecipeWithAIModal';
 import CreateRecipeManuallyModal from './modal/CreateRecipeManuallyModal';
 import { IRecipeFilters } from '@/types';
+import { useParams } from 'react-router-dom';
+
 
 const RecipesPage = () => {
+
+    const {
+        cookbookId,
+    } = useParams();
+
+    console.log(cookbookId)
 
     const [
         isGrid,
@@ -45,7 +53,8 @@ const RecipesPage = () => {
 
             <RecipesList 
                 isGrid={isGrid} 
-                filters={filters} 
+                filters={filters}
+                cookbookId={cookbookId}
             />
 
             {/* GENERATE WITH AI MODAL */}
