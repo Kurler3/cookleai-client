@@ -5,6 +5,8 @@ import SearchUsers from "../../../../../utils/SearchUsers";
 import UserItem from "../../../../../utils/UserItem";
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import { useGetUser } from "../../../../../../hooks/user";
+import useAddMembersToCookbook from "../../../../../../hooks/cookbook/useAddMembersToCookbook";
+import { handleCloseModal } from "../../../../../../utils/functions/closeModal";
 
 type IProps = {
     cookbook: ICookbook;
@@ -33,9 +35,9 @@ const AddCookbookMembersModal: FC<IProps> = ({
 
         const added = members.map((member) => member.user.id);
 
-        // if(user) {
-        //     added.push(user.id);
-        // }
+        if(user) {
+            added.push(user.id);
+        }
 
         return added;
     }, [members, user])
@@ -47,6 +49,12 @@ const AddCookbookMembersModal: FC<IProps> = ({
     //////////////////////////////////////
 
     // Hook to add users to cookbook.
+    const {
+        isAddingMembersToCookbook,
+        addMembersToCookbook,
+    } = useAddMembersToCookbook({
+        cookbook,
+    });
 
     //////////////////////////////////////
     // FUNCTIONS /////////////////////////
@@ -106,13 +114,26 @@ const AddCookbookMembersModal: FC<IProps> = ({
         });
     }
 
-    //TODO Function to be called when saving changes.
-    //TODO If already loading => skip
-    //TODO If theres no changes => return false.
-    //TODO Reset the state to empty.
+    // Function to be called when saving changes.
+    // If already loading => skip
+    // If theres no changes => return false.
+    // Reset the state to empty.
     const handleSaveChanges = () => {
 
-        
+        if(isAddingMembersToCookbook) return;
+        if(members.length === 0) return;
+
+        addMembersToCookbook({
+            members: members,
+            onSuccessFn: () => {
+
+                // Clean state.
+                setMembers(() => []);
+
+                // Close modal.
+                handleCloseModal(COOKBOOK_MODAL_IDS.ADD_MEMBERS);
+            }
+        });
 
     }
      
@@ -180,8 +201,7 @@ const AddCookbookMembersModal: FC<IProps> = ({
                                 }`}
                             onClick={handleSaveChanges}
                         >
-                            {/* //TODO */}
-                            {true && (
+                            {isAddingMembersToCookbook && (
                                 <span className="loading loading-spinner"></span>
                             )}
                             Save Changes

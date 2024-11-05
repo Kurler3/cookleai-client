@@ -102,7 +102,7 @@ const UserItem: FC<IProps> = ({
                         <option disabled>Select a role</option>
 
                         {
-                            Object.values(COOKBOOK_ROLES).map((cookbookRole) => {
+                            Object.values(COOKBOOK_ROLES).filter(role => role !== 'OWNER').map((cookbookRole) => {
 
                                 return (
                                     <option

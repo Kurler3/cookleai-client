@@ -6,7 +6,6 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import { Link } from "react-router-dom";
 import ImageWithLoader from "../../../../utils/ImageWithLoader";
 
-
 type IProps = {
     cookbook: ICookbook;
     currentUser?: IUser;
@@ -54,7 +53,7 @@ const CookbookMembers: FC<IProps> = ({
                                                 />
                                             ) : (
                                                 <VisibilityIcon
-                                                    className="absolute bottom-[-10px] right-[-10px] z-2 text-gray-800 bg-gray-100 rounded"
+                                                    className="absolute bottom-[-10px] right-[-10px] z-2 text-white  rounded"
                                                 />
                                             )
                                     }
