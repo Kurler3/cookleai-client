@@ -1,7 +1,7 @@
 import { useState } from "react";
 import RecipeGrid from "./grid/RecipeGrid";
 import RecipesTable from "./row/RecipesTable";
-import { IRecipe, IRecipeFilters } from "@/types";
+import { ICookbook, IRecipe, IRecipeFilters } from "@/types";
 import DeleteRecipeModal from "./modal/DeleteRecipeModal";
 import { RECIPE_ACTION_MODAL_IDS, RECIPE_CARD_DIMENSIONS, RECIPE_ROW_DIMENSIONS } from "@/utils/constants/recipes.constants";
 import AddToCookbookModal from "./modal/AddToCookbookModal";
@@ -14,15 +14,15 @@ import useGetRecipes from "../../../hooks/recipes/useGetRecipes.hook";
 type IProps = {
     isGrid: boolean;
     filters: IRecipeFilters;
-    cookbookId?: string;
+    cookbook?: ICookbook;
 };
 
 const RecipesList: React.FC<IProps> = ({
     isGrid,
     filters,
-    cookbookId,
+    cookbook,
 }) => {
-
+    
     const {
         recipes,
         isLoadingRecipes,
@@ -30,7 +30,7 @@ const RecipesList: React.FC<IProps> = ({
         lastElementRef,
     } =  useGetRecipes({
         filters,
-        cookbookId,
+        cookbookId: cookbook?.id?.toString(),
     });
 
     // Virtualization
@@ -61,7 +61,9 @@ const RecipesList: React.FC<IProps> = ({
         <div className="flex justify-start items-start w-full flex-1 gap-4 max-h-[80%]">
             {
                 !isLoadingRecipes && recipes?.length === 0 ? (
-                    <AddYourFirstRecipe />
+                    <AddYourFirstRecipe 
+                        cookbook={cookbook}
+                    />
                 ) :
                     !isGrid ? (
                         <RecipesTable
