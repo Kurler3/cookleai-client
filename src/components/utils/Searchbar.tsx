@@ -1,5 +1,5 @@
 import SearchIcon from '@mui/icons-material/Search';
-import { FC } from 'react';
+import { FC, useEffect, useState } from 'react';
 
 
 type IProps = {
@@ -12,11 +12,27 @@ type IProps = {
 
 const Searchbar: FC<IProps> = ({
     placeholder = "Search my recipes...",
-    fullWidth=false,
-    textSize='sm', 
+    fullWidth = false,
+    textSize = 'sm',
     value,
     setValue,
 }) => {
+
+    const [debouncerValue, setDebouncerValue] = useState(value);
+
+    useEffect(() => {
+
+        const t = setTimeout(() => {
+
+            setValue?.(debouncerValue);
+
+        }, 500);
+
+        return () => {
+            clearTimeout(t);
+        }
+
+    }, [debouncerValue, setValue])
 
     const widthsClass = fullWidth ? 'w-full' : 'w-20 md:w-56 lg:w-80'
 
@@ -27,8 +43,8 @@ const Searchbar: FC<IProps> = ({
 
             <input
                 type="text"
-                value={value}
-                onChange={({target: { value }}) => {setValue?.(value)}}
+                value={debouncerValue}
+                onChange={(e) => { setDebouncerValue(e.target.value) }}
                 placeholder={placeholder}
                 className={` ${widthsClass} input input-md input-bordered text-${textSize} pl-10 focus:outline-app-green`}
             />
