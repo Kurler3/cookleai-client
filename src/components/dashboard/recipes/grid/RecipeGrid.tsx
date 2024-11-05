@@ -1,4 +1,4 @@
-import { IRecipe } from "@/types";
+import { ICookbook, IRecipe } from "@/types";
 import RecipeCard from "./RecipeCard";
 import RecipeCardSkeleton from "./RecipeCardSkeleton";
 import { VirtualItem } from "@tanstack/react-virtual";
@@ -15,6 +15,7 @@ type IProps = {
     totalListWidth: number;
     scrollParentRef: RefObject<HTMLDivElement>;
     columns: number;
+    cookbook?: ICookbook;
 }
 
 const RecipeGrid: React.FC<IProps> = ({
@@ -28,6 +29,7 @@ const RecipeGrid: React.FC<IProps> = ({
     virtualColumns,
     scrollParentRef,
     columns,
+    cookbook,
 }) => {
 
     return (
@@ -71,6 +73,7 @@ const RecipeGrid: React.FC<IProps> = ({
                                                         lastElementRef={idx === recipes!.length - 1 ? lastElementRef : undefined}
                                                         virtualColumn={virtualColumn}
                                                         virtualRow={virtualRow}
+                                                        cookbook={cookbook}
                                                     />
                                                 );
 

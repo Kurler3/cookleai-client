@@ -8,7 +8,6 @@ import { IRecipeFilters } from '@/types';
 import { useParams } from 'react-router-dom';
 import useGetCookbook from '../../../hooks/cookbook/useGetCookbook';
 
-
 const RecipesPage = () => {
 
     const {

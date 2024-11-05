@@ -8,3 +8,4 @@ export const COOKBOOK_MODAL_IDS = {
     LEAVE: 'leave-cookbook-modal',
     ADD_MEMBERS: 'add-members',
 }
+

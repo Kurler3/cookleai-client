@@ -88,6 +88,7 @@ const RecipesList: React.FC<IProps> = ({
                             scrollParentRef={scrollParentRef}
                             totalListWidth={totalListWidth}
                             columns={columns}
+                            cookbook={cookbook}
                         />
                     )}
 
