@@ -3,7 +3,7 @@ import { ICookbook, ICookbookRole } from "@/types"
 import { FC, useCallback, useState } from "react";
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import UserItem from "../../../../../utils/UserItem";
-import { useGetUser } from "../../../../../../hooks/user";
+import { useGetUser } from "@/hooks/user";
 
 type IProps = {
     cookbook: ICookbook;
