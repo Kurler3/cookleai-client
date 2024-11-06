@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { ROUTE_PATHS } from "@/utils/constants";
 import toast from "react-hot-toast";
 import { IQuota } from "@/types/quota.types";
-import useGetRecipes from "./useGetRecipes.hook";
+// import useGetRecipes from "./useGetRecipes.hook";
 import { IRecipe } from "../../types";
 
 type IUseCreateRecipeArgs = {
@@ -21,11 +21,11 @@ const useCreateRecipe = ({
     const axios = useAxios();
     const queryClient = useQueryClient();
 
-    const {
-        addRecipeToCache
-    } = useGetRecipes({
-        cookbookId,
-    });
+    // const {
+    //     addRecipeToCache
+    // } = useGetRecipes({
+    //     cookbookId,
+    // });
 
     const {
         data: newRecipe,
@@ -54,8 +54,8 @@ const useCreateRecipe = ({
         },
         onSuccess: (data) => {
 
-            // Add recipe to the cache.
-            addRecipeToCache(data);
+            // // Add recipe to the cache.
+            // addRecipeToCache(data);
 
             if(withAI) {
 

@@ -22,7 +22,7 @@ const useDeleteRecipe = ({
 
     const axios = useAxios();
 
-    const { removeRecipeFromCache } = useGetUserRecipes({ filters });
+    // const { removeRecipeFromCache } = useGetUserRecipes({ filters });
 
     const {
         mutate: deleteRecipe,
@@ -38,7 +38,7 @@ const useDeleteRecipe = ({
             toast.success("Recipe deleted successfully");
 
             // Delete recipe from cache.
-            removeRecipeFromCache(recipeId!);
+            // removeRecipeFromCache(recipeId!);
 
             // Close modal
             handleCloseModal(RECIPE_ACTION_MODAL_IDS.DELETE);

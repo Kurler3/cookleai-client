@@ -1,9 +1,8 @@
 import { InfiniteData, useInfiniteQuery, useQueryClient } from "@tanstack/react-query";
 import { IRecipe, IRecipeFilters } from "../../types";
 import useAxios from "../axios/useAxios.hook";
-import { getMinutesInMs } from "../../utils/functions";
+// import { getMinutesInMs } from "../../utils/functions";
 import { useInfinityQueryFunctions } from "../common/useInfinityQueryFunctions";
-
 
 
 type IUseGetRecipesArgs = {
@@ -22,7 +21,11 @@ const useGetRecipes = ({
         cookbookId ? 'cookbook.recipes' : 'my-recipes',
         cookbookId,
         pageSize,
-        filters
+        filters ?? {
+            cuisine: null,
+            difficulty: null,
+            title: null,
+        }
     ];
 
     const axios = useAxios();
@@ -55,11 +58,11 @@ const useGetRecipes = ({
                 .then((res) => res.data);
         },
         getNextPageParam: (lastPage, pages) => {
-            return lastPage.length ? pages.length : undefined; // If the last page was not empty, then continue fetching, otherwise stop.
+            return lastPage.length ? pages.length : undefined; // If the last page was not empty, then continue fetching, otherwise stop.   
         },
         initialPageParam: 0,
         // If any filters, don't cache the data, because it can change often and its hard to manage with mutations.
-        staleTime: filters ? 0 : getMinutesInMs(3),
+        // staleTime: getMinutesInMs(3) // filters ? 0 : getMinutesInMs(3),
     });
 
     const {
@@ -74,16 +77,12 @@ const useGetRecipes = ({
         data: recipes,
     });
 
-    console.log({recipes})
-
     ////////////////////////////////////
     // FUNCTIONS ///////////////////////
     ////////////////////////////////////
 
     const removeRecipeFromCache = (recipeId: number) => {
         const recipeIndexes = recipeIdToIndexMap.get(recipeId);
-
-        console.log('Recipe indexes: ', recipeIndexes)
 
         if (!recipeIndexes) {
             console.debug('No indexes found for the recipe: ', recipeId);

@@ -1,8 +1,7 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { ICookbook } from "../../types"
 import axiosNetworkErrorHandler from "../../utils/functions/axiosNetworkErrorHandler";
 import useAxios from "../axios/useAxios.hook";
-import useGetRecipes from "../recipes/useGetRecipes.hook";
 import toast from "react-hot-toast";
 
 
@@ -14,16 +13,7 @@ const useRemoveRecipeFromCookbook = ({
     cookbook,
 }: IUseRemoveRecipeFromCookbookArgs) => {
 
-    const {
-        removeRecipeFromCache
-    } = useGetRecipes({
-        cookbookId: cookbook.id.toString(),
-        filters: {
-            cuisine: null,
-            difficulty: null,
-            title: null,
-        }
-    });
+    const queryClient = useQueryClient();
 
     const axios = useAxios();
 
@@ -49,12 +39,21 @@ const useRemoveRecipeFromCookbook = ({
             };
             
         },
-        onSuccess: ({
-            recipeId,
-        }) => {
+        onSuccess: () => {
 
-            // Remove from cache.
-            removeRecipeFromCache(recipeId);
+            queryClient.invalidateQueries({
+                queryKey: [
+                    'cookbook.recipes',
+                    cookbook.id.toString(),
+                    10,
+                    {
+                        cuisine: null,
+                        difficulty: null,
+                        title: null,
+                    }
+                ],
+                exact: true
+            })
 
             toast.success('Removed the recipe from the cookbook successfully!')
 

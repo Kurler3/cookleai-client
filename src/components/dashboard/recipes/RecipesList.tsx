@@ -33,8 +33,6 @@ const RecipesList: React.FC<IProps> = ({
         cookbookId: cookbook?.id?.toString(),
     });
 
-    console.log(recipes,)
-
     // Virtualization
     const {
         scrollParentRef,

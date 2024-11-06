@@ -6,7 +6,7 @@ type IProps = {
     placeholder?: string;
     fullWidth?: boolean;
     textSize?: 'xs' | 'sm' | 'md'
-    value?: string;
+    value: string | null;
     setValue?: (newValue?: string) => void;
 }
 
@@ -18,19 +18,22 @@ const Searchbar: FC<IProps> = ({
     setValue,
 }) => {
 
-    const [debouncerValue, setDebouncerValue] = useState(value);
+    const [debouncerValue, setDebouncerValue] = useState(value ?? null);
 
     useEffect(() => {
 
-        const t = setTimeout(() => {
+        if (debouncerValue) {
+            const t = setTimeout(() => {
 
-            setValue?.(debouncerValue);
+                setValue?.(debouncerValue);
 
-        }, 500);
+            }, 500);
 
-        return () => {
-            clearTimeout(t);
+            return () => {
+                clearTimeout(t);
+            }   
         }
+
 
     }, [debouncerValue, setValue])
 
@@ -43,7 +46,7 @@ const Searchbar: FC<IProps> = ({
 
             <input
                 type="text"
-                value={debouncerValue}
+                value={debouncerValue ?? ''}
                 onChange={(e) => { setDebouncerValue(e.target.value) }}
                 placeholder={placeholder}
                 className={` ${widthsClass} input input-md input-bordered text-${textSize} pl-10 focus:outline-app-green`}

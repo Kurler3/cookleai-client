@@ -1,5 +1,4 @@
 import { FC, useState } from "react";
-import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
 
 
@@ -27,7 +26,7 @@ const ImageWithLoader: FC<IProps> = ({
     }
 
     const onImgLoadingErr = () => {
-        toast.error('Failed to load image');
+        // toast.error('Failed to load image');
         setIsLoadingImage(false);
     }
 
