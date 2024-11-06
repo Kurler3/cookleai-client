@@ -21,7 +21,7 @@ const EditCookbookTitleModal: FC<IProps> = ({
         onSuccessFn: () => {
             handleCloseModal(COOKBOOK_MODAL_IDS.EDIT);
         },
-    })
+    });
 
     const [cookbookTitle, setCookbookTitle] = useState(cookbook.title);
 

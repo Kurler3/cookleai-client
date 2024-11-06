@@ -3,8 +3,8 @@ import { COOKBOOK_ROLES, ICookbook, IUser } from "@/types"
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import EditIcon from '@mui/icons-material/Edit';
 import VisibilityIcon from '@mui/icons-material/Visibility';
-import { Link } from "react-router-dom";
 import ImageWithLoader from "../../../../utils/ImageWithLoader";
+import { COOKBOOK_MODAL_IDS } from "../../../../../utils/constants";
 
 type IProps = {
     cookbook: ICookbook;
@@ -21,24 +21,25 @@ const CookbookMembers: FC<IProps> = ({
 
             {
                 cookbook.users!.map(({ role, user }, index) => {
+
                     return (
                         <div
                             className="tooltip tooltip-right" data-tip={`${user.firstName}${currentUser?.id === user.id ? ' (you)' : ''} is a ${role.toLowerCase()} in this cookbook`}
                             key={`cookbook_user_${user.id}_${index}`}
                         >
-                            <Link to={`/dashboard/profiles/${user.id}`}>
+                            <label htmlFor={role === COOKBOOK_ROLES.OWNER ? COOKBOOK_MODAL_IDS.MANAGE_MEMBERS : ''} >
                                 <div
                                     className="avatar cursor-pointer relative"
                                 >
                                     <div className="w-10 rounded-full bg-red-500">
 
-                                        <ImageWithLoader 
+                                        <ImageWithLoader
                                             imageUrl={user.avatar}
                                             imgClassName=""
                                             altTxt={user.email}
                                             loader={<div className="loading loading-spinner"></div>}
                                         />
-                                
+
                                     </div>
 
                                     {
@@ -57,13 +58,11 @@ const CookbookMembers: FC<IProps> = ({
                                                 />
                                             )
                                     }
-
                                 </div>
-                            </Link>
-
+                            </label>
                         </div>
-
-                    )
+                    );
+                    
                 })
             }
 

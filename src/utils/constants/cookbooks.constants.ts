@@ -7,5 +7,6 @@ export const COOKBOOK_MODAL_IDS = {
     DELETE: 'delete-cookbook-modal',
     LEAVE: 'leave-cookbook-modal',
     ADD_MEMBERS: 'add-members',
+    MANAGE_MEMBERS: 'manage-members'
 }
 

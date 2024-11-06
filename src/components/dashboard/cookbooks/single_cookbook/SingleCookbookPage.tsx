@@ -9,6 +9,7 @@ import EditCookbookTitleModal from "./components/modals/EditCookbookTitleModal";
 import DeleteCookbookModal from "./components/modals/DeleteCookbookModal";
 import LeaveCookbookModal from "./components/modals/LeaveCookbookModal";
 import RecipesPage from "../../recipes/RecipesPage";
+import ManageCookbookMembersModal from "./components/modals/ManageCookbookMembersModal";
 
 const SingleCookbookPage = () => {
 
@@ -53,7 +54,7 @@ const SingleCookbookPage = () => {
                 currentUser={currentUser}
             />
 
-            {/* //TODO: RECIPES LIST */}
+            {/* RECIPES LIST */}
             <RecipesPage />
 
             {/* ------------------------------------------------- */}
@@ -72,6 +73,11 @@ const SingleCookbookPage = () => {
 
             {/* Leave cookbook */}
             <LeaveCookbookModal 
+                cookbook={cookbook}
+            />
+
+            {/* Manage cookbook members */}
+            <ManageCookbookMembersModal 
                 cookbook={cookbook}
             />
 

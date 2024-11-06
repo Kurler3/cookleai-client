@@ -13,9 +13,11 @@ type IProps = {
     isAlreadySelected: boolean;
     alreadySelectedIcon?: ReactNode;
     isShowRoleInput?: boolean;
+    customClassName?: string;
+    isUseAnimation?: boolean;
+    clickedDelay?: number;
+    customTooltipTxt?: string;
 };
-
-const clickedDelay = 1000;
 
 const UserItem: FC<IProps> = ({
     user,
@@ -25,6 +27,10 @@ const UserItem: FC<IProps> = ({
     role,
     onEditUserRole,
     isShowRoleInput = false,
+    customClassName,
+    isUseAnimation=true,
+    clickedDelay=100,
+    customTooltipTxt,
 }) => {
 
     const [wasClicked, setWasClicked] = useState(false);
@@ -43,7 +49,7 @@ const UserItem: FC<IProps> = ({
 
             return () => clearTimeout(timeout);
         }
-    }, [wasClicked]);
+    }, [clickedDelay, wasClicked]);
 
     return (
         <div
@@ -53,18 +59,21 @@ const UserItem: FC<IProps> = ({
                 flex flex-row gap-4 items-center p-2 transition-all ${!!onClickUser && "cursor-pointer"
                 } rounded w-full tooltip tooltip-info
                 hover:bg-base-200
+                ${customClassName}
             `}
-            data-tip={`${isAlreadySelected ? "Already added" : "Add"} ${user.email
-                }`}
+            data-tip={
+                customTooltipTxt ?? 
+                `${isAlreadySelected ? "Already added" : "Add"} ${user.email}`
+            }
             onClick={(e) => {
                 e.stopPropagation();
                 onClick();
             }}
         >
             <motion.div
-                initial={{ scale: 1, rotate: 0 }}
-                animate={wasClicked ? { scale: [1, 1.2, 1], rotate: 360 } : {}}
-                transition={{ duration: 0.5 }}
+                initial={ isUseAnimation ? { scale: 1, rotate: 0 } : undefined}
+                animate={ isUseAnimation ? wasClicked ? { scale: [1, 1.2, 1], rotate: 360 } : {} : undefined}
+                transition={isUseAnimation ? { duration: 0.5 } : undefined}
             >
                 {wasClicked || isAlreadySelected ? (
                     alreadySelectedIcon || (
