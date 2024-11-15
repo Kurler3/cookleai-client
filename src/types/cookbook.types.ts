@@ -41,3 +41,8 @@ export type IGetCookbooksQueryParams = {
     pageSize?: number;
     excludedRecipeId?: number,
 }
+
+export type IEditCookbookMember = {
+    userId: number;
+    role: ICookbookRole;
+}

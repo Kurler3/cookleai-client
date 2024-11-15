@@ -16,18 +16,19 @@ const CookbookMembers: FC<IProps> = ({
     currentUser,
 }) => {
 
+    const self = cookbook.users?.find((user) => user.user.id === currentUser?.id);
+
     return (
         <div className='flex flex-row gap-2 justify-start items-center w-full'>
 
             {
                 cookbook.users!.map(({ role, user }, index) => {
-
                     return (
                         <div
                             className="tooltip tooltip-right" data-tip={`${user.firstName}${currentUser?.id === user.id ? ' (you)' : ''} is a ${role.toLowerCase()} in this cookbook`}
                             key={`cookbook_user_${user.id}_${index}`}
                         >
-                            <label htmlFor={role === COOKBOOK_ROLES.OWNER ? COOKBOOK_MODAL_IDS.MANAGE_MEMBERS : ''} >
+                            <label htmlFor={self?.role === COOKBOOK_ROLES.OWNER ? COOKBOOK_MODAL_IDS.MANAGE_MEMBERS : ''} >
                                 <div
                                     className="avatar cursor-pointer relative"
                                 >

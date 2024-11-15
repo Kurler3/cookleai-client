@@ -4,6 +4,8 @@ import { FC, useCallback, useState } from "react";
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import UserItem from "../../../../../utils/UserItem";
 import { useGetUser } from "@/hooks/user";
+import useManageCookbookMembers from "@/hooks/cookbook/useManageCookbookMembers";
+import { handleCloseModal } from "@/utils/functions/closeModal";
 
 type IProps = {
     cookbook: ICookbook;
@@ -21,6 +23,17 @@ const ManageCookbookMembersModal: FC<IProps> = ({
         user: currentUser,
     } = useGetUser();
 
+    const {
+        manageCookbookMembers,
+        isManagingCookbookMembers,
+    } = useManageCookbookMembers({
+        cookbookId: cookbook.id.toString(),
+        onSuccessFn: () => {
+            // Close the modal.
+            handleCloseModal(COOKBOOK_MODAL_IDS.MANAGE_MEMBERS)
+        },
+    })
+
     ///////////////////////////////////
     // STATE //////////////////////////
     ///////////////////////////////////
@@ -36,9 +49,6 @@ const ManageCookbookMembersModal: FC<IProps> = ({
     ///////////////////////////////////
 
     const canSave = changedMembers.edited.length > 0 || changedMembers.deleted.length > 0;
-
-    //TODO
-    const isSaving = false;
 
     ///////////////////////////////////
     // FUNCTIONS //////////////////////
@@ -142,16 +152,17 @@ const ManageCookbookMembersModal: FC<IProps> = ({
 
     }
 
-    //TODO Function that handles saving the changes.
+    // Function that handles saving the changes.
     const handleSaveChanges = useCallback(() => {
 
-        if(isSaving || !canSave) return;
+        if(isManagingCookbookMembers || !canSave) return;
 
-        // If edited members > 0 => edit members.
+        manageCookbookMembers({
+            editedMembers: changedMembers.edited,
+            removeMembers: changedMembers.deleted,
+        });
 
-        // If deleted members > 0 => remove members.
-
-    }, []);
+    }, [canSave, changedMembers.deleted, changedMembers.edited, isManagingCookbookMembers, manageCookbookMembers]);
 
     ////////////////////////////////
     // RETURN //////////////////////
@@ -226,7 +237,7 @@ const ManageCookbookMembersModal: FC<IProps> = ({
                             disabled={!canSave}
                             onClick={handleSaveChanges}
                         >
-                            { isSaving && <span className="loading loading-spinner"></span> }
+                            { isManagingCookbookMembers && <span className="loading loading-spinner"></span> }
                             Save
                         </button>
                     </div>
