@@ -1,33 +1,36 @@
 import { useState } from "react";
-import useGetUserRecipes from "../../../hooks/recipes/useGetUserRecipes.hook";
 import RecipeGrid from "./grid/RecipeGrid";
 import RecipesTable from "./row/RecipesTable";
-import { IRecipe, IRecipeFilters } from "@/types";
+import { ICookbook, IRecipe, IRecipeFilters } from "@/types";
 import DeleteRecipeModal from "./modal/DeleteRecipeModal";
 import { RECIPE_ACTION_MODAL_IDS, RECIPE_CARD_DIMENSIONS, RECIPE_ROW_DIMENSIONS } from "@/utils/constants/recipes.constants";
 import AddToCookbookModal from "./modal/AddToCookbookModal";
 import ShareRecipeModal from "./modal/ShareRecipeModal";
 import AddYourFirstRecipe from "./AddYourFirstRecipe";
 import useVirtualization from "@/hooks/common/useVirtualization.hook";
+import useGetRecipes from "../../../hooks/recipes/useGetRecipes.hook";
 
 
 type IProps = {
     isGrid: boolean;
     filters: IRecipeFilters;
+    cookbook?: ICookbook;
 };
 
 const RecipesList: React.FC<IProps> = ({
     isGrid,
     filters,
+    cookbook,
 }) => {
-
+    
     const {
         recipes,
         isLoadingRecipes,
         isFetchingNextPage,
         lastElementRef,
-    } = useGetUserRecipes({
+    } =  useGetRecipes({
         filters,
+        cookbookId: cookbook?.id?.toString(),
     });
 
     // Virtualization
@@ -58,7 +61,9 @@ const RecipesList: React.FC<IProps> = ({
         <div className="flex justify-start items-start w-full flex-1 gap-4 max-h-[80%]">
             {
                 !isLoadingRecipes && recipes?.length === 0 ? (
-                    <AddYourFirstRecipe />
+                    <AddYourFirstRecipe 
+                        cookbook={cookbook}
+                    />
                 ) :
                     !isGrid ? (
                         <RecipesTable
@@ -83,6 +88,7 @@ const RecipesList: React.FC<IProps> = ({
                             scrollParentRef={scrollParentRef}
                             totalListWidth={totalListWidth}
                             columns={columns}
+                            cookbook={cookbook}
                         />
                     )}
 

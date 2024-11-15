@@ -4,6 +4,7 @@ import { DASHBOARD_DRAWER_ID, DASHBOARD_SIDEBAR_GROUPS, DASHBOARD_SIDEBAR_PROFIL
 import Logo from '../utils/Logo';
 import { useGetUser } from '../../hooks/user';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import ImageWithLoader from '../utils/ImageWithLoader';
 
 const DashboardSideBar = () => {
 
@@ -76,7 +77,7 @@ const DashboardSideBar = () => {
 										`
 															}
 															style={{
-																color: location.pathname === groupItem.uri ? 'white' : null,
+																color: location.pathname === groupItem.uri ? 'white' : undefined,
 															}}
 														>
 															{/* ICON */}
@@ -112,12 +113,16 @@ const DashboardSideBar = () => {
 
 							<div className='flex justify-start items-center gap-2'>
 								{/* AVATAR */}
-								<img
-									src={user?.avatar}
-									alt='User avatar'
-									className='w-6 rounded-full'
-								/>
-
+								<ImageWithLoader 
+									imageUrl={user?.avatar}
+									altTxt='User avatar'
+									imgClassName='w-6 rounded-full'
+									loader={
+										<div className='loading loading-spinner'>
+										</div>
+									}
+								/>	
+								
 								{/* NAME */}
 								<div>
 									{user?.firstName}

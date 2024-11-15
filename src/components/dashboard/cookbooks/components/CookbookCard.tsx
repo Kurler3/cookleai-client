@@ -4,6 +4,8 @@ import recipePlaceholderImg from '@/assets/images/recipe_placeholder.png';
 import { Link } from "react-router-dom";
 import getRoleColor from "@/utils/functions/getRoleColor";
 import { VirtualItem } from "@tanstack/react-virtual";
+import getVirtualizedGridItemStyles from "@/utils/functions/getVirtualizedGridItemStyles";
+import ImageWithLoader from "../../../utils/ImageWithLoader";
 
 type IProps = {
     cookbook: ICookbook;
@@ -22,7 +24,7 @@ const CookbookCard: FC<IProps> = ({
     // Get first recipe of a cookbook.
     const img = useMemo(() => {
         if (cookbook.recipes && cookbook.recipes.length > 0) {
-            return cookbook.recipes[0].image ?? recipePlaceholderImg
+            return cookbook.recipes[0].recipe.imageUrl ?? recipePlaceholderImg
         }
         return recipePlaceholderImg;
     }, [cookbook.recipes]);
@@ -31,20 +33,23 @@ const CookbookCard: FC<IProps> = ({
         <Link
             className="w-48 h-48 max-w-48 bg-base-300 rounded-md flex justify-center items-start flex-col p-4 hover:bg-base-100"
             ref={lastElementRef as LegacyRef<HTMLAnchorElement> | undefined}
-            to={`/cookbooks/${cookbook.id}`}
-            style={virtualColumn && virtualRow && {
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                width: `${virtualColumn?.size}px`,
-                height: `${virtualRow?.size}px`,
-                transform: `translateX(${virtualColumn?.start}px) translateY(${virtualRow?.start}px)`,
-            }}
+            to={`/dashboard/cookbooks/${cookbook.id}`}
+            style={virtualColumn && virtualRow && getVirtualizedGridItemStyles({
+                virtualColumn,
+                virtualRow
+            })}
         >
-
             {/* FIRST RECIPE IMAGE */}
             <figure className="w-full flex justify-center items-center">
-                <img src={img} alt={cookbook.title} className="h-28 w-28 rounded object-cover" />
+                <ImageWithLoader 
+                    imageUrl={img}
+                    imgClassName="h-28 w-28 rounded object-cover"
+                    altTxt={cookbook.title}
+                    loader={
+                        <div className="loading loading-spinner h-28 w-28">
+                        </div>
+                    }
+                />
             </figure>
 
             {/* COOKBOOK TITLE */}

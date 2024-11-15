@@ -1,10 +1,17 @@
 import useCreateRecipe from "@/hooks/recipes/useCreateRecipe.hook";
 import { RECIPE_ACTION_MODAL_IDS } from "@/utils/constants/recipes.constants"
-import { useState } from "react";
+import { FC, useState } from "react";
 import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
 import { useGetUserQuotaByType } from "@/hooks/user";
 
-const GenerateRecipeWithAIModal = () => {
+type IProps = {
+  cookbookId?: string;
+
+}
+
+const GenerateRecipeWithAIModal: FC<IProps> = ({
+  cookbookId,
+}) => {
 
   //////////////////////////////////
   // HOOKS /////////////////////////
@@ -20,6 +27,7 @@ const GenerateRecipeWithAIModal = () => {
 
   const { isCreatingRecipe, createRecipe } = useCreateRecipe({
     withAI: true,
+    cookbookId,
   });
 
   //////////////////////////////////
@@ -40,10 +48,10 @@ const GenerateRecipeWithAIModal = () => {
 
   const handleCreateRecipe = () => {
 
-    if(!canCreateRecipe) return;
+    if (!canCreateRecipe) return;
 
     // If used more or equal to the limit of the quota
-    if(quota!.used >= quota!.limit) {
+    if (quota!.used >= quota!.limit) {
       return;
     }
 
@@ -55,7 +63,7 @@ const GenerateRecipeWithAIModal = () => {
   // RETURN ////////////////////////
   //////////////////////////////////
 
-  if(errorWhileGettingUserQuota) {
+  if (errorWhileGettingUserQuota) {
     //TODO
     return (
       <div>

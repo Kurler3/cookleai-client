@@ -3,10 +3,11 @@ import useAxios from "../axios/useAxios.hook";
 import { useNavigate } from "react-router-dom";
 import { RECIPE_ROLES, ROUTE_PATHS } from "@/utils/constants";
 import toast from "react-hot-toast";
-import { INetworkError, IRecipe } from "@/types";
+import { IRecipe } from "@/types";
 import { useEffect } from "react";
 import useIsInEditPage from "../common/useIsInEditPage";
 import { getMinutesInMs } from "@/utils/functions";
+import useHandleFetchError from "../common/useHandleFetchError";
 
 const useGetRecipe = (recipeId?: string) => {
     const navigate = useNavigate();
@@ -35,26 +36,14 @@ const useGetRecipe = (recipeId?: string) => {
         
     });
 
-    useEffect(() => {
-
-        // If there's an error
-        if(errorWhileGettingRecipe) {
-
-            let toastErrMsg: string;
-
-            // If unauthorized
-            if ((errorWhileGettingRecipe as INetworkError).statusCode === 401) {
-                toastErrMsg = "You are not authorized to view this recipe";
-            } else {
-                toastErrMsg = "An error occurred while getting the recipe";
-            }
-
-            toast.error(toastErrMsg);
-
+    useHandleFetchError({
+        unAuthorizedMsg: "You are not authorized to view this recipe",
+        errMsg: "An error occurred while getting the recipe",
+        fnc: () => {
             navigate(ROUTE_PATHS.RECIPES);
-
-        }
-    }, [errorWhileGettingRecipe, navigate]);
+        },
+        error: errorWhileGettingRecipe,
+    })
 
     // If role is viewer, and trying to edit => redirect back
     useEffect(() => {

@@ -5,7 +5,7 @@ import { ROUTE_PATHS } from '@/utils/constants';
 import { RECIPE_ACTION_MODAL_IDS } from '@/utils/constants/recipes.constants';
 import CreateRecipeModal from './modal/CreateRecipeModal';
 import RecipePageHeaderFilters from './RecipePageHeaderFilters';
-import { IRecipeFilters } from '@/types';
+import { COOKBOOK_ROLES, ICookbook, IRecipeFilters } from '@/types';
 
 
 type IProps = {
@@ -13,13 +13,15 @@ type IProps = {
     setIsGrid: React.Dispatch<React.SetStateAction<boolean>>;
     updateFilter: (filterKey: string, newValue: string | null) => void;
     recipeFilters: IRecipeFilters;
+    cookbook?: ICookbook;
 }
 
 const RecipesPageHeader: React.FC<IProps> = ({
     isGrid,
     setIsGrid,
     updateFilter,
-    recipeFilters
+    recipeFilters,
+    cookbook,
 }) => {
 
     return (
@@ -39,19 +41,25 @@ const RecipesPageHeader: React.FC<IProps> = ({
                         <ExploreIcon />
                         <div>Explore</div>
                     </Link>
-                    <label 
-                        htmlFor={RECIPE_ACTION_MODAL_IDS.CREATE}
-                        className="btn btn-sm md:btn-md flex justify-center items-center common_btn"
-                    >
-                        <AddIcon />
-                        <div>Add</div>
-                    </label>
+                    {
+                        cookbook && cookbook.role === COOKBOOK_ROLES.VIEWER ? (
+                            null) : (
+                            <label
+                                htmlFor={RECIPE_ACTION_MODAL_IDS.CREATE}
+                                className="btn btn-sm md:btn-md flex justify-center items-center common_btn"
+                            >
+                                <AddIcon />
+                                <div>Add</div>
+                            </label>
+                        )
+                    }
+
                 </div>
 
             </div>
 
             {/* SEARCH BAR + FILTERS + GRID VIEW / ROW VIEW */}
-            <RecipePageHeaderFilters 
+            <RecipePageHeaderFilters
                 isGrid={isGrid}
                 setIsGrid={setIsGrid}
                 updateFilter={updateFilter}
@@ -61,7 +69,7 @@ const RecipesPageHeader: React.FC<IProps> = ({
             {/* CREATE RECIPE MODAL */}
             <input type="checkbox" id={RECIPE_ACTION_MODAL_IDS.CREATE} className='modal-toggle' />
             <CreateRecipeModal />
-                
+
         </>
     )
 };

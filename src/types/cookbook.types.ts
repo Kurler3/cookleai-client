@@ -2,13 +2,26 @@ import { IRecipe } from "./recipe.types";
 import { IUser } from "./user.types";
 
 
+export enum COOKBOOK_ROLES {
+    OWNER = 'OWNER',
+    EDITOR = 'EDITOR',
+    VIEWER = 'VIEWER'
+}
+
+export type ICookbookRole = keyof typeof COOKBOOK_ROLES;
+
+export type ICookbookMember = {
+    role: ICookbookRole; 
+    user: IUser
+}
+
 export type ICookbook = {
     id: number;
     title: string;
     isPrivate: boolean;
     image: string;
-    users?: IUser[];
-    recipes?: IRecipe[];
+    users?: ICookbookMember[];
+    recipes?: { recipe: IRecipe }[];
     createdAt: Date;
     updatedAt: Date;
     updatedBy: number;
@@ -29,8 +42,7 @@ export type IGetCookbooksQueryParams = {
     excludedRecipeId?: number,
 }
 
-export enum ICookbookRole {
-    OWNER = "OWNER",
-    EDITOR = "EDITOR",
-    VIEWER = "VIEWER",
+export type IEditCookbookMember = {
+    userId: number;
+    role: ICookbookRole;
 }

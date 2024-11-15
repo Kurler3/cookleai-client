@@ -2,6 +2,7 @@ import recipePlaceholderImg from '@/assets/images/recipe_placeholder.png';
 import { IRecipe } from '@/types';
 import { FC } from 'react';
 import IngredientDisplayRow from '../IngredientDisplayRow';
+import ImageWithLoader from '../../../../utils/ImageWithLoader';
 
 type IProps = {
     recipe?: IRecipe;
@@ -15,10 +16,15 @@ const RecipeDisplayMainContentLeftPart: FC<IProps> = ({
 
             {/* IMAGE */}
             <div className="w-full border flex justify-center items-center rounded border-gray-600">
-                <img
-                    src={recipe?.image ?? recipePlaceholderImg}
-                    alt={recipe?.title}
-                    className="w-80 h-80 object-cover rounded"
+                <ImageWithLoader 
+                    imgClassName='w-80 h-80 object-cover rounded'
+                    imageUrl={recipe?.imageUrl ?? recipePlaceholderImg}
+                    altTxt={recipe?.title ?? ''}
+                    loader={
+                        <div className='h-80 w-80 flex justify-center items-center'>
+                            <div className="w-20 h-20 loading loading-spinner"></div>
+                        </div>
+                    }
                 />
             </div>
 

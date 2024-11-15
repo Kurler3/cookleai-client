@@ -3,6 +3,7 @@ import { IRecipe } from "../../../../types/recipe.types";
 import RecipeRow from "./RecipeRow";
 import RecipeRowSkeleton from "./RecipeRowSkeleton";
 import { RefObject, FC } from "react";
+import { ICookbook } from "../../../../types";
 
 type IProps = {
     recipes?: IRecipe[];
@@ -12,7 +13,8 @@ type IProps = {
     setSelectedRecipe: React.Dispatch<React.SetStateAction<IRecipe | undefined>>;
     totalListHeight: number;
     virtualItems: VirtualItem[];
-    scrollParentRef: RefObject<HTMLDivElement>
+    scrollParentRef: RefObject<HTMLDivElement>;
+    cookbook?: ICookbook;
 };
 
 const RecipesTable: FC<IProps> = ({
@@ -23,13 +25,14 @@ const RecipesTable: FC<IProps> = ({
     setSelectedRecipe,
     totalListHeight,
     virtualItems,
-    scrollParentRef,    
+    scrollParentRef,
+    cookbook,
 }) => {
 
     return (
         // min-w-96
         <div
-            className="w-full overflow-x-auto overflow-y-auto no-scrollbar relative h-full"
+            className="w-full overflow-x-auto overflow-y-auto no-scrollbar relative h-full overflow-visible"
             ref={scrollParentRef}
         >
             {/* HEADERS */}

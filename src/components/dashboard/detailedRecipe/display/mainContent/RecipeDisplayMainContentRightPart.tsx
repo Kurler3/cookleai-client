@@ -3,6 +3,7 @@ import { FC } from "react";
 import TimerIcon from '@mui/icons-material/Timer';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import RecipeDisplayInstructions from "./instructions/RecipeDisplayInstructions";
+import ImageWithLoader from "../../../../utils/ImageWithLoader";
 
 type IProps = {
     recipe?: IRecipe;
@@ -41,7 +42,15 @@ const RecipeDisplayMainContentRightPart: FC<IProps> = ({
                 <div className="flex justify-center items-center gap-2">
                     <div className="avatar">
                         <div className="w-8 rounded-full">
-                            <img src={recipe?.createdByUser?.avatar} />
+                            <ImageWithLoader 
+                                imageUrl={recipe?.createdByUser?.avatar}
+                                altTxt={recipe?.createdByUser?.email}
+                                redirectTo={recipe?.createdBy ? `/dashboard/profiles/${recipe.createdBy}` : '/'}
+                                loader={
+                                    <div className="loading loading-spinner">
+                                    </div>
+                                }
+                            />
                         </div>
                     </div>
                     <div>

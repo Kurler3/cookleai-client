@@ -19,7 +19,6 @@ const ShareRecipeModal: React.FC<IProps> = ({ recipe, setSelectedRecipe }) => {
 
     const canEditRecipe = useCanEditRecipe(recipe);
 
-
     const {
         editRecipe,
         isEditingRecipe,

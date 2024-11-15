@@ -4,19 +4,28 @@ import { useNavigate } from "react-router-dom";
 import { ROUTE_PATHS } from "@/utils/constants";
 import toast from "react-hot-toast";
 import { IQuota } from "@/types/quota.types";
-import useGetUserRecipes from "./useGetUserRecipes.hook";
+// import useGetRecipes from "./useGetRecipes.hook";
+import { IRecipe } from "../../types";
+
+type IUseCreateRecipeArgs = {
+    withAI?: boolean;
+    cookbookId?: string;
+}
 
 const useCreateRecipe = ({
-    withAI=false
-}={}) => {
+    withAI=false,
+    cookbookId,
+}: IUseCreateRecipeArgs={}) => {
 
     const navigate = useNavigate();
     const axios = useAxios();
     const queryClient = useQueryClient();
 
-    const {
-        addRecipeToCache
-    } = useGetUserRecipes();
+    // const {
+    //     addRecipeToCache
+    // } = useGetRecipes({
+    //     cookbookId,
+    // });
 
     const {
         data: newRecipe,
@@ -28,7 +37,14 @@ const useCreateRecipe = ({
             const apiRoute = withAI ? 'create-with-ai' : 'create';
             const body = withAI ? { prompt: title } : { title }
             const response = await axios.post(`/recipes/${apiRoute}`, body);
-            return response.data;
+
+            const newRecipe = response.data as IRecipe;
+
+            if(cookbookId) {
+                await axios.post(`/cookbooks/${cookbookId}/recipes/${newRecipe.id}`);
+            }
+
+            return newRecipe;
         },
         onError: () => {
 
@@ -38,8 +54,8 @@ const useCreateRecipe = ({
         },
         onSuccess: (data) => {
 
-            // Add recipe to the cache.
-            addRecipeToCache(data);
+            // // Add recipe to the cache.
+            // addRecipeToCache(data);
 
             if(withAI) {
 

@@ -8,6 +8,7 @@ import { useRef } from "react";
 import toast from "react-hot-toast";
 import useUploadRecipeImage from "@/hooks/recipes/useUploadRecipeImage.hook";
 import useEditRecipe from "@/hooks/recipes/useEditRecipe.hook";
+import ImageWithLoader from "../../../../utils/ImageWithLoader";
 
 type IProps = {
     recipe: IRecipe;
@@ -75,7 +76,7 @@ const EditRecipeImageModal: React.FC<IProps> = ({ recipe }) => {
 
         editRecipe({
             id: recipe.id,
-            image: null,
+            imageUrl: null,
         });
 
     }
@@ -96,13 +97,18 @@ const EditRecipeImageModal: React.FC<IProps> = ({ recipe }) => {
             </div>
 
             {/* CURRENT IMAGE */}
-            <img
-                src={recipe.image ?? recipePlaceholderImg}
-                alt="Recipe image"
-                className="border bg-base-100 rounded-md border-gray-600 h-[450px] w-full"
-                key={`recipe_${recipe.id}_${recipe.image}`}
+            <ImageWithLoader 
+                imageUrl={recipe.imageUrl ?? recipePlaceholderImg}
+                loader={
+                    <div className="h-[450px] w-full flex justify-center items-center">
+                        <div className="loading loading-spinner loading-lg"></div>
+                    </div>
+                }
+                imgClassName="border bg-base-100 rounded-md border-gray-600 h-[450px] w-full"
+                altTxt="Recipe image"
+                key={`recipe_${recipe.id}_${recipe.imageUrl}`}
             />
-
+         
             {/* SELECT IMAGE BUTTON */}
             <div className="flex justify-center items-center w-full gap-2">
 
@@ -124,7 +130,7 @@ const EditRecipeImageModal: React.FC<IProps> = ({ recipe }) => {
                 </button>
 
                 {
-                    recipe.image && (
+                    recipe.imageUrl && (
                         <button 
                             onClick={handleResetImage}
                             className="btn border border-red-500 text-red-500 hover:border-red-500 hover:bg-red-500 hover:text-white transition"

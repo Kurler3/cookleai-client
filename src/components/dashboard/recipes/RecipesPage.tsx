@@ -5,8 +5,18 @@ import { RECIPE_ACTION_MODAL_IDS } from '@/utils/constants/recipes.constants';
 import GenerateRecipeWithAIModal from './modal/GenerateRecipeWithAIModal';
 import CreateRecipeManuallyModal from './modal/CreateRecipeManuallyModal';
 import { IRecipeFilters } from '@/types';
+import { useParams } from 'react-router-dom';
+import useGetCookbook from '../../../hooks/cookbook/useGetCookbook';
 
 const RecipesPage = () => {
+
+    const {
+        cookbookId,
+    } = useParams();
+
+    const {
+        cookbook,
+    } = useGetCookbook(cookbookId);
 
     const [
         isGrid,
@@ -41,22 +51,28 @@ const RecipesPage = () => {
                 setIsGrid={setIsGrid} 
                 updateFilter={updateFilter}
                 recipeFilters={filters}
+                cookbook={cookbook}
             />
 
             <RecipesList 
                 isGrid={isGrid} 
-                filters={filters} 
+                filters={filters}
+                cookbook={cookbook}
             />
 
             {/* GENERATE WITH AI MODAL */}
             <input type="checkbox" id={RECIPE_ACTION_MODAL_IDS.GENERATE_WITH_AI} className="modal-toggle" />
 
-            <GenerateRecipeWithAIModal />
+            <GenerateRecipeWithAIModal 
+                cookbookId={cookbookId}
+            />
 
             {/* CREATE MANUALLY MODAL */}
             <input type="checkbox" id={RECIPE_ACTION_MODAL_IDS.CREATE_MANUALLY} className="modal-toggle" />
 
-            <CreateRecipeManuallyModal />
+            <CreateRecipeManuallyModal 
+                cookbookId={cookbookId}
+            />
         </div>
     )
 }

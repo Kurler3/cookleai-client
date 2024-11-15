@@ -1,79 +1,12 @@
-import { ICookbook } from "../../types";
 
 
 
+export const COOKBOOK_MODAL_IDS = {
+    CREATE: 'create-cookbook-modal',
+    EDIT: 'edit-cookbook-modal',
+    DELETE: 'delete-cookbook-modal',
+    LEAVE: 'leave-cookbook-modal',
+    ADD_MEMBERS: 'add-members',
+    MANAGE_MEMBERS: 'manage-members'
+}
 
-export const mockCookbooks: ICookbook[] = [
-    {
-        id: 1,
-        title: "Test cookbook",
-        isPrivate: true,
-        image: 'https://cdn.britannica.com/36/123536-050-95CB0C6E/Variety-fruits-vegetables.jpg',
-        users: [],
-        recipes: [],
-        createdAt: new Date(),
-        updatedAt: new Date(),
-        updatedBy: 1,
-        createdBy: 1,
-    },
-    {
-        id: 2,
-        title: "Test cookbook",
-        isPrivate: true,
-        image: 'https://cdn.britannica.com/36/123536-050-95CB0C6E/Variety-fruits-vegetables.jpg',
-        users: [],
-        recipes: [],
-        createdAt: new Date(),
-        updatedAt: new Date(),
-        updatedBy: 1,
-        createdBy: 1,
-    },
-    {
-        id: 3,
-        title: "Test cookbook",
-        isPrivate: true,
-        image: 'https://cdn.britannica.com/36/123536-050-95CB0C6E/Variety-fruits-vegetables.jpg',
-        users: [],
-        recipes: [],
-        createdAt: new Date(),
-        updatedAt: new Date(),
-        updatedBy: 1,
-        createdBy: 1,
-    },
-    {
-        id: 4,
-        title: "Test cookbook",
-        isPrivate: true,
-        image: 'https://cdn.britannica.com/36/123536-050-95CB0C6E/Variety-fruits-vegetables.jpg',
-        users: [],
-        recipes: [],
-        createdAt: new Date(),
-        updatedAt: new Date(),
-        updatedBy: 1,
-        createdBy: 1,
-    }
-    ,{
-        id: 5,
-        title: "Test cookbook",
-        isPrivate: true,
-        image: 'https://cdn.britannica.com/36/123536-050-95CB0C6E/Variety-fruits-vegetables.jpg',
-        users: [],
-        recipes: [],
-        createdAt: new Date(),
-        updatedAt: new Date(),
-        updatedBy: 1,
-        createdBy: 1,
-    },
-    {
-        id: 6,
-        title: "Test cookbook",
-        isPrivate: true,
-        image: 'https://cdn.britannica.com/36/123536-050-95CB0C6E/Variety-fruits-vegetables.jpg',
-        users: [],
-        recipes: [],
-        createdAt: new Date(),
-        updatedAt: new Date(),
-        updatedBy: 1,
-        createdBy: 1,
-    }
-]

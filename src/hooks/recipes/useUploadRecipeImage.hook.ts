@@ -63,7 +63,7 @@ const useUploadRecipeImage = () => {
 
                     return {
                         ...recipe,
-                        image: uploadedImgUrl
+                        imageUrl: uploadedImgUrl
                     };
 
                 }

@@ -34,7 +34,7 @@ const RecipePageHeaderFilters: FC<IProps> = ({
                 {/* SEARCH BAR */}
                 <Searchbar
                     placeholder="Search for a recipe title"
-                    value={recipeFilters.title ?? ''}
+                    value={recipeFilters.title}
                     setValue={(newValue?: string) => {
                         updateFilter('title', newValue ?? null)
                     }}

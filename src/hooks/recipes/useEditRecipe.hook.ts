@@ -12,7 +12,7 @@ const useEditRecipe = () => {
     
     const axios = useAxios();
 
-    const { editRecipeInCache } = useGetUserRecipes();
+    // const { editRecipeInCache } = useGetUserRecipes();
 
     const {
         mutate: editRecipe,
@@ -29,7 +29,7 @@ const useEditRecipe = () => {
         onSuccess: (editedRecipe: IRecipe) => {
 
             // Update cache in list
-            editRecipeInCache(editedRecipe)
+            // editRecipeInCache(editedRecipe)
             
             // Update cache of single recipe
             queryClient.setQueryData(

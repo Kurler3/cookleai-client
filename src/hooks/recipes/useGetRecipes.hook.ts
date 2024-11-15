@@ -1,25 +1,32 @@
 import { InfiniteData, useInfiniteQuery, useQueryClient } from "@tanstack/react-query";
+import { IRecipe, IRecipeFilters } from "../../types";
 import useAxios from "../axios/useAxios.hook";
-import { IRecipe, IRecipeFilters } from "@/types";
+// import { getMinutesInMs } from "../../utils/functions";
 import { useInfinityQueryFunctions } from "../common/useInfinityQueryFunctions";
-import { getMinutesInMs } from "@/utils/functions";
 
-type IUseGetUserRecipesInput = {
+
+type IUseGetRecipesArgs = {
+    cookbookId?: string;
     pageSize?: number;
     filters?: IRecipeFilters;
 }
 
-const useGetUserRecipes = ({
-    pageSize = 15,
-    filters,
-}: IUseGetUserRecipesInput = {}) => {
+const useGetRecipes = ({
+    cookbookId,
+    pageSize = 10,
+    filters
+}: IUseGetRecipesArgs) => {
 
-    const queryKey = ["my-recipes", filters ?? {
-        cuisine: null,
-        difficulty: null,
-        title: null,
-    }
-    ]
+    const queryKey = [
+        cookbookId ? 'cookbook.recipes' : 'my-recipes',
+        cookbookId,
+        pageSize,
+        filters ?? {
+            cuisine: null,
+            difficulty: null,
+            title: null,
+        }
+    ];
 
     const axios = useAxios();
     const queryClient = useQueryClient();
@@ -37,8 +44,11 @@ const useGetUserRecipes = ({
     } = useInfiniteQuery({
         queryKey,
         queryFn: async ({ pageParam = 0 }): Promise<IRecipe[]> => {
+
+            const route = cookbookId ? `/cookbooks/${cookbookId}/recipes` : "/recipes/my-recipes";
+
             return axios
-                .get("/recipes/my-recipes", {
+                .get(route, {
                     params: {
                         page: pageParam,
                         limit: pageSize,
@@ -48,11 +58,11 @@ const useGetUserRecipes = ({
                 .then((res) => res.data);
         },
         getNextPageParam: (lastPage, pages) => {
-            return lastPage.length ? pages.length : undefined; // If the last page was not empty, then continue fetching, otherwise stop.
+            return lastPage.length ? pages.length : undefined; // If the last page was not empty, then continue fetching, otherwise stop.   
         },
         initialPageParam: 0,
         // If any filters, don't cache the data, because it can change often and its hard to manage with mutations.
-        staleTime: filters ? 0 : getMinutesInMs(3),
+        // staleTime: getMinutesInMs(3) // filters ? 0 : getMinutesInMs(3),
     });
 
     const {
@@ -73,11 +83,18 @@ const useGetUserRecipes = ({
 
     const removeRecipeFromCache = (recipeId: number) => {
         const recipeIndexes = recipeIdToIndexMap.get(recipeId);
-        if (!recipeIndexes) return;
+
+        if (!recipeIndexes) {
+            console.debug('No indexes found for the recipe: ', recipeId);
+            return;
+        }
 
         queryClient.setQueryData(queryKey, (oldData: InfiniteData<IRecipe[]>) => {
 
-            if (!oldData) return null;
+            if (!oldData) {
+                console.error('No data chached for key: ', queryKey);
+                return;
+            }
 
             const newData = { ...oldData };
 
@@ -99,7 +116,7 @@ const useGetUserRecipes = ({
             (oldData: InfiniteData<IRecipe[]>) => {
 
                 if (!oldData) {
-                    console.error(`no cache found for: 'my-recipes'`);
+                    console.error(`no cache found for: ${JSON.stringify(queryKey)}`);
                     return null;
                 }
 
@@ -123,7 +140,7 @@ const useGetUserRecipes = ({
             (oldData: InfiniteData<IRecipe[]>) => {
 
                 if (!oldData) {
-                    console.error(`no cache found for: 'my-recipes'`);
+                    console.error(`no cache found for: ${JSON.stringify(queryKey)}`);
                     return null;
                 }
 
@@ -165,6 +182,7 @@ const useGetUserRecipes = ({
         editRecipeInCache,
 
     };
-};
 
-export default useGetUserRecipes;
+}
+
+export default useGetRecipes;
