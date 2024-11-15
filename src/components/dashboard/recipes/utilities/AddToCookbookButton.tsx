@@ -32,6 +32,7 @@ const AddToCookbookButton: FC<IProps> = ({
                 id={RECIPE_ACTION_MODAL_IDS.ADD_TO_ADD_COOKBOOK}
                 className="modal-toggle"
             />
+            
             <AddToCookbookModal recipe={recipe} />
         </>
     )
