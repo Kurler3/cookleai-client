@@ -5,6 +5,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import ShareRecipeButton from "../../recipes/utilities/ShareRecipeButton";
 import DeleteRecipeButton from "../../recipes/utilities/DeleteRecipeButton";
 import AddToCookbookButton from "../../recipes/utilities/AddToCookbookButton";
+import AddMembersToRecipeButton from "../../recipes/utilities/AddMembersToRecipeButton";
 
 type IProps = {
     recipe?: IRecipe;
@@ -46,6 +47,13 @@ const RecipeDisplayPageHeader: FC<IProps> = ({
                 recipe={recipe}
                 buttonClassName="btn border border-gray-400 hover:border-gray-400 text-white"
             />
+
+            {/* ADD MEMBERS */}
+            {
+                canEditRecipe && (
+                    <AddMembersToRecipeButton />
+                )
+            }
 
             {/* DELETE */}
             {

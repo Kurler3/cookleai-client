@@ -10,6 +10,8 @@ const AddMembersToRecipeButton = () => {
     ///////////////////////////////
     
     //TODO - Use hook to add members on recipes.
+    
+
 
     ///////////////////////////////
     // RENDER /////////////////////
@@ -18,16 +20,13 @@ const AddMembersToRecipeButton = () => {
     return (
         <>
 
-            <label htmlFor={RECIPE_ACTION_MODAL_IDS.ADD_MEMBERS}>
+            <label 
+                htmlFor={RECIPE_ACTION_MODAL_IDS.ADD_MEMBERS}
+                className="btn border border-gray-400 hover:border-gray-400 text-white"
+            >
                 <AddIcon style={{ height: "20px" }} />
                 Add Members
             </label>
-
-            <input
-                type="checkbox"
-                id={RECIPE_ACTION_MODAL_IDS.ADD_MEMBERS}
-                className="modal-toggle"
-            />
 
             <AddMembersModal 
                 modalId={RECIPE_ACTION_MODAL_IDS.ADD_MEMBERS}
