@@ -22,17 +22,16 @@ const Searchbar: FC<IProps> = ({
 
     useEffect(() => {
 
-        if (debouncerValue) {
-            const t = setTimeout(() => {
+        const t = setTimeout(() => {
 
-                setValue?.(debouncerValue);
+            setValue?.(debouncerValue ?? "");
 
-            }, 500);
+        }, 500);
 
-            return () => {
-                clearTimeout(t);
-            }   
+        return () => {
+            clearTimeout(t);
         }
+
 
 
     }, [debouncerValue, setValue])
