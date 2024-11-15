@@ -1,18 +1,30 @@
 import { RECIPE_ACTION_MODAL_IDS } from "../../../../utils/constants";
 import AddIcon from "@mui/icons-material/Add";
 import AddMembersModal from "../../../utils/AddMembersModal";
+import useAddMembersToRecipe from "../../../../hooks/recipes/useAddMembersToRecipe.hook";
+import { IRecipe } from "../../../../types";
+import { FC } from "react";
 
+type IProps = {
+    recipe?: IRecipe;
+};
 
-const AddMembersToRecipeButton = () => {
+const AddMembersToRecipeButton: FC<IProps> = ({
+    recipe,
+}) => {
 
     ///////////////////////////////
     // HOOKS //////////////////////
     ///////////////////////////////
     
-    //TODO - Use hook to add members on recipes.
+    // Use hook to add members on recipes.
+    const {
+        isAddingMembersToRecipe,
+        addMembersToRecipe,
+    } = useAddMembersToRecipe({
+        recipeId: recipe?.id,
+    });
     
-
-
     ///////////////////////////////
     // RENDER /////////////////////
     ///////////////////////////////
@@ -30,8 +42,8 @@ const AddMembersToRecipeButton = () => {
 
             <AddMembersModal 
                 modalId={RECIPE_ACTION_MODAL_IDS.ADD_MEMBERS}
-                isLoading={false}
-                confirmAddUsers={() => { }}
+                isLoading={isAddingMembersToRecipe}
+                confirmAddUsers={addMembersToRecipe}
             />
         </>
     );

@@ -10,7 +10,8 @@ const useCanEditRecipe = (
     return useMemo(() => {
         if(!recipe) return false;
         if(!recipe.role) return false;
-        return recipe.role === 'EDITOR' || recipe.role === 'OWNER';
+        // return recipe.role === 'EDITOR' || 
+        return recipe.role === 'OWNER';
     }, [recipe]);
 };
 

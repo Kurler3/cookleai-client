@@ -1,17 +1,20 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import useAxios from "../axios/useAxios.hook";
 import { useNavigate } from "react-router-dom";
 import { RECIPE_ROLES, ROUTE_PATHS } from "@/utils/constants";
 import toast from "react-hot-toast";
-import { IRecipe } from "@/types";
+import { IRecipe, IRecipeMember } from "@/types";
 import { useEffect } from "react";
 import useIsInEditPage from "../common/useIsInEditPage";
 import { getMinutesInMs } from "@/utils/functions";
 import useHandleFetchError from "../common/useHandleFetchError";
 
 const useGetRecipe = (recipeId?: string) => {
+    
     const navigate = useNavigate();
     const axios = useAxios();
+
+    const queryClient = useQueryClient();
 
     const isInEditPage = useIsInEditPage();
 
@@ -55,10 +58,48 @@ const useGetRecipe = (recipeId?: string) => {
 
     }, [isInEditPage, navigate, recipe?.role])
 
+    ///////////////////////////////////
+    // FUNCTIONS //////////////////////
+    ///////////////////////////////////
+
+    const handleAddMembersToRecipeCache = (
+        members: IRecipeMember[]
+    ) => {
+
+        queryClient.setQueryData(
+            ['recipe', recipeId],
+            (oldRecipe?: IRecipe) => {
+
+                if(!oldRecipe) return null;
+
+                return {
+                    ...oldRecipe,
+                    users: [
+                        ...(oldRecipe.users ?? []),
+                        ...members,
+                    ],
+                }
+            }
+        )
+
+    }
+
+    ///////////////////////////////////
+    // RETURN /////////////////////////
+    ///////////////////////////////////
+
     return {
         isLoadingRecipe: isLoading || isFetching,
         errorWhileGettingRecipe,
         recipe,
+
+
+        ////////////////
+        // FUNCTIONS ///
+        ////////////////
+
+        handleAddMembersToRecipeCache,
+
     };
 };
 

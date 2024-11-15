@@ -1,7 +1,7 @@
 import { FC, useMemo, useState } from "react";
 import SearchUsers from "./SearchUsers";
 import { useGetUser } from "../../hooks/user";
-import { COOKBOOK_ROLES, ICookbookMember, ICookbookRole, IUser } from "../../types";
+import { COOKBOOK_ROLES, IAddCookbookMembersFunc, IAddMembersToRecipeFn, ICookbookMember, ICookbookRole, IUser } from "../../types";
 import UserItem from "./UserItem";
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import { handleCloseModal } from "../../utils/functions/closeModal";
@@ -10,12 +10,8 @@ import { handleCloseModal } from "../../utils/functions/closeModal";
 type IProps = {
     modalId: string;
     isLoading: boolean;
-    confirmAddUsers: ({
-        members,
-        onSuccessFn,
-    }: { members: ICookbookMember[], onSuccessFn?: () => void }) => void;
+    confirmAddUsers: IAddCookbookMembersFunc | IAddMembersToRecipeFn;
 }
-
 
 const AddMembersModal: FC<IProps> = ({
     modalId,

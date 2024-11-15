@@ -7,6 +7,11 @@ export enum IRecipeRole {
     VIEWER = "VIEWER",
 }
 
+export type IRecipeMember = {
+    role: IRecipeRole; 
+    user: IUser
+}
+
 export type INutrients = {
     calories?: number;
     carbohydrates?: number;
@@ -91,3 +96,11 @@ export type IRecipeFilters = {
     cuisine: string | null;
     difficulty: string | null;
 }
+
+export type IAddMembersToRecipeFn = ({
+    members,
+    onSuccessFn,
+}: {
+    members: IRecipeMember[];
+    onSuccessFn?: () => void;
+}) => void;
