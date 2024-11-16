@@ -54,3 +54,14 @@ export type IAddCookbookMembersFunc = ({
     members: ICookbookMember[],
     onSuccessFn?: () => void;
 }) => void;
+
+export type IManageCookbookMembersFunc = ({
+    editedMembers,
+    removeMembers,
+}: {
+    editedMembers: IEditCookbookMember[],
+    removeMembers: number[],
+}) => {
+    editedMembers: IEditCookbookMember[];
+    removeMembers: number[];
+};

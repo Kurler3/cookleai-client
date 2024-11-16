@@ -10,6 +10,8 @@ import DeleteCookbookModal from "./components/modals/DeleteCookbookModal";
 import LeaveCookbookModal from "./components/modals/LeaveCookbookModal";
 import RecipesPage from "../../recipes/RecipesPage";
 import ManageCookbookMembersModal from "./components/modals/ManageCookbookMembersModal";
+import MembersList from "../../../utils/MembersList";
+import { COOKBOOK_MODAL_IDS } from "../../../../utils/constants";
 
 const SingleCookbookPage = () => {
 
@@ -46,6 +48,10 @@ const SingleCookbookPage = () => {
             {/* TITLE + ACTIONS */}
             <CookbookPageHeader 
                 cookbook={cookbook}
+            />
+
+            <MembersList 
+                modalId={COOKBOOK_MODAL_IDS.MANAGE_MEMBERS}
             />
 
             {/* MEMBERS */}

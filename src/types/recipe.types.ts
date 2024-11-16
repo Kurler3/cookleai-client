@@ -107,3 +107,16 @@ export type IAddMembersToRecipeFn = ({
     members: IRecipeMember[];
     onSuccessFn?: () => void;
 }) => void;
+
+export type IEditRecipeMember = {
+    userId: number;
+    role: IRecipeRole;
+}
+
+export type IManageRecipeMembersFn = ({
+    editedMembers,
+    removeMembers,
+}: {
+    editedMembers: IEditRecipeMember[];
+    removeMembers: number[];
+}) => void;
