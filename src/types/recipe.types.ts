@@ -1,11 +1,14 @@
 import { ICookbook } from "./cookbook.types";
 import { IUser } from "./user.types";
 
-export enum IRecipeRole {
+export enum RECIPE_ROLES {
     OWNER = "OWNER",
     EDITOR = "EDITOR",
     VIEWER = "VIEWER",
 }
+
+export type IRecipeRole = keyof typeof RECIPE_ROLES;
+
 
 export type IRecipeMember = {
     role: IRecipeRole; 
