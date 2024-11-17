@@ -19,16 +19,13 @@ const MembersList: FC<IProps> = ({
     currentUser,
     members,
 }) => {
-
     
     const self = members.find(({user}) => user.id === currentUser?.id);
 
-
     return (
         <div className='flex flex-row gap-2 justify-start items-center w-full'>
-
             {
-                members!.map(({ role, user }, index) => {
+                self ? members!.map(({ role, user }, index) => {
                     return (
                         <div
                             className="tooltip tooltip-right" 
@@ -73,7 +70,7 @@ const MembersList: FC<IProps> = ({
                         </div>
                     );
                     
-                })
+                }) : null
             }
 
         </div>

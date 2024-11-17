@@ -9,7 +9,6 @@ export enum RECIPE_ROLES {
 
 export type IRecipeRole = keyof typeof RECIPE_ROLES;
 
-
 export type IRecipeMember = {
     role: IRecipeRole; 
     user: IUser
@@ -21,8 +20,6 @@ export type INutrients = {
     protein?: number;
     fat?: number;
 }
-
-type IRecipeUser = IUser & { role: IRecipeRole };
 
 export type IRecipe = {
     id: number;
@@ -43,7 +40,7 @@ export type IRecipe = {
     instructions: string[];
     likedBy?: IUser[];
     cookbooks?: ICookbook[];
-    users?: IRecipeUser[];
+    users?: IRecipeMember[];
     role?: IRecipeRole;
     createdAt: string;
     updatedAt: string;

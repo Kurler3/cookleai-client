@@ -10,6 +10,7 @@ export const RECIPE_ACTION_MODAL_IDS = {
     SHARE_RECIPE: 'share_recipe_modal',
     EDIT_IMAGE: 'edit_recipe_image_modal',
     ADD_MEMBERS: 'add_members_to_recipe_modal',
+    MANAGE_MEMBERS: 'manage_recipe_members_modal',
 }
 
 export const RECIPE_ROLES = {
