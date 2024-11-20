@@ -1,7 +1,7 @@
 import { useGetUser } from "../../../hooks/user"
 import ErrorScreen from "../../utils/ErrorScreen";
 import LoadingScreen from "../../utils/LoadingScreen";
-import DeleteIcon from '@mui/icons-material/Delete';
+import DeleteAccountButton from "./utilities/DeleteAccountButton";
 
 const SettingsPage = () => {
 
@@ -27,24 +27,16 @@ const SettingsPage = () => {
     }
 
     return (
-        <div className="w-full h-full flex justify-start items-start gap-4 p-4 flex-col">
+        <div 
+            className="w-full h-full flex justify-start items-start gap-4 p-4 flex-col"
+        >
 
             <h1 className="text-2xl text-white font-medium">
                 Settings
             </h1>
 
             {/* BUTTON TO DELETE ACCOUNT */}
-            <button className="btn btn-error text-gray-100">
-
-                {/* DELETE ICON */}
-                <DeleteIcon />
-
-                {/* TEXT */}
-                <p>
-                    Delete your account
-                </p>
-
-            </button>
+            <DeleteAccountButton />
 
         </div>
     )

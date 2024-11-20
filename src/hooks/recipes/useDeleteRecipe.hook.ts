@@ -3,7 +3,7 @@ import useAxios from "../axios/useAxios.hook";
 import toast from "react-hot-toast";
 import { handleCloseModal } from "@/utils/functions/closeModal";
 import { RECIPE_ACTION_MODAL_IDS } from "@/utils/constants/recipes.constants";
-import useGetUserRecipes from "./useGetUserRecipes.hook";
+// import useGetUserRecipes from "./useGetUserRecipes.hook";
 import axiosNetworkErrorHandler from "@/utils/functions/axiosNetworkErrorHandler";
 import { IRecipeFilters } from "@/types";
 
@@ -17,7 +17,7 @@ type IProps = {
 const useDeleteRecipe = ({
     recipeId, 
     onSuccessCallback,
-    filters,
+    // filters,
 }: IProps={}) => {
 
     const axios = useAxios();
