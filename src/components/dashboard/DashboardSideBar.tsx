@@ -23,7 +23,7 @@ const DashboardSideBar = () => {
 				{/* CLOSE */}
 				<label htmlFor={DASHBOARD_DRAWER_ID} aria-label="close sidebar" className="drawer-overlay"></label>
 
-				<div 
+				<div
 					className='flex flex-col justify-between items-start h-screen bg-base-300 border-r border-r-slate-600'
 				>
 					<ul className="menu text-base-content h-full w-48 p-4 gap-4">
@@ -49,6 +49,7 @@ const DashboardSideBar = () => {
 						{/* SIDE BAR NAVIGATION */}
 						{
 							DASHBOARD_SIDEBAR_GROUPS.map((sideBarGroup, idx) => {
+
 								return (
 									<div
 										key={`sidebar_group_${sideBarGroup.id}_${idx}`}
@@ -63,21 +64,27 @@ const DashboardSideBar = () => {
 										{
 											sideBarGroup.items.map((groupItem) => {
 
+												let uri = groupItem.uri;
+
+												if (groupItem.id === 'profile' && user) {
+													uri += `/${user?.id}`;
+												}
+
 												return (
 													<Link
 														key={`group_item_${sideBarGroup.id}_${groupItem.id}`}
-														to={groupItem.uri}
+														to={uri}
 														className='w-full mt-4'
 													>
 														<button
 															className={
 																`
 										btn w-full btn-sm justify-start text-gray-300 hover:bg-green-600 hover:text-white
-										${location.pathname === groupItem.uri ? 'text-white bg-green-600' : ''}
+										${location.pathname === uri ? 'text-white bg-green-600' : ''}
 										`
 															}
 															style={{
-																color: location.pathname === groupItem.uri ? 'white' : undefined,
+																color: location.pathname === uri ? 'white' : undefined,
 															}}
 														>
 															{/* ICON */}
@@ -113,7 +120,7 @@ const DashboardSideBar = () => {
 
 							<div className='flex justify-start items-center gap-2'>
 								{/* AVATAR */}
-								<ImageWithLoader 
+								<ImageWithLoader
 									imageUrl={user?.avatar}
 									altTxt='User avatar'
 									imgClassName='w-6 rounded-full'
@@ -121,8 +128,8 @@ const DashboardSideBar = () => {
 										<div className='loading loading-spinner'>
 										</div>
 									}
-								/>	
-								
+								/>
+
 								{/* NAME */}
 								<div>
 									{user?.firstName}

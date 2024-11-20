@@ -77,16 +77,16 @@ const App = () => {
                                 />
 
                                 {/* EXPLORE */}
-                                <Route
+                                {/* <Route
                                     path={ROUTE_PATHS.EXPLORE}
                                     element={<div>Hello</div>}
-                                />
+                                /> */}
 
                                 {/* PROFILES */}
-                                <Route 
+                                {/* <Route 
                                     path={ROUTE_PATHS.PROFILE}
                                     element={<div>Profile!</div>}
-                                />
+                                /> */}
 
                             </Route>
                         </Route>

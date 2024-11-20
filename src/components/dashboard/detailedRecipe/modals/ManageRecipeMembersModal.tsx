@@ -5,7 +5,6 @@ import { RECIPE_ACTION_MODAL_IDS } from "../../../../utils/constants";
 import useManageRecipeMembers from "../../../../hooks/recipes/useManageRecipeMembers";
 import { handleCloseModal } from "../../../../utils/functions/closeModal";
 
-
 type IProps = {
     recipe?: IRecipe;
 }
