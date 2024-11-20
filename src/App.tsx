@@ -16,6 +16,7 @@ import DetailedRecipePage from "./components/dashboard/detailedRecipe/DetailedRe
 import DetailedRecipeEditPage from "./components/dashboard/detailedRecipe/DetailedRecipeEditPage";
 import Logout from "./components/Logout";
 import SingleCookbookPage from "./components/dashboard/cookbooks/single_cookbook/SingleCookbookPage";
+import SettingsPage from "./components/dashboard/settings/SettingsPage";
 
 const App = () => {
     return (
@@ -74,6 +75,14 @@ const App = () => {
                                 <Route 
                                     path={ROUTE_PATHS.SINGLE_COOKBOOK}
                                     element={<SingleCookbookPage />}
+                                />
+
+                                {/* SETTINGS */}
+                                <Route 
+                                    path={ROUTE_PATHS.SETTINGS}
+                                    element={
+                                        <SettingsPage />
+                                    }
                                 />
 
                                 {/* EXPLORE */}
