@@ -19,11 +19,11 @@ const navItems: NavItem[] = [
     //     color: 'neutral-content',
     //     bgColor: 'ghost',
     // },
-    {
-        label: 'About',
-        url: '/about',
-        bgColor: 'ghost'
-    }
+    // {
+    //     label: 'About',
+    //     url: '/about',
+    //     bgColor: 'ghost'
+    // }
 ]
 
 
