@@ -53,6 +53,7 @@ const DeleteRecipeModal: React.FC<IProps> = ({
 
     return (
         <div className="modal" role="dialog">
+
             <div className="modal-box flex flex-col items-center gap-4 text-center border-red-600 border">
                 {/* ALERT ICON */}
                 <ReportProblemIcon
@@ -75,6 +76,7 @@ const DeleteRecipeModal: React.FC<IProps> = ({
 
                 {/* BOTTOM BUTTONS */}
                 <div className="w-full flex justify-center items-center gap-4 m-auto">
+
                     {/* CONFIRM DELETE BTN */}
                     <button
                         className={`btn btn-error ${
@@ -87,7 +89,9 @@ const DeleteRecipeModal: React.FC<IProps> = ({
                         )}
                         Delete
                     </button>
+
                 </div>
+                
             </div>
 
             <label

@@ -13,17 +13,17 @@ type NavItem = {
 }
 
 const navItems: NavItem[] = [
-    {
-        label: 'Explore',
-        url: '/dashboard/explore',
-        color: 'neutral-content',
-        bgColor: 'ghost',
-    },
-    {
-        label: 'About',
-        url: '/about',
-        bgColor: 'ghost'
-    }
+    // {
+    //     label: 'Explore',
+    //     url: '/dashboard/explore',
+    //     color: 'neutral-content',
+    //     bgColor: 'ghost',
+    // },
+    // {
+    //     label: 'About',
+    //     url: '/about',
+    //     bgColor: 'ghost'
+    // }
 ]
 
 

@@ -5,6 +5,10 @@ import RecipeDisplayPageHeader from "./display/RecipeDisplayPageHeader";
 import RecipeDisplayMainContent from "./display/mainContent/RecipeDisplayMainContent";
 import LoadingScreen from "@/components/utils/LoadingScreen";
 import ErrorScreen from "@/components/utils/ErrorScreen";
+import MembersList from "../../utils/MembersList";
+import { RECIPE_ACTION_MODAL_IDS } from "../../../utils/constants";
+import { useGetUser } from "../../../hooks/user";
+import ManageRecipeMembersModal from "./modals/ManageRecipeMembersModal";
 
 const DetailedRecipePage = () => {
 
@@ -15,6 +19,10 @@ const DetailedRecipePage = () => {
     errorWhileGettingRecipe,
     recipe,
   } = useGetRecipe(recipeId);
+
+  const {
+    user: currentUser
+  } = useGetUser();
 
   const canEditRecipe = useCanEditRecipe(recipe);
 
@@ -47,9 +55,22 @@ const DetailedRecipePage = () => {
         canEditRecipe={canEditRecipe}
       />
 
+      {/* MEMBERS */}
+      <MembersList 
+        modalId={RECIPE_ACTION_MODAL_IDS.MANAGE_MEMBERS}
+        isRecipe={true}
+        currentUser={currentUser}
+        members={recipe?.users ||[]}
+      />
+
 
       {/* MAIN CONTENT */}
       <RecipeDisplayMainContent
+        recipe={recipe}
+      />
+
+      {/* MANAGE MEMBERS MODAL */}
+      <ManageRecipeMembersModal 
         recipe={recipe}
       />
 

@@ -1,10 +1,17 @@
 import { ICookbook } from "./cookbook.types";
 import { IUser } from "./user.types";
 
-export enum IRecipeRole {
+export enum RECIPE_ROLES {
     OWNER = "OWNER",
     EDITOR = "EDITOR",
     VIEWER = "VIEWER",
+}
+
+export type IRecipeRole = keyof typeof RECIPE_ROLES;
+
+export type IRecipeMember = {
+    role: IRecipeRole; 
+    user: IUser
 }
 
 export type INutrients = {
@@ -13,8 +20,6 @@ export type INutrients = {
     protein?: number;
     fat?: number;
 }
-
-type IRecipeUser = IUser & { role: IRecipeRole };
 
 export type IRecipe = {
     id: number;
@@ -35,7 +40,7 @@ export type IRecipe = {
     instructions: string[];
     likedBy?: IUser[];
     cookbooks?: ICookbook[];
-    users?: IRecipeUser[];
+    users?: IRecipeMember[];
     role?: IRecipeRole;
     createdAt: string;
     updatedAt: string;
@@ -91,3 +96,24 @@ export type IRecipeFilters = {
     cuisine: string | null;
     difficulty: string | null;
 }
+
+export type IAddMembersToRecipeFn = ({
+    members,
+    onSuccessFn,
+}: {
+    members: IRecipeMember[];
+    onSuccessFn?: () => void;
+}) => void;
+
+export type IEditRecipeMember = {
+    userId: number;
+    role: IRecipeRole;
+}
+
+export type IManageRecipeMembersFn = ({
+    editedMembers,
+    removeMembers,
+}: {
+    editedMembers: IEditRecipeMember[];
+    removeMembers: number[];
+}) => void;

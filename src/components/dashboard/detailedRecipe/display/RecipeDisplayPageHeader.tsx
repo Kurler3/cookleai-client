@@ -51,7 +51,9 @@ const RecipeDisplayPageHeader: FC<IProps> = ({
             {/* ADD MEMBERS */}
             {
                 canEditRecipe && (
-                    <AddMembersToRecipeButton />
+                    <AddMembersToRecipeButton 
+                        recipe={recipe}
+                    />
                 )
             }
 

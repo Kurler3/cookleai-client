@@ -4,12 +4,13 @@ import LoadingScreen from "../../../utils/LoadingScreen";
 import ErrorScreen from "../../../utils/ErrorScreen";
 import { useGetUser } from '../../../../hooks/user';
 import CookbookPageHeader from './components/CookbookPageHeader';
-import CookbookMembers from './components/CookbookMembers';
 import EditCookbookTitleModal from "./components/modals/EditCookbookTitleModal";
 import DeleteCookbookModal from "./components/modals/DeleteCookbookModal";
 import LeaveCookbookModal from "./components/modals/LeaveCookbookModal";
 import RecipesPage from "../../recipes/RecipesPage";
 import ManageCookbookMembersModal from "./components/modals/ManageCookbookMembersModal";
+import MembersList from "../../../utils/MembersList";
+import { COOKBOOK_MODAL_IDS } from "../../../../utils/constants";
 
 const SingleCookbookPage = () => {
 
@@ -49,10 +50,13 @@ const SingleCookbookPage = () => {
             />
 
             {/* MEMBERS */}
-            <CookbookMembers 
-                cookbook={cookbook}
+            <MembersList 
+                modalId={COOKBOOK_MODAL_IDS.MANAGE_MEMBERS}
+                isRecipe={false}
                 currentUser={currentUser}
+                members={cookbook.users || []}
             />
+
 
             {/* RECIPES LIST */}
             <RecipesPage />

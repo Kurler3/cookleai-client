@@ -46,3 +46,22 @@ export type IEditCookbookMember = {
     userId: number;
     role: ICookbookRole;
 }
+
+export type IAddCookbookMembersFunc = ({
+    members,
+    onSuccessFn,
+}: {
+    members: ICookbookMember[],
+    onSuccessFn?: () => void;
+}) => void;
+
+export type IManageCookbookMembersFunc = ({
+    editedMembers,
+    removeMembers,
+}: {
+    editedMembers: IEditCookbookMember[],
+    removeMembers: number[],
+}) => {
+    editedMembers: IEditCookbookMember[];
+    removeMembers: number[];
+};

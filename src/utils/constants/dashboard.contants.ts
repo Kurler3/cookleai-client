@@ -1,7 +1,7 @@
 import BlenderIcon from '@mui/icons-material/Blender';
 import AutoStoriesIcon from '@mui/icons-material/AutoStories';
-import ExploreIcon from '@mui/icons-material/Explore';
-import AccountBoxIcon from '@mui/icons-material/AccountBox';
+// import ExploreIcon from '@mui/icons-material/Explore';
+// import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import HomeIcon from '@mui/icons-material/Home';
 import SettingsIcon from '@mui/icons-material/Settings';
 import LogoutIcon from '@mui/icons-material/Logout';
@@ -28,18 +28,18 @@ export const DASHBOARD_SIDEBAR_GROUPS = [
                 uri: '/dashboard/cookbooks',
                 icon: AutoStoriesIcon,
             },
-            {
-                id: 'explore',
-                label: 'Explore',
-                uri: '/dashboard/explore',
-                icon: ExploreIcon,
-            },
-            {
-                id: 'profile',
-                label: 'Profile',
-                uri: '/dashboard/profile',
-                icon: AccountBoxIcon,
-            },
+            // {
+            //     id: 'explore',
+            //     label: 'Explore',
+            //     uri: '/dashboard/explore',
+            //     icon: ExploreIcon,
+            // },
+            // {
+            //     id: 'profile',
+            //     label: 'Profile',
+            //     uri: '/dashboard/profiles',
+            //     icon: AccountBoxIcon,
+            // },
         ]
     }
 ]
@@ -51,12 +51,12 @@ export const DASHBOARD_SIDEBAR_PROFILE_ITEMS = [
         uri: '/',
         icon: HomeIcon,
     },
-    {
-        id: 'profile',
-        label: 'Profile',
-        uri: '/dashboard/profile',
-        icon: AccountBoxIcon,
-    },
+    // {
+    //     id: 'profile',
+    //     label: 'Profile',
+    //     uri: '/dashboard/profile',
+    //     icon: AccountBoxIcon,
+    // },
     {
         id: 'settings',
         label: 'Settings',

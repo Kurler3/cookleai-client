@@ -11,4 +11,5 @@ export const ROUTE_PATHS = {
     LOGOUT: '/logout',
     RECIPE: '/dashboard/recipes/:recipeId',
     SINGLE_COOKBOOK: '/dashboard/cookbooks/:cookbookId',
+    SETTINGS: '/dashboard/settings',
 }
