@@ -34,12 +34,13 @@ The frontend is built using React, TypeScript, and Vite for a modern and optimiz
     `git clone https://github.com/Kurler3/cookleai-client.git`
 
 2. Install Dependencies
+
     Navigate into the project directory and install the necessary dependencies.
 
     <code>cd cookleai-client <br> 
     npm install</code>
 
-3. Environment Variables
+4. Environment Variables
     
     The frontend requires one environment variable for the local backend URL.
 
@@ -49,7 +50,7 @@ The frontend is built using React, TypeScript, and Vite for a modern and optimiz
 
     This is used to communicate with the backend API during development.
 
-4. Run the Development Server
+5. Run the Development Server
 
     Now, you can start the local development server using Vite.
 
