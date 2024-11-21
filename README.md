@@ -36,7 +36,8 @@ The frontend is built using React, TypeScript, and Vite for a modern and optimiz
 2. Install Dependencies
     Navigate into the project directory and install the necessary dependencies.
 
-    <code>cd cookleai-client <br> npm install</code>
+    <code>cd cookleai-client <br> 
+    npm install</code>
 
 3. Environment Variables
     
